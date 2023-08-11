@@ -1,0 +1,85 @@
+{
+  "chainId": 1,
+  "factory": "0xaF2Cf343735D6dd59f659F9CBbFb80e3d13f318d",
+  "tidePools": [
+    {
+      "chainId": 1,
+      "address": "0x23B1918BDdFdBF92cB01EbDF32c3D41a033E3DA5",
+      "poolAddress": "0x60594a405d53811d3BC4766596EFD80fd545A270",
+      "pool": {
+        "token0": {
+          "chainId": 1,
+          "decimals": 18,
+          "symbol": "DAI",
+          "name": "Dai Stablecoin",
+          "isNative": false,
+          "isToken": true,
+          "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+        },
+        "token1": {
+          "chainId": 1,
+          "decimals": 18,
+          "symbol": "WETH",
+          "name": "Wrapped Ether",
+          "isNative": false,
+          "isToken": true,
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        },
+        "fee": 500,
+        "sqrtRatioX96": [
+          379751504,
+          390965404,
+          532873887,
+          1
+        ],
+        "liquidity": [
+          1001944363,
+          461027707,
+          1378168
+        ],
+        "tickCurrent": -75122,
+        "tickDataProvider": {}
+      },
+      "APR": "3.58"
+    },
+    {
+      "chainId": 1,
+      "address": "0x29ee7DeA9f5cA0D29376679b469f3D8b48d6bfEf",
+      "poolAddress": "0x11950d141EcB863F01007AdD7D1A342041227b58",
+      "pool": {
+        "token0": {
+          "chainId": 1,
+          "decimals": 18,
+          "symbol": "PEPE",
+          "name": "Pepe",
+          "isNative": false,
+          "isToken": true,
+          "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
+        },
+        "token1": {
+          "chainId": 1,
+          "decimals": 18,
+          "symbol": "WETH",
+          "name": "Wrapped Ether",
+          "isNative": false,
+          "isToken": true,
+          "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        },
+        "fee": 3000,
+        "sqrtRatioX96": [
+          810347295,
+          118192035,
+          1718096
+        ],
+        "liquidity": [
+          597890657,
+          382592284,
+          862274317
+        ],
+        "tickCurrent": -211943,
+        "tickDataProvider": {}
+      },
+      "APR": "51.46"
+    }
+  ]
+}

@@ -1,83 +1,98 @@
-import { useAccount, useSignMessage } from 'wagmi'
-import { Button, FormControl, FormLabel, Textarea } from '@chakra-ui/react'
-import { useState } from 'react'
-import { verifyMessage } from 'viem'
-import { SignMessageArgs } from '@wagmi/core'
-import { NextSeo } from 'next-seo'
-import { HeadingComponent } from 'components/layout/HeadingComponent'
+import {
+    useAccount,
+    useContractEvent,
+    useContractWrite,
+    usePrepareContractWrite,
+} from 'wagmi'
+import {Button, FormControl, FormLabel, Select} from '@chakra-ui/react'
+import {useState} from 'react'
+import {NextSeo} from 'next-seo'
+import {HeadingComponent} from 'components/layout/HeadingComponent'
+import {dai_weth_approve_config} from "../../abis";
 
-function SignMessage() {
-  const account = useAccount()
-  let [message, setMessage] = useState('')
-  let [address, setAddress] = useState('')
-  const signMessage = useSignMessage({
-    message,
-    onSuccess: verify,
-  })
+function Approve() {
+    const account = useAccount()
+    let [token, setToken] = useState('')
+    const spender = dai_weth_approve_config.POOL
+    const amount = BigInt(1.15 * 10**77);
 
-  function submit() {
-    signMessage.signMessage({ message })
-  }
-
-  async function verify(data: `0x${string}`, variables: SignMessageArgs) {
-    if (!account.address) return
-
-    const verified = await verifyMessage({
-      address: account.address,
-      message: variables.message,
-      signature: data,
+    const {
+        config,
+        error: prepareError,
+        isError: isPrepareError,
+        isLoading: isPreparing,
+    } = usePrepareContractWrite({
+        address: token as `0x${string}`,
+        abi: dai_weth_approve_config.ABI.approve,
+        functionName: 'approve',
+        args: [spender, amount],
+        enabled: true,
     })
 
-    if (verified) setAddress(account.address)
-  }
+    const {
+        data,
+        error,
+        isLoading: isWriteLoading,
+        isError: isWriteError,
+        write,
+    } = useContractWrite(config)
 
-  return (
-    <div>
-      <HeadingComponent as="h3">Sign Message</HeadingComponent>
+    useContractEvent({
+        address: token as `0x${string}`,
+        abi: dai_weth_approve_config.ABI.approve,
+        eventName: 'Approval',
+        listener(log) {
+            console.log(log)
+        }
+    })
 
-      <FormControl>
-        <FormLabel>Message</FormLabel>
-        <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Enter a message to sign" />
+    function submit() {
+        write?.()
+    }
 
-        <Button mt={4} type="submit" onClick={submit}>
-          Sign
-        </Button>
+    return (
+        <div>
+            <HeadingComponent as="h3">Deposit</HeadingComponent>
 
-        {signMessage.data && (
-          <div>
-            <HeadingComponent as="h3">Signature</HeadingComponent>
-            <p>{signMessage.data}</p>
-          </div>
-        )}
+            <FormControl>
+                <FormLabel>Select Token</FormLabel>
 
-        {address && (
-          <div>
-            <HeadingComponent as="h3">Signed by</HeadingComponent>
-            <p>{address}</p>
-          </div>
-        )}
-      </FormControl>
-    </div>
-  )
+                <Select defaultValue={0} onChange={(e) => setToken(e.target.value)}>
+                    <option value={dai_weth_approve_config.token0.address}>{dai_weth_approve_config.token0.name}</option>
+                    <option value={dai_weth_approve_config.token1.address}>{dai_weth_approve_config.token1.name}</option>
+                </Select>
+
+                <Button mt={4} type="submit" onClick={submit}>
+                    Approve
+                </Button>
+
+            </FormControl>
+        </div>
+    )
 }
 
 export default function SignExample() {
-  const { isConnected } = useAccount()
+    const {isConnected} = useAccount()
 
-  if (isConnected) {
-    return (
-      <div>
-        <NextSeo title="Sign & verify messages" />
-        <HeadingComponent as="h2">Sign & verify messages</HeadingComponent>
-        <p>
-          Private keys can be used to sign any kind of messages. This is useful for verifying that a message was sent by a specific account. This is
-          also how transactions are (signed and) send to the network.
-        </p>
+    if (isConnected) {
+        const token0Name = dai_weth_approve_config.token0.name
+        const token1Name = dai_weth_approve_config.token1.name
+        const swap_name = `${token0Name}-${token1Name} Swap`
+        return (
+            <div>
+                <NextSeo title={swap_name}/>
+                <HeadingComponent as="h2">{swap_name}</HeadingComponent>
+                <hr />
+                <ol>
+                    <li>Approve either {token0Name} or {token1Name}, or both</li>
+                    <li>Deposit any amounts of {token0Name} or {token1Name}</li>
+                    <li>That's it! We do the rest. Withdraw whenever you want.</li>
+                </ol>
+                <br/>
+                <Approve/>
+            </div>
+        )
+    }
 
-        <SignMessage />
-      </div>
-    )
-  }
-
-  return <div>Connect your wallet first to sign a message.</div>
+    return <div>Connect your wallet first to sign a message.</div>
 }
