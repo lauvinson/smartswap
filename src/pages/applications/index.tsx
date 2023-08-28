@@ -17,7 +17,7 @@ export const ExampleItems = [
       </Flex>
     ),
     image: [DaiIcon.src, WethIcon.src],
-    url: '/applications/deposit',
+    url: '/applications/pool',
   },
   // {
   //   title: "Sign-in with Ethereum",
@@ -74,9 +74,9 @@ export default function Examples() {
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
         <Text pb={4}>
-          Robust earnings and always keep your money safe with the latest version
+          Put your funds to work by providing liquidity.
           <br />
-          Connect your wallet, deposit in a pool, and we take care of the rest.
+          Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra rewards if the pool is incentivized.
         </Text>
 
         <CardList title="Smart Pools" items={ExampleItems} />
