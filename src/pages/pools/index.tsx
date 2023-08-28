@@ -18,7 +18,7 @@ export const ExampleItems = [
     description: '3.58% APR, 0.05% Fee',
     image: SignIcon.src,
     url: '/examples/sign',
-  }
+  },
 ]
 
 export default function Examples() {

@@ -1,5 +1,5 @@
 import { ThemingProps } from '@chakra-ui/react'
-import {mainnet, sepolia, polygon, optimism, arbitrum, bsc, localhost, Chain} from '@wagmi/chains'
+import { mainnet, sepolia, polygon, optimism, arbitrum, bsc, localhost, Chain } from '@wagmi/chains'
 
 export const SITE_NAME = 'Smart Swap'
 export const SITE_DESCRIPTION = 'turns V3 liquidity pools into hassle-free V2 liquidity pools.'
@@ -18,23 +18,23 @@ export const SOCIAL_GITHUB = 'wslyvh/nexth'
 
 export const local = {
   id: 1337,
-  name: "Localhost",
-  network: "localhost",
+  name: 'hk',
+  network: 'hk',
   nativeCurrency: {
     decimals: 18,
-    name: "Ether",
-    symbol: "ETH",
+    name: 'Ether',
+    symbol: 'ETH',
   },
   rpcUrls: {
     default: {
-      http: ["http://127.0.0.1:7545"],
+      http: ['https://chain.buhuibaidu.ma/'],
     },
     public: {
-      http: ["http://127.0.0.1:7545"],
-    }
-  }
+      http: ['https://chain.buhuibaidu.ma/'],
+    },
+  },
 }
-export const ETH_CHAINS = [mainnet, sepolia, polygon, optimism, arbitrum, bsc, local]
+export const ETH_CHAINS = [local, mainnet, sepolia, polygon, optimism, arbitrum, bsc]
 
 export const SERVER_SESSION_SETTINGS = {
   cookieName: SITE_NAME,
