@@ -51,6 +51,7 @@ export default function MessageExample() {
         {Object.keys(messageConfig.address).map((i) => {
           const chain = ETH_CHAINS.find((chain: Chain) => String(chain.id) === i)
           const address = (messageAddress as any)[i]
+          // @ts-ignore
           const explorerUrl = chain?.blockExplorers?.default.url
 
           return (

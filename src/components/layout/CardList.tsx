@@ -5,7 +5,7 @@ import { HeadingComponent } from './HeadingComponent'
 
 interface ListItemType {
   title: string
-  description: string
+  description: React.ReactNode | string
   image: string[]
   url?: string
 }
@@ -20,7 +20,7 @@ export function CardList(props: Props) {
   const className = props.className ?? ''
   const invert = useColorModeValue('20%', '80%')
 
-  const MakeLogo = function (i) {
+  const MakeLogo = function (i: ListItemType) {
     if (i.image.length === 1) {
       return (
         <Flex ml="10px" mr="10px">

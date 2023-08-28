@@ -1,11 +1,11 @@
-import { Head } from "components/layout/Head";
-import { CardList } from "components/layout/CardList";
-import { Flex, Tag, Text } from "@chakra-ui/react";
+import { Head } from 'components/layout/Head'
+import { CardList } from 'components/layout/CardList'
+import { Flex, Tag, Text } from '@chakra-ui/react'
 
-import DaiIcon from "assets/icons/dai.png";
-import WethIcon from "assets/icons/weth.png";
-import TokenIcon from "assets/icons/token.png";
-import { dai_weth_approve_config } from "../../abis";
+import DaiIcon from 'assets/icons/dai.png'
+import WethIcon from 'assets/icons/weth.png'
+import TokenIcon from 'assets/icons/token.png'
+import { dai_weth_approve_config } from '../../abis'
 
 export const ExampleItems = [
   {
@@ -65,6 +65,8 @@ export const ExampleItems = [
 ]
 
 export default function Examples() {
+  // @ts-ignore
+  // @ts-ignore
   return (
     <>
       <Head />
