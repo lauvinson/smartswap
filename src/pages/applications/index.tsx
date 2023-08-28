@@ -17,50 +17,50 @@ export const ExampleItems = [
       </Flex>
     ),
     image: [DaiIcon.src, WethIcon.src],
-    url: '/examples/sign',
+    url: '/applications/deposit',
   },
   // {
   //   title: "Sign-in with Ethereum",
   //   description: "Sign-in with Ethereum is a new form of authentication that enables users to control their identity with their Ethereum account.",
   //   image: [AuthIcon.src],
-  //   url: "/examples/siwe"
+  //   url: "/applications/siwe"
   // },
   // {
   //   title: "Gitcoin Passport",
   //   description:
   //     "Gitcoin Passport is an identity protocol that proves your trustworthiness without needing to collect personally identifiable information.",
   //   image: [PassportIcon.src],
-  //   url: "/examples/passport"
+  //   url: "/applications/passport"
   // },
   // {
   //   title: "Custom Contract",
   //   description: "This example shows a custom Solidity smart contract deployed using Hardhat. You can find sample contract under /contracts.",
   //   image: [CustomIcon.src],
-  //   url: "/examples/custom-message"
+  //   url: "/applications/custom-message"
   // },
   // {
   //   title: "Send Ether",
   //   description: "Sending Ether to another address is the most basic, common transaction that you can do.",
   //   image: [EtherIcon.src],
-  //   url: "/examples/send-ether"
+  //   url: "/applications/send-ether"
   // },
   // {
   //   title: "Send ERC20 Token",
   //   description: "ERC20 introduces a standard interface for fungible tokens. Use this example to send any ERC20 to another address.",
   //   image: [TokenIcon.src],
-  //   url: "/examples/send-erc20"
+  //   url: "/applications/send-erc20"
   // },
   // {
   //   title: "Mint NFT",
   //   description: "A Non-Fungible Token (NFT) is used to identify something or someone in a unique way. Use this ERC721 example to mint your own NFT.",
   //   image: [NFTIcon.src],
-  //   url: "/examples/mint-nft"
+  //   url: "/applications/mint-nft"
   // },
   {
     title: 'More Comming Soon',
     description: "We're putting more pools on the shelves. Follow our official account to get discounts and airdrops first",
     image: [TokenIcon.src],
-    url: '/examples/fetch-ens',
+    url: '/',
   },
 ]
 

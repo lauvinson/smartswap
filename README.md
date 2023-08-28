@@ -6,7 +6,7 @@ A Next.js + Ethereum starter kit to quickly ship Web3 Apps ⚡
 
 ## Getting Started 👀
 
-Check-out the [example pages](./src/pages/examples/) or [live demo](https://nexth.vercel.app/) to see how you can use this starter kit.
+Check-out the [example pages](src/pages/applications/) or [live demo](https://nexth.vercel.app/) to see how you can use this starter kit.
 
 ## Features ✅
 
