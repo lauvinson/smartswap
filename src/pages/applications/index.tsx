@@ -1,24 +1,10 @@
-import { Head } from 'components/layout/Head'
-import { CardList } from 'components/layout/CardList'
-import { Flex, Tag, Text } from '@chakra-ui/react'
-
-import DaiIcon from 'assets/icons/dai.png'
-import WethIcon from 'assets/icons/weth.png'
-import TokenIcon from 'assets/icons/token.png'
-import { dai_weth_approve_config } from '../../abis'
+import { Head } from "components/layout/Head";
+import { CardList } from "components/layout/CardList";
+import { Text } from "@chakra-ui/react";
+import TokenIcon from "assets/icons/token.png";
+import { pools } from "../../pools";
 
 export const ExampleItems = [
-  {
-    title: `${dai_weth_approve_config.token0.name}-${dai_weth_approve_config.token1.name} Swap`,
-    description: (
-      <Flex gap="2">
-        <Tag colorScheme="green">3.15% APR</Tag>
-        <Tag colorScheme="red">0.05% Fee</Tag>
-      </Flex>
-    ),
-    image: [DaiIcon.src, WethIcon.src],
-    url: '/applications/pool',
-  },
   // {
   //   title: "Sign-in with Ethereum",
   //   description: "Sign-in with Ethereum is a new form of authentication that enables users to control their identity with their Ethereum account.",
@@ -57,30 +43,32 @@ export const ExampleItems = [
   //   url: "/applications/mint-nft"
   // },
   {
-    title: 'More Comming Soon',
+    title: "More support soon",
     description: "We're putting more pools on the shelves. Follow our official account to get discounts and airdrops first",
     image: [TokenIcon.src],
-    url: '/',
-  },
-]
+    url: "/"
+  }
+];
 
 export default function Examples() {
   // @ts-ignore
   // @ts-ignore
+  const items = pools.concat(ExampleItems)
   return (
     <>
       <Head />
 
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
-        <Text pb={4}>
-          Put your funds to work by providing liquidity.
-          <br />
-          Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra rewards if the pool is incentivized.
-        </Text>
-
-        <CardList title="Smart Pools" items={ExampleItems} />
+        <CardList title="Pools" intro={
+          <Text pb={4}>
+            Put your funds to work by providing liquidity.
+            <br />
+            Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra
+            rewards if the pool is incentivized.
+          </Text>
+        } items={items} />
       </main>
     </>
-  )
+  );
 }

@@ -6,7 +6,19 @@ interface Props {
   children: ReactNode
 }
 
-const theme = extendTheme(withDefaultColorScheme({ colorScheme: THEME_COLOR_SCHEME }), {
+const theme = extendTheme({
+  styles: {
+    global: {
+      "body::-webkit-scrollbar": {
+        display: "none",
+      },
+      "body": {
+        msOverflowStyle: "none",
+        scrollbarWidth: "none"
+      }
+    },
+  },
+}, withDefaultColorScheme({ colorScheme: THEME_COLOR_SCHEME }), {
   ...THEME_CONFIG,
 })
 

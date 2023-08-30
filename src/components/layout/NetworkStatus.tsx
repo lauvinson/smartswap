@@ -9,7 +9,7 @@ export function NetworkStatus() {
   const block = useBlockNumber({ watch: true })
   const network = useNetwork()
   const explorerUrl = network.chain?.blockExplorers?.default.url
-  const bgColor = useColorModeValue(`${THEME_COLOR_SCHEME}.50`, `${THEME_COLOR_SCHEME}.800`)
+  const bgColor = useColorModeValue(`${THEME_COLOR_SCHEME}.100`, `${THEME_COLOR_SCHEME}.900`)
 
   return (
     <Flex alignItems="center" gap={2} zIndex={2} bgColor={bgColor} p={1}>

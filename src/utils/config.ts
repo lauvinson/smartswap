@@ -1,9 +1,10 @@
 import { ThemingProps } from '@chakra-ui/react'
 import { mainnet, sepolia, polygon, optimism, arbitrum, bsc, localhost, Chain } from '@wagmi/chains'
 
-export const SITE_NAME = 'Smart Swap'
-export const SITE_DESCRIPTION = 'turns V3 liquidity pools into hassle-free V2 liquidity pools.'
-export const SITE_URL = 'https://nexth.vercel.app'
+export const SITE_NAME = 'Dolphin'
+export const SITE_DESCRIPTION =
+  'A Decentralised Finance (DeFi) app with features such as swap, cross chain swap, streaming, vesting, and permissionless market making for liquidity providers.'
+export const SITE_URL = 'https://smart.buhuibaidu.ma'
 
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
@@ -11,7 +12,7 @@ export const THEME_CONFIG = {
   initialColorMode: THEME_INITIAL_COLOR,
 }
 
-export const SOCIAL_TWITTER = 'x'
+export const SOCIAL_TWITTER = 'vinsonlauvinson'
 export const SOCIAL_GITHUB = 'wslyvh/nexth'
 
 // 创建一个自定义个Chain

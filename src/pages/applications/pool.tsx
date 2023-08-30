@@ -110,5 +110,5 @@ export default function SignExample() {
     )
   }
 
-  return <div>Connect your wallet first to sign a message.</div>
+  return <div>Connect your wallet first to enable this page.</div>
 }

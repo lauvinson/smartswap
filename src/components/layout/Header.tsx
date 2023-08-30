@@ -1,10 +1,11 @@
 import React from 'react'
-import { Flex, useColorModeValue, Spacer, Heading } from '@chakra-ui/react'
-import { SITE_NAME } from 'utils/config'
+import { Flex, useColorModeValue, Spacer, Heading, Img, Image } from "@chakra-ui/react";
+import { SITE_NAME, THEME_COLOR_SCHEME } from "utils/config";
 import { LinkComponent } from './LinkComponent'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { PassportScore } from './PassportScore'
 import { Web3Button, Web3NetworkSwitch } from '@web3modal/react'
+import Logo from '../../assets/logo/stroke.svg'
 
 interface Props {
   className?: string
@@ -14,19 +15,17 @@ export function Header(props: Props) {
   const className = props.className ?? ''
 
   return (
-    <Flex as="header" className={className} bg={useColorModeValue('gray.100', 'gray.900')} px={4} py={2} mb={8} alignItems="center">
+    <Flex as="header" className={className} borderBottom="1px" borderColor={useColorModeValue(`${THEME_COLOR_SCHEME}.200`, `${THEME_COLOR_SCHEME}.700`)} px={4} py={4} mb={8} alignItems="center">
       <LinkComponent href="/">
-        <Heading as="h1" size="md">
-          {SITE_NAME}
-        </Heading>
+        <Image objectFit="contain" maxW="35px" src={Logo.src} alt={SITE_NAME} />
       </LinkComponent>
 
       <Spacer />
 
       <Flex alignItems="center" gap={4}>
         <PassportScore />
-        <Web3Button icon="show" avatar="show" balance="show" label="Connect" />
-        <Web3NetworkSwitch />
+        <Web3Button avatar="show" label="Connect" />
+        {/*<Web3NetworkSwitch />*/}
         <ThemeSwitcher />
       </Flex>
     </Flex>
