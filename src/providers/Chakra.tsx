@@ -6,21 +6,26 @@ interface Props {
   children: ReactNode
 }
 
-const theme = extendTheme({
-  styles: {
-    global: {
-      "body::-webkit-scrollbar": {
-        display: "none",
+const theme = extendTheme(
+  {
+    styles: {
+      global: {
+        'body::-webkit-scrollbar': {
+          display: 'none',
+        },
+        body: {
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+          userSelect: 'none',
+        },
       },
-      "body": {
-        msOverflowStyle: "none",
-        scrollbarWidth: "none"
-      }
     },
   },
-}, withDefaultColorScheme({ colorScheme: THEME_COLOR_SCHEME }), {
-  ...THEME_CONFIG,
-})
+  withDefaultColorScheme({ colorScheme: THEME_COLOR_SCHEME }),
+  {
+    ...THEME_CONFIG,
+  }
+)
 
 export function ChakraProvider(props: Props) {
   return <ChakraUiProvider theme={theme}>{props.children}</ChakraUiProvider>

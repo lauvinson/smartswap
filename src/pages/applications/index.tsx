@@ -1,8 +1,8 @@
-import { Head } from "components/layout/Head";
-import { CardList } from "components/layout/CardList";
-import { Text } from "@chakra-ui/react";
-import TokenIcon from "assets/icons/token.png";
-import { pools } from "../../pools";
+import { Head } from 'components/layout/Head'
+import { CardList } from 'components/layout/CardList'
+import { Text } from '@chakra-ui/react'
+import TokenIcon from 'assets/icons/token.png'
+import { pools } from '../../pools'
 
 export const ExampleItems = [
   // {
@@ -43,12 +43,12 @@ export const ExampleItems = [
   //   url: "/applications/mint-nft"
   // },
   {
-    title: "More support soon",
+    title: 'More support soon',
     description: "We're putting more pools on the shelves. Follow our official account to get discounts and airdrops first",
     image: [TokenIcon.src],
-    url: "/"
-  }
-];
+    url: '/',
+  },
+]
 
 export default function Examples() {
   // @ts-ignore
@@ -60,15 +60,19 @@ export default function Examples() {
 
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
-        <CardList title="Pools" intro={
-          <Text pb={4}>
-            Put your funds to work by providing liquidity.
-            <br />
-            Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra
-            rewards if the pool is incentivized.
-          </Text>
-        } items={items} />
+        <CardList
+          title="Pools"
+          intro={
+            <Text pb={4}>
+              Put your funds to work by providing liquidity.
+              <br />
+              Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra rewards if the pool is
+              incentivized.
+            </Text>
+          }
+          items={items}
+        />
       </main>
     </>
-  );
+  )
 }

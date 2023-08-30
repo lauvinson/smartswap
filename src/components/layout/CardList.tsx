@@ -3,6 +3,7 @@ import { Image, Text, Box, Card, CardBody, Flex, useColorModeValue, Tag } from '
 import { LinkComponent } from './LinkComponent'
 import { HeadingComponent } from './HeadingComponent'
 import { THEME_COLOR_SCHEME } from '../../utils/config'
+import { Pool } from '../../pools'
 
 interface ListItemType {
   title: string
@@ -11,44 +12,38 @@ interface ListItemType {
   url?: string
 }
 
-interface TokenConfig {
-  name: string
-  address: string
-  icon: string
-}
-
-interface PoolConfig {
-  token0: TokenConfig
-  token1: TokenConfig
-  pool: string
-  fee: number
-  apr: number
-}
-
 interface Props {
   className?: string
   title?: string
   intro?: React.ReactNode | string
-  items: PoolConfig[] | ListItemType[]
+  items: Pool[] | ListItemType[]
+}
+
+function isListItemType(item: ListItemType | Pool): item is ListItemType {
+  return (item as ListItemType).image !== undefined
+}
+
+function isPoolConfig(item: ListItemType | Pool): item is Pool {
+  return (item as Pool).token0 !== undefined
 }
 
 export function CardList(props: Props) {
   const className = props.className ?? ''
   const invert = useColorModeValue('20%', '80%')
 
-  const MakeLogo = function (i: PoolConfig | ListItemType) {
-    if (i.token0 === undefined) {
+  const MakeLogo = function (i: Pool | ListItemType) {
+    if (isListItemType(i)) {
       return (
         <Flex>
-          <Image objectFit="contain" maxW="55px" src={i.image[0]} alt={i.title} filter={`invert(${invert})`} />
+          <Image draggable={false} objectFit="contain" maxW="55px" src={i.image[0]} alt={i.title} filter={`invert(${invert})`} />
         </Flex>
       )
     } else {
       // 让两个图片一起显示，第二个在上面，第一个露一点，不要用px，尽量多端适配一点
       return (
         <Flex>
-          <Image objectFit="contain" maxW="60px" src={i.token0.icon} alt={i.token0.name} mt="-10px" />
-          <Image objectFit="contain" maxW="60px" src={i.token1.icon} alt={i.token1.name} ml="-10px" mt="10px" />
+          <Image draggable={false} objectFit="contain" maxW="60px" src={i.token0.icon} alt={i.token0.name} mt="-10px" />
+          <Image draggable={false} objectFit="contain" maxW="60px" src={i.token1.icon} alt={i.token1.name} ml="-10px" mt="10px" />
         </Flex>
       )
     }
@@ -65,10 +60,14 @@ export function CardList(props: Props) {
       overflow="hidden"
       className={className}>
       {props.title && <HeadingComponent as="h1">{props.title}</HeadingComponent>}
-      {props.intro && <Text as="h3" fontSize='xl'>{props.intro}</Text>}
+      {props.intro && (
+        <Text as="h3" fontSize="xl">
+          {props.intro}
+        </Text>
+      )}
       <Flex direction="column" gap={4}>
         {props.items.map((i, index) => {
-          if (i.token0 !== undefined) {
+          if (isPoolConfig(i)) {
             return (
               <Card key={`${index}_${i.token0.name}`} variant="outline" size="sm">
                 <CardBody>
@@ -81,7 +80,6 @@ export function CardList(props: Props) {
                           <HeadingComponent as="h4">{i.token0.name + '/' + i.token1.name}</HeadingComponent>
                         </LinkComponent>
                       )}
-                      {!i.id && <HeadingComponent as="h4">{i.title}</HeadingComponent>}
 
                       <Text mt={0}>
                         <Flex gap="2">
@@ -94,7 +92,7 @@ export function CardList(props: Props) {
                 </CardBody>
               </Card>
             )
-          } else {
+          } else if (isListItemType(i)) {
             return (
               <Card key={`${index}_${i.title}`} variant="outline" size="sm">
                 <CardBody>

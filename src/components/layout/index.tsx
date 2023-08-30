@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react'
-import { Box, Container, useColorModeValue } from "@chakra-ui/react";
+import { Box, Container, useColorModeValue } from '@chakra-ui/react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { NetworkStatus } from './NetworkStatus'
-import { THEME_COLOR_SCHEME } from "../../utils/config";
+import { THEME_COLOR_SCHEME } from '../../utils/config'
 
 interface Props {
   children: ReactNode

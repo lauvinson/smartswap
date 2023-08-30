@@ -1,6 +1,6 @@
 import React from 'react'
-import { Flex, useColorModeValue, Spacer, Heading, Img, Image } from "@chakra-ui/react";
-import { SITE_NAME, THEME_COLOR_SCHEME } from "utils/config";
+import { Flex, useColorModeValue, Spacer, Heading, Img, Image } from '@chakra-ui/react'
+import { SITE_NAME, THEME_COLOR_SCHEME } from 'utils/config'
 import { LinkComponent } from './LinkComponent'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { PassportScore } from './PassportScore'
@@ -15,9 +15,19 @@ export function Header(props: Props) {
   const className = props.className ?? ''
 
   return (
-    <Flex as="header" className={className} borderBottom="1px" borderColor={useColorModeValue(`${THEME_COLOR_SCHEME}.200`, `${THEME_COLOR_SCHEME}.700`)} px={4} py={4} mb={8} alignItems="center">
+    <Flex
+      as="header"
+      className={className}
+      borderBottom="1px"
+      borderColor={useColorModeValue(`${THEME_COLOR_SCHEME}.200`, `${THEME_COLOR_SCHEME}.700`)}
+      px={4}
+      py={4}
+      pl={16}
+      pr={16}
+      mb={8}
+      alignItems="center">
       <LinkComponent href="/">
-        <Image objectFit="contain" maxW="35px" src={Logo.src} alt={SITE_NAME} />
+        <Image draggable={false} objectFit="contain" maxW="35px" src={Logo.src} alt={SITE_NAME} />
       </LinkComponent>
 
       <Spacer />
