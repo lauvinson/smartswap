@@ -80,9 +80,8 @@ export function CardList(props: Props) {
         {props.items.map((i, index) => {
           if (isPoolConfig(i)) {
             return (
-              <LinkComponent key={i.id} href={'/applications/pool/' + i.id}>
+              <LinkComponent key={`${index}_${i.token0.name}`} href={'/applications/pool/' + i.id}>
                 <Card
-                  key={`${index}_${i.token0.name}`}
                   variant="outline"
                   size="sm"
                   _hover={{
