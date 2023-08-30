@@ -22,8 +22,8 @@ export function Header(props: Props) {
       borderColor={useColorModeValue(`${THEME_COLOR_SCHEME}.200`, `${THEME_COLOR_SCHEME}.700`)}
       px={4}
       py={4}
-      pl={16}
-      pr={16}
+      pl={['4', '4', '16', '16']}
+      pr={['4', '4', '16', '16']}
       mb={8}
       alignItems="center">
       <LinkComponent href="/">

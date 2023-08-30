@@ -2,8 +2,12 @@ import React from 'react'
 import { Image, Text, Box, Card, CardBody, Flex, useColorModeValue, Tag } from '@chakra-ui/react'
 import { LinkComponent } from './LinkComponent'
 import { HeadingComponent } from './HeadingComponent'
-import { THEME_COLOR_SCHEME } from '../../utils/config'
+import { SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from '../../utils/config'
 import { Pool } from '../../pools'
+import { motion } from 'framer-motion'
+
+// 创建一个基于 Chakra UI Box 的 Framer Motion 组件
+const MotionBox = motion(Box)
 
 interface ListItemType {
   title: string
@@ -50,7 +54,14 @@ export function CardList(props: Props) {
   }
 
   return (
-    <Box
+    <MotionBox
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        duration: 0.5,
+        delay: 0.3,
+        ease: 'easeInOut',
+      }}
       as="section"
       borderRadius="lg"
       boxShadow="lg"
@@ -69,44 +80,42 @@ export function CardList(props: Props) {
         {props.items.map((i, index) => {
           if (isPoolConfig(i)) {
             return (
-              <Card key={`${index}_${i.token0.name}`} variant="outline" size="sm">
-                <CardBody>
-                  <Flex gap={4} direction={{ base: 'column', sm: 'row' }}>
-                    <Flex px={{ base: 0, sm: 4 }}>{MakeLogo(i)}</Flex>
+              <LinkComponent key={i.id} href={'/applications/pool/' + i.id}>
+                <Card
+                  key={`${index}_${i.token0.name}`}
+                  variant="outline"
+                  size="sm"
+                  _hover={{
+                    borderColor: `${SECOND_COLOR_SCHEME}.500`,
+                  }}>
+                  <CardBody>
+                    <Flex gap={4} direction={{ base: 'column', sm: 'row' }}>
+                      <Flex px={{ base: 0, sm: 4 }}>{MakeLogo(i)}</Flex>
 
-                    <Flex direction="column">
-                      {i.id && (
-                        <LinkComponent href={'/applications/pool/' + i.id}>
-                          <HeadingComponent as="h4">{i.token0.name + '/' + i.token1.name}</HeadingComponent>
-                        </LinkComponent>
-                      )}
+                      <Flex direction="column">
+                        {i.id && <HeadingComponent as="h4">{i.token0.name + '/' + i.token1.name}</HeadingComponent>}
 
-                      <Text mt={0}>
-                        <Flex gap="2">
-                          <Tag colorScheme="green">{i.apr}% APR</Tag>
-                          <Tag colorScheme="red">{i.fee / 10000}% Fee</Tag>
-                        </Flex>
-                      </Text>
+                        <Text mt={0}>
+                          <Flex gap="2">
+                            <Tag colorScheme="green">{i.apr}% APR</Tag>
+                            <Tag colorScheme="red">{i.fee / 10000}% Fee</Tag>
+                          </Flex>
+                        </Text>
+                      </Flex>
                     </Flex>
-                  </Flex>
-                </CardBody>
-              </Card>
+                  </CardBody>
+                </Card>
+              </LinkComponent>
             )
           } else if (isListItemType(i)) {
             return (
-              <Card key={`${index}_${i.title}`} variant="outline" size="sm">
+              <Card key={`${index}_${i.title}`} variant="outline" size="sm" borderWidth={0}>
                 <CardBody>
                   <Flex gap={4} direction={{ base: 'column', sm: 'row' }}>
                     <Flex px={{ base: 0, sm: 4 }}>{MakeLogo(i)}</Flex>
 
                     <Flex direction="column">
-                      {i.url && (
-                        <LinkComponent href={i.url}>
-                          <HeadingComponent as="h4">{i.title}</HeadingComponent>
-                        </LinkComponent>
-                      )}
-                      {!i.url && <HeadingComponent as="h4">{i.title}</HeadingComponent>}
-
+                      <HeadingComponent as="h4">{i.title}</HeadingComponent>
                       <Text mt={0}>{i.description}</Text>
                     </Flex>
                   </Flex>
@@ -116,6 +125,6 @@ export function CardList(props: Props) {
           }
         })}
       </Flex>
-    </Box>
+    </MotionBox>
   )
 }
