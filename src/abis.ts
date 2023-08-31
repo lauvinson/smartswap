@@ -114,7 +114,7 @@ export function writeMessage<TFunctionName extends string, TMode extends WriteCo
     abi: messageABI,
     address: messageAddress[11155111],
     ...config,
-  } as WriteContractArgs<typeof messageABI, TFunctionName>)
+  } as unknown as WriteContractArgs<typeof messageABI, TFunctionName>)
 }
 
 /**
@@ -150,7 +150,7 @@ export function watchMessageEvent<TAbi extends readonly unknown[] = typeof messa
       abi: messageABI,
       address: messageAddress[11155111],
       ...config,
-    } as WatchContractEventConfig<TAbi, TEventName>,
+    } as unknown as WatchContractEventConfig<TAbi, TEventName>,
     callback
   )
 }
