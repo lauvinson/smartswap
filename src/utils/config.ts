@@ -9,7 +9,7 @@ export const SITE_URL = 'https://smart.buhuibaidu.ma'
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
 
-export const SECOND_COLOR_SCHEME: ThemingProps['colorScheme'] = 'blue'
+export const SECOND_COLOR_SCHEME: ThemingProps['colorScheme'] = 'pink'
 export const THEME_CONFIG = {
   initialColorMode: THEME_INITIAL_COLOR,
 }

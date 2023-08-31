@@ -1,8 +1,9 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Text } from '@chakra-ui/react'
+import { Divider, Grid, GridItem, Text, Badge } from '@chakra-ui/react'
 import TokenIcon from 'assets/icons/token.png'
 import { pools } from '../../pools'
+import React from 'react'
 
 export const ExampleItems = [
   // {
@@ -53,24 +54,39 @@ export const ExampleItems = [
 export default function Examples() {
   // @ts-ignore
   // @ts-ignore
-  const items = pools.concat(ExampleItems)
   return (
     <>
       <Head />
 
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
-        <CardList
-          title="Pools"
-          intro={
-            <Text pb={4}>
-              Put your funds to work by providing liquidity.
-              <br />
+        <Grid templateColumns="repeat(5, 1fr)" gap={4} py={20}>
+          <GridItem colSpan={5} bg="pink"></GridItem>
+          <GridItem rowStart={2} colSpan={5} marginTop={{ base: '-10', md: '-10', lg: '-10' }}>
+            <Text lineHeight="normal" fontWeight="bold" fontSize={{ base: '3xl', md: '5xl' }}>
+              Put your funds <br /> to work by <br /> providing liquidity.
+            </Text>
+          </GridItem>
+          <GridItem rowStart={3} colSpan={5}>
+            <Text fontSize={{ base: '1xl', md: '2xl' }} fontWeight="light">
               Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra rewards if the pool is
               incentivized.
             </Text>
+          </GridItem>
+        </Grid>
+        <CardList
+          title={
+            <>
+              <Text fontWeight="bold" fontSize={{ base: '1xl', md: '2xl' }}>
+                Pools
+                <Badge ml="1" colorScheme="green">
+                  New
+                </Badge>
+              </Text>
+            </>
           }
-          items={items}
+          intro={<Text opacity={0.5}>Only the pools with the current network will be displayed. Please switch the network for other pools.</Text>}
+          items={pools}
         />
       </main>
     </>

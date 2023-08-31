@@ -34,7 +34,7 @@ export function Header(props: Props) {
 
       <Flex alignItems="center" gap={4}>
         <PassportScore />
-        <Web3Button avatar="show" label="Connect" />
+        <Web3Button icon="hide" avatar="show" label="Connect" />
         {/*<Web3NetworkSwitch />*/}
         <ThemeSwitcher />
       </Flex>

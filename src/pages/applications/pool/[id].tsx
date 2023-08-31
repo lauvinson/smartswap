@@ -6,6 +6,7 @@ import { HeadingComponent } from 'components/layout/HeadingComponent'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { pools, abis, Pool } from '../../../pools'
+import { SECOND_COLOR_SCHEME } from '../../../utils/config'
 function Approve({ pool }: { pool: Pool }) {
   let [approving, setApproving] = useState(false)
   let [token, setToken] = useState(pool.token0.address)
@@ -76,7 +77,14 @@ function Approve({ pool }: { pool: Pool }) {
           <option value={pool.token1.address}>{pool.token1.name}</option>
         </Select>
 
-        <Button mt={4} type="submit" onClick={submit} isLoading={approving} loadingText="Approving" colorScheme="blue" variant="outline">
+        <Button
+          mt={4}
+          type="submit"
+          onClick={submit}
+          isLoading={approving}
+          loadingText="Approving"
+          colorScheme={`${SECOND_COLOR_SCHEME}`}
+          variant="outline">
           Approve
         </Button>
       </FormControl>
