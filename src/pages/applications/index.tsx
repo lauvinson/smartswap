@@ -1,10 +1,11 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Divider, Grid, GridItem, Text, Badge } from '@chakra-ui/react'
+import { Divider, Grid, GridItem, Text, Badge, InputLeftElement, Input, InputGroup, useColorModeValue, Container } from '@chakra-ui/react'
 import TokenIcon from 'assets/icons/token.png'
 import { pools } from '../../pools'
 import React from 'react'
 import { SECOND_COLOR_SCHEME } from '../../utils/config'
+import { SearchIcon } from '@chakra-ui/icons'
 
 export const ExampleItems = [
   // {
@@ -53,33 +54,29 @@ export const ExampleItems = [
 ]
 
 export default function Examples() {
-  // @ts-ignore
-  // @ts-ignore
+  const tdHoverTextColor = useColorModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
   return (
     <>
       <Head />
 
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
-        <Grid templateColumns="repeat(5, 1fr)" gap={4} py={20}>
-          <GridItem colSpan={5} bg="pink"></GridItem>
-          <GridItem rowStart={2} colSpan={3} marginTop={{ base: '-10', md: '-10', lg: '-10' }}>
-            <Text lineHeight="normal" fontWeight="bold" fontSize={{ base: '3xl', md: '5xl' }}>
-              <Text bg={SECOND_COLOR_SCHEME}>Put your funds</Text> to work by <br /> providing liquidity.
-            </Text>
-          </GridItem>
-          <GridItem rowStart={3} colSpan={5}>
-            <Text fontSize={{ base: '1xl', md: '2xl' }} fontWeight="light">
-              Providing liquidity to a pool allows you to earn a percentage of the pools traded volume as well as any extra rewards if the pool is
-              incentivized.
-            </Text>
-          </GridItem>
-        </Grid>
+        <Container m={0} maxW="100%" py={['2', '2', '5', '5']}>
+          <InputGroup display={{ base: 'none', md: 'block' }} gridColumn="span 1">
+            <InputLeftElement pointerEvents="none">
+              <SearchIcon color="gray.300" />
+            </InputLeftElement>
+            <Input variant="filled" placeholder="Search Token" focusBorderColor={tdHoverTextColor} />
+          </InputGroup>
+        </Container>
         <CardList
           title={
             <>
               <Text fontWeight="bold" fontSize={{ base: '1xl', md: '2xl' }} mx={3.5}>
-                Pools
+                Pools{' '}
+                <Text as="span" fontSize={{ base: '3xs', md: '3xs' }}>
+                  ({pools.length})
+                </Text>
               </Text>
             </>
           }

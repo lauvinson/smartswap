@@ -103,22 +103,7 @@ export function CardList(props: Props) {
       overflow="hidden"
       className={className}>
       <Card borderRadius="xl" boxShadow="base" borderWidth={1} bgColor={tbBgColor}>
-        {props.title && (
-          <CardHeader borderBottomWidth={1}>
-            <Grid templateColumns="repeat(2, 1fr)" alignItems="center">
-              <Flex gridColumn="span 1">
-                {props.title}
-                <InputGroup display={{ base: 'none', md: 'block' }} gridColumn="span 1">
-                  <InputLeftElement pointerEvents="none">
-                    <SearchIcon color="gray.300" />
-                  </InputLeftElement>
-                  <Input variant="filled" placeholder="Search Token" focusBorderColor={tdHoverTextColor} />
-                </InputGroup>
-              </Flex>
-              <Flex gridColumn="span 3">{/* The remaining space */}</Flex>
-            </Grid>
-          </CardHeader>
-        )}
+        {props.title && <CardHeader borderBottomWidth={1}>{props.title}</CardHeader>}
         <CardBody>
           <TableContainer>
             <Table variant="simple">
