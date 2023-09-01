@@ -20,12 +20,18 @@ import {
   Tbody,
   Td,
   LinkOverlay,
+  Input,
+  InputLeftElement,
+  InputRightElement,
+  InputGroup,
+  Grid,
 } from '@chakra-ui/react'
 import { LinkComponent } from './LinkComponent'
 import { HeadingComponent } from './HeadingComponent'
 import { SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from '../../utils/config'
 import { Pool } from '../../pools'
 import { motion } from 'framer-motion'
+import { CheckIcon, SearchIcon } from '@chakra-ui/icons'
 
 // 创建一个基于 Chakra UI Box 的 Framer Motion 组件
 const MotionBox = motion(Box)
@@ -97,7 +103,22 @@ export function CardList(props: Props) {
       overflow="hidden"
       className={className}>
       <Card borderRadius="xl" boxShadow="base" borderWidth={1} bgColor={tbBgColor}>
-        {props.title && <CardHeader borderBottomWidth={1}>{props.title}</CardHeader>}
+        {props.title && (
+          <CardHeader borderBottomWidth={1}>
+            <Grid templateColumns="repeat(2, 1fr)" alignItems="center">
+              <Flex gridColumn="span 1">
+                {props.title}
+                <InputGroup display={{ base: 'none', md: 'block' }} gridColumn="span 1">
+                  <InputLeftElement pointerEvents="none">
+                    <SearchIcon color="gray.300" />
+                  </InputLeftElement>
+                  <Input variant="filled" placeholder="Search Token" focusBorderColor={tdHoverTextColor} />
+                </InputGroup>
+              </Flex>
+              <Flex gridColumn="span 3">{/* The remaining space */}</Flex>
+            </Grid>
+          </CardHeader>
+        )}
         <CardBody>
           <TableContainer>
             <Table variant="simple">

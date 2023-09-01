@@ -4,6 +4,7 @@ import { Divider, Grid, GridItem, Text, Badge } from '@chakra-ui/react'
 import TokenIcon from 'assets/icons/token.png'
 import { pools } from '../../pools'
 import React from 'react'
+import { SECOND_COLOR_SCHEME } from '../../utils/config'
 
 export const ExampleItems = [
   // {
@@ -62,9 +63,9 @@ export default function Examples() {
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
         <Grid templateColumns="repeat(5, 1fr)" gap={4} py={20}>
           <GridItem colSpan={5} bg="pink"></GridItem>
-          <GridItem rowStart={2} colSpan={5} marginTop={{ base: '-10', md: '-10', lg: '-10' }}>
+          <GridItem rowStart={2} colSpan={3} marginTop={{ base: '-10', md: '-10', lg: '-10' }}>
             <Text lineHeight="normal" fontWeight="bold" fontSize={{ base: '3xl', md: '5xl' }}>
-              Put your funds <br /> to work by <br /> providing liquidity.
+              <Text bg={SECOND_COLOR_SCHEME}>Put your funds</Text> to work by <br /> providing liquidity.
             </Text>
           </GridItem>
           <GridItem rowStart={3} colSpan={5}>
@@ -77,11 +78,8 @@ export default function Examples() {
         <CardList
           title={
             <>
-              <Text fontWeight="bold" fontSize={{ base: '1xl', md: '2xl' }}>
+              <Text fontWeight="bold" fontSize={{ base: '1xl', md: '2xl' }} mx={3.5}>
                 Pools
-                <Badge ml="1" colorScheme="green">
-                  New
-                </Badge>
               </Text>
             </>
           }

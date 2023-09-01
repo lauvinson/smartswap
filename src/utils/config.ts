@@ -1,10 +1,10 @@
 import { ThemingProps } from '@chakra-ui/react'
 import { mainnet, sepolia, polygon, optimism, arbitrum, bsc, localhost, Chain } from '@wagmi/chains'
 
-export const SITE_NAME = 'Dolphin'
+export const SITE_NAME = 'Byte Pools'
 export const SITE_DESCRIPTION =
   'A Decentralised Finance (DeFi) app with features such as swap, cross chain swap, streaming, vesting, and permissionless market making for liquidity providers.'
-export const SITE_URL = 'https://smart.buhuibaidu.ma'
+export const SITE_URL = 'https://byte.exchange'
 
 export const THEME_INITIAL_COLOR = 'system'
 export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
