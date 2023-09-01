@@ -11,7 +11,7 @@ interface Props {
 
 export function Layout(props: Props) {
   return (
-    <Box margin="0 auto" minH="100vh" bg={useColorModeValue(`${THEME_COLOR_SCHEME}.100`, `${THEME_COLOR_SCHEME}.900`)}>
+    <Box margin="0 auto" minH="100vh" bg={useColorModeValue(`${THEME_COLOR_SCHEME}.100`, `${THEME_COLOR_SCHEME}.800`)}>
       <Header />
 
       <Container maxW="container.lg">{props.children}</Container>
