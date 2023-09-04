@@ -5,7 +5,7 @@ import { pools } from '../../pools'
 import React from 'react'
 import { SECOND_COLOR_SCHEME } from '../../utils/config'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useQuery } from "@apollo/client";
+import { useQuery } from '@apollo/client'
 import { DAI_QUERY, ETH_PRICE_QUERY } from '../../providers/Apollo'
 
 export default function Examples() {
@@ -54,15 +54,15 @@ export default function Examples() {
             {ethLoading || daiLoading
               ? 'Loading token data...'
               : '$' +
-              // parse responses as floats and fix to 2 decimals
-              (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
+                // parse responses as floats and fix to 2 decimals
+                (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
           </div>
           <div>
             Dai total liquidity:{' '}
             {daiLoading
               ? 'Loading token data...'
               : // display the total amount of DAI spread across all pools
-              parseFloat(daiTotalLiquidity).toFixed(0)}
+                parseFloat(daiTotalLiquidity).toFixed(0)}
           </div>
         </div>
       </main>

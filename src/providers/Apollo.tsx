@@ -1,5 +1,5 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import gql from "graphql-tag";
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+import gql from 'graphql-tag'
 
 export const client = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
