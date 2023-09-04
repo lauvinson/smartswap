@@ -1,5 +1,5 @@
-import { useAccount, useContractWrite, usePrepareContractWrite, useWaitForTransaction, useNetwork } from 'wagmi'
-import { Button, Heading, Text, ListItem, UnorderedList } from '@chakra-ui/react'
+import { useAccount, useContractWrite, useNetwork, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { Button, Heading, ListItem, Text, UnorderedList } from '@chakra-ui/react'
 import { NextSeo } from 'next-seo'
 import { LinkComponent } from 'components/layout/LinkComponent'
 

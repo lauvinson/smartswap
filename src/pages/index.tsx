@@ -1,7 +1,4 @@
-import { Text } from '@chakra-ui/react'
 import { Head } from 'components/layout/Head'
-import { HeadingComponent } from 'components/layout/HeadingComponent'
-import { LinkComponent } from 'components/layout/LinkComponent'
 import Examples from './applications'
 
 export default function Home() {

@@ -1,10 +1,12 @@
-import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-import { ETH_CHAINS, SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from 'utils/config'
-import { useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { ETH_CHAINS } from 'utils/config'
+import { useColorModeValue } from '@chakra-ui/react'
 import { ReactNode, useEffect, useState } from 'react'
-import { Web3Modal } from '@web3modal/react'
+import { createWeb3Modal, useWeb3ModalTheme } from '@web3modal/wagmi/react'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { InjectedConnector } from '@wagmi/core'
+import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
 
 interface Props {
   children: ReactNode
@@ -14,39 +16,37 @@ const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? ''
 if (!projectId) {
   console.warn('You need to provide a NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID env variable')
 }
-const { chains, publicClient, webSocketPublicClient } = configureChains(ETH_CHAINS, [publicProvider(), w3mProvider({ projectId: projectId })])
+const { chains, publicClient, webSocketPublicClient } = configureChains(ETH_CHAINS, [publicProvider()])
 
 const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors: w3mConnectors({ chains, projectId: projectId }),
+  connectors: [
+    new WalletConnectConnector({ chains, options: { projectId, showQrModal: false } }),
+    new InjectedConnector({ chains, options: { shimDisconnect: true } }),
+    new CoinbaseWalletConnector({ chains, options: { appName: 'ByteExchange' } }),
+  ],
   publicClient,
   webSocketPublicClient,
 })
 
-const ethereumClient = new EthereumClient(wagmiConfig, chains)
+createWeb3Modal({
+  wagmiConfig,
+  projectId,
+  chains: ETH_CHAINS,
+})
 
 export function Web3Provider(props: Props) {
-  const { colorMode } = useColorMode()
   const [ready, setReady] = useState(false)
-  const accentColor = useColorModeValue(`${THEME_COLOR_SCHEME}`, `${SECOND_COLOR_SCHEME}`)
+  const { setThemeMode } = useWeb3ModalTheme()
+  const themeColor = useColorModeValue('light', 'dark')
 
   useEffect(() => {
     setReady(true)
   }, [])
 
-  return (
-    <>
-      {ready && <WagmiConfig config={wagmiConfig}>{props.children}</WagmiConfig>}
+  useEffect(() => {
+    setThemeMode(themeColor)
+  }, [themeColor])
 
-      <Web3Modal
-        projectId={projectId}
-        ethereumClient={ethereumClient}
-        themeMode={colorMode}
-        themeVariables={{
-          '--w3m-accent-color': accentColor,
-          '--w3m-background-color': accentColor,
-        }}
-      />
-    </>
-  )
+  return <>{ready && <WagmiConfig config={wagmiConfig}>{props.children}</WagmiConfig>}</>
 }

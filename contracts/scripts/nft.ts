@@ -1,4 +1,4 @@
-import { ethers, network, run } from 'hardhat'
+import { ethers, network, run } from "hardhat";
 
 async function main() {
   console.log('Deploying Nexth NFT...')

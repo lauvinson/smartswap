@@ -1,4 +1,4 @@
-import { useAccount, useBalance, useContractWrite, usePrepareContractWrite, useWaitForTransaction, useNetwork, erc20ABI } from 'wagmi'
+import { erc20ABI, useAccount, useBalance, useContractWrite, useNetwork, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { Button, FormControl, FormLabel, Heading, Input, NumberInput, NumberInputField, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import { NextSeo } from 'next-seo'

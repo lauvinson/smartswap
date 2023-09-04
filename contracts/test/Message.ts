@@ -1,6 +1,6 @@
-import { loadFixture } from '@nomicfoundation/hardhat-network-helpers'
-import { expect } from 'chai'
-import { ethers } from 'hardhat'
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
 describe('Message', function () {
   // We define a fixture to reuse the same setup in every test.

@@ -1,5 +1,5 @@
 import { useAccount } from 'wagmi'
-import { Button, Text, Card, CardBody, SimpleGrid, Image } from '@chakra-ui/react'
+import { Button, Card, CardBody, Image, SimpleGrid, Text } from '@chakra-ui/react'
 import { NextSeo } from 'next-seo'
 import { LinkComponent } from 'components/layout/LinkComponent'
 import { usePassportScore } from 'hooks/passport/usePassportScore'

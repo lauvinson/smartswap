@@ -5,8 +5,9 @@ import { NextSeo } from 'next-seo'
 import { HeadingComponent } from 'components/layout/HeadingComponent'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { pools, abis, Pool } from '../../../pools'
+import { abis, Pool, pools } from '../../../pools'
 import { SECOND_COLOR_SCHEME } from '../../../utils/config'
+
 function Approve({ pool }: { pool: Pool }) {
   let [approving, setApproving] = useState(false)
   let [token, setToken] = useState(pool.token0.address)

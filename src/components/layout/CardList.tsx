@@ -1,37 +1,29 @@
 import React from 'react'
 import {
-  Image,
-  Text,
   Box,
   Card,
   CardBody,
-  Flex,
-  useColorModeValue,
-  Tag,
-  Link,
-  LinkBox,
   CardHeader,
-  TableContainer,
+  Flex,
+  Image,
+  LinkBox,
+  LinkOverlay,
   Table,
   TableCaption,
-  Thead,
-  Tr,
-  Th,
+  TableContainer,
   Tbody,
   Td,
-  LinkOverlay,
-  Input,
-  InputLeftElement,
-  InputRightElement,
-  InputGroup,
-  Grid,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { LinkComponent } from './LinkComponent'
 import { HeadingComponent } from './HeadingComponent'
 import { SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from '../../utils/config'
 import { Pool } from '../../pools'
 import { motion } from 'framer-motion'
-import { CheckIcon, SearchIcon } from '@chakra-ui/icons'
+import { LinkComponent } from './LinkComponent'
 
 // 创建一个基于 Chakra UI Box 的 Framer Motion 组件
 const MotionBox = motion(Box)
@@ -127,19 +119,23 @@ export function CardList(props: Props) {
                           textColor: tdHoverTextColor,
                         }}>
                         <Td borderRadius={['md', '0', '0', 'md']}>
-                          <LinkOverlay as={Link} href={'/applications/pool/' + i.id} _hover={{ textDecoration: 'none' }}>
-                            {MakeLogo(i)}
-                          </LinkOverlay>
+                          <LinkComponent href={'/applications/pool/' + i.id}>
+                            <LinkOverlay _hover={{ textDecoration: 'none' }}>{MakeLogo(i)}</LinkOverlay>
+                          </LinkComponent>
                         </Td>
                         <Td>
-                          <Link as={Link} to={'/applications/pool/' + i.id} _hover={{ textDecoration: 'none' }} textDecoration="underline dashed">
-                            {i.fee / 10000}%
-                          </Link>
+                          <LinkComponent href={'/applications/pool/' + i.id}>
+                            <LinkOverlay _hover={{ textDecoration: 'none' }} textDecoration="underline dashed">
+                              {i.fee / 10000}%
+                            </LinkOverlay>
+                          </LinkComponent>
                         </Td>
                         <Td isNumeric borderRadius={['0', 'md', 'md', '0']}>
-                          <Link as={Link} to={'/applications/pool/' + i.id} _hover={{ textDecoration: 'none' }} textDecoration="underline dashed">
-                            {i.apr}%
-                          </Link>
+                          <LinkComponent href={'/applications/pool/' + i.id}>
+                            <LinkOverlay _hover={{ textDecoration: 'none' }} textDecoration="underline dashed">
+                              {i.apr}%
+                            </LinkOverlay>
+                          </LinkComponent>
                         </Td>
                       </LinkBox>
                     )

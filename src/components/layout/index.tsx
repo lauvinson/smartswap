@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Box, Container, Grid, GridItem, Text, useColorModeValue, useBreakpointValue } from '@chakra-ui/react'
+import { Box, Container, Grid, GridItem, Text, useBreakpointValue, useColorModeValue } from '@chakra-ui/react'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { NetworkStatus } from './NetworkStatus'
@@ -17,7 +17,7 @@ export function Layout(props: Props) {
       <Header />
       <Container m={0} maxW="100%">
         <Container maxW="container.lg">
-          <Grid templateColumns="repeat(5, 1fr)" gap={4} py={['10', '10', '20', '20']}>
+          <Grid templateColumns="repeat(5, 1fr)" gap={4} py={['10', '10', '10', '20']}>
             <GridItem colSpan={5} bg="pink"></GridItem>
             <GridItem rowStart={2} colSpan={colSpanValue} marginTop={{ base: '-10', md: '-10', lg: '-10' }}>
               <Text lineHeight="normal" fontWeight="bold" fontSize={{ base: '3xl', md: '5xl' }}>
@@ -33,7 +33,7 @@ export function Layout(props: Props) {
           </Grid>
         </Container>
       </Container>
-      <Container m={0} maxW="100%" py={['10', '10', '20', '20']} bg={bgColor}>
+      <Container m={0} maxW="100%" py={['10', '10', '10', '20']} bg={bgColor}>
         <Container maxW="container.lg">{props.children}</Container>
       </Container>
       <Box position="fixed" bottom={2} right={2}>

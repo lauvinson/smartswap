@@ -1,5 +1,5 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { mainnet, sepolia, polygon, optimism, arbitrum, bsc, localhost, Chain } from '@wagmi/chains'
+import { arbitrum, bsc, mainnet, optimism, polygon, sepolia } from '@wagmi/chains'
 
 export const SITE_NAME = 'Byte Pools'
 export const SITE_DESCRIPTION =

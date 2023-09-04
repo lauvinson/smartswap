@@ -1,6 +1,6 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Divider, Grid, GridItem, Text, Badge, InputLeftElement, Input, InputGroup, useColorModeValue, Container } from '@chakra-ui/react'
+import { Container, Input, InputGroup, InputLeftElement, Text, useColorModeValue } from '@chakra-ui/react'
 import TokenIcon from 'assets/icons/token.png'
 import { pools } from '../../pools'
 import React from 'react'
@@ -74,7 +74,7 @@ export default function Examples() {
             <>
               <Text fontWeight="bold" fontSize={{ base: '1xl', md: '2xl' }} mx={3.5}>
                 Pools{' '}
-                <Text as="span" fontSize={{ base: '3xs', md: '3xs' }}>
+                <Text as="span" opacity={0.5} fontSize={{ base: '4xs', md: '5xs' }}>
                   ({pools.length})
                 </Text>
               </Text>

@@ -1,5 +1,5 @@
-import { defineConfig } from '@wagmi/cli'
-import { actions, hardhat } from '@wagmi/cli/plugins'
+import { defineConfig } from "@wagmi/cli";
+import { actions, hardhat } from "@wagmi/cli/plugins";
 
 export default defineConfig({
   out: 'src/abis.ts',
