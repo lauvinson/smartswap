@@ -72,7 +72,7 @@ export function CardList(props: Props) {
           <Image draggable={false} objectFit="contain" maxW="60px" src={i.token1.icon} alt={i.token1.name} ml="-10px" mt="10px" />
           <Text ml={5} whiteSpace="nowrap">
             {i.token0.name}{' '}
-            <Text as="span" opacity={0.5}>
+            <Text as="span" fontWeight="light" opacity={0.5}>
               /
             </Text>{' '}
             {i.token1.name}
@@ -112,6 +112,7 @@ export function CardList(props: Props) {
                   if (isPoolConfig(i)) {
                     return (
                       <LinkBox
+                        fontWeight="bold"
                         as="tr"
                         key={`${index}_${i.token0.name}`}
                         _hover={{
@@ -125,14 +126,14 @@ export function CardList(props: Props) {
                         </Td>
                         <Td>
                           <LinkComponent href={'/applications/pool/' + i.id}>
-                            <LinkOverlay _hover={{ textDecoration: 'none' }} textDecoration="underline dashed">
+                            <LinkOverlay _hover={{ textDecoration: 'none' }} textDecoration="underline dotted">
                               {i.fee / 10000}%
                             </LinkOverlay>
                           </LinkComponent>
                         </Td>
                         <Td isNumeric borderRadius={['0', 'md', 'md', '0']}>
                           <LinkComponent href={'/applications/pool/' + i.id}>
-                            <LinkOverlay _hover={{ textDecoration: 'none' }} textDecoration="underline dashed">
+                            <LinkOverlay _hover={{ textDecoration: 'none' }} textDecoration="underline dotted">
                               {i.apr}%
                             </LinkOverlay>
                           </LinkComponent>

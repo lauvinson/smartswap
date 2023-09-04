@@ -33,7 +33,7 @@ export function Layout(props: Props) {
           </Grid>
         </Container>
       </Container>
-      <Container m={0} maxW="100%" py={['10', '10', '10', '20']} bg={bgColor}>
+      <Container m={0} maxW="100%" pb={['10', '10', '10', '20']} bg={bgColor}>
         <Container maxW="container.lg">{props.children}</Container>
       </Container>
       <Box position="fixed" bottom={2} right={2}>

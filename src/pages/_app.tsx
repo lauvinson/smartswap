@@ -4,20 +4,27 @@ import { Web3Provider } from 'providers/Web3'
 import { ChakraProvider } from 'providers/Chakra'
 import { useIsMounted } from 'hooks/useIsMounted'
 import { Seo } from 'components/layout/Seo'
+import { client } from '../providers/Apollo'
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { ApolloProvider } from 'react-apollo'
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
+  loadErrorMessages()
+  loadDevMessages()
 
   return (
-    <ChakraProvider>
-      <Seo />
-      <Web3Provider>
-        {isMounted && (
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        )}
-      </Web3Provider>
-    </ChakraProvider>
+    <ApolloProvider client={client}>
+      <ChakraProvider>
+        <Seo />
+        <Web3Provider>
+          {isMounted && (
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          )}
+        </Web3Provider>
+      </ChakraProvider>
+    </ApolloProvider>
   )
 }
