@@ -1,12 +1,8 @@
-import { ApolloClient } from 'apollo-client'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink } from 'apollo-link-http'
-import gql from 'graphql-tag'
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import gql from "graphql-tag";
 
 export const client = new ApolloClient({
-  link: new HttpLink({
-    uri: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
-  }),
+  uri: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
   cache: new InMemoryCache(),
 })
 

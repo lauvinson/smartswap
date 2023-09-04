@@ -5,13 +5,13 @@ import { ChakraProvider } from 'providers/Chakra'
 import { useIsMounted } from 'hooks/useIsMounted'
 import { Seo } from 'components/layout/Seo'
 import { client } from '../providers/Apollo'
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
-import { ApolloProvider } from 'react-apollo'
+// import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { ApolloProvider } from '@apollo/client'
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
-  loadErrorMessages()
-  loadDevMessages()
+  // loadErrorMessages()
+  // loadDevMessages()
 
   return (
     <ApolloProvider client={client}>
