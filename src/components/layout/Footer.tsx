@@ -4,6 +4,7 @@ import { FaGithub, FaTwitter, FaWallet } from 'react-icons/fa'
 import { LinkComponent } from './LinkComponent'
 import Logo from '../../assets/logo/hollow.svg'
 import { SITE_NAME } from '../../utils/config'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 interface Props {
   className?: string
@@ -11,7 +12,7 @@ interface Props {
 
 export function Footer(props: Props) {
   const className = props.className ?? ''
-  const filterValue = useColorModeValue('invert(0%)', 'invert(100%)')
+  const filterValue = useThemeModeValue('invert(0%)', 'invert(100%)')
 
   return (
     <Flex as="footer" className={className} flexDirection="column" justifyContent="center" alignItems="center" py={['10', '10', '10', '20']}>

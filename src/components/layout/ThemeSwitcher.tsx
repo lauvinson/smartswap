@@ -1,18 +1,61 @@
-import React from 'react'
-import { Box, useColorMode } from '@chakra-ui/react'
+'use client'
+
+import { FC } from 'react'
+import { VisuallyHidden } from '@react-aria/visually-hidden'
+import { SwitchProps, useSwitch } from '@nextui-org/switch'
+import { useTheme } from 'next-themes'
+import { useIsSSR } from '@react-aria/ssr'
+import clsx from 'clsx'
+
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
-interface Props {
+export interface ThemeSwitchProps {
   className?: string
+  classNames?: SwitchProps['classNames']
 }
 
-export function ThemeSwitcher(props: Props) {
-  const className = props.className ?? ''
-  const { colorMode, toggleColorMode } = useColorMode()
+export const ThemeSwitcher: FC<ThemeSwitchProps> = ({ className, classNames }) => {
+  const { theme, setTheme } = useTheme()
+  const isSSR = useIsSSR()
+
+  const onChange = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light')
+  }
+
+  const { Component, slots, isSelected, getBaseProps, getInputProps, getWrapperProps } = useSwitch({
+    isSelected: theme === 'light',
+    'aria-label': `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`,
+    onChange,
+  })
 
   return (
-    <Box className={className} onClick={toggleColorMode} _hover={{ cursor: 'pointer' }}>
-      {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-    </Box>
+    <Component
+      {...getBaseProps({
+        className: clsx('px-px transition-opacity hover:opacity-80 cursor-pointer', className, classNames?.base),
+      })}>
+      <VisuallyHidden>
+        <input {...getInputProps()} />
+      </VisuallyHidden>
+      <div
+        {...getWrapperProps()}
+        className={slots.wrapper({
+          class: clsx(
+            [
+              'w-auto h-auto',
+              'bg-transparent',
+              'rounded-lg',
+              'flex items-center justify-center',
+              'group-data-[selected=true]:bg-transparent',
+              '!text-default-500',
+              'pt-px',
+              'px-0',
+              'mx-0',
+            ],
+            classNames?.wrapper
+          ),
+        })}>
+        {!isSelected || isSSR ? <SunIcon /> : <MoonIcon />}
+      </div>
+    </Component>
   )
 }

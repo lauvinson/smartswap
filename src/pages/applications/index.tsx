@@ -1,15 +1,16 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
 import { Container, Input, InputGroup, InputLeftElement, Text, useColorModeValue } from '@chakra-ui/react'
-import { pools } from '../../pools'
+import { pools } from '@/pools'
 import React from 'react'
-import { SECOND_COLOR_SCHEME } from '../../utils/config'
+import { SECOND_COLOR_SCHEME } from '@/utils/config'
 import { SearchIcon } from '@chakra-ui/icons'
 import { useQuery } from '@apollo/client'
-import { DAI_QUERY, ETH_PRICE_QUERY } from '../../providers/Apollo'
+import { DAI_QUERY, ETH_PRICE_QUERY } from '@/providers/Apollo'
+import { useThemeModeValue } from '@/providers/NextUI'
 
-export default function Examples() {
-  const tdHoverTextColor = useColorModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
+export default function Applications() {
+  const tdHoverTextColor = useThemeModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
   const { loading: ethLoading, data: ethPriceData, error: ethError } = useQuery(ETH_PRICE_QUERY)
   const { loading: daiLoading, data: daiData } = useQuery(DAI_QUERY, {
     variables: {

@@ -2,7 +2,10 @@
   "extends": "@tsconfig/next/tsconfig.json",
   "compilerOptions": {
     "target": "es6",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
