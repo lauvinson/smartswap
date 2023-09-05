@@ -1,5 +1,6 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { arbitrum, bsc, mainnet, optimism, polygon, sepolia } from '@wagmi/chains'
+import { arbitrum, bsc, mainnet, optimism, polygon } from '@wagmi/chains'
+import { avalanche, base, celo } from 'viem/chains'
 
 export const SITE_NAME = 'Byte Pools'
 export const SITE_DESCRIPTION =
@@ -37,7 +38,7 @@ export const local = {
     },
   },
 }
-export const ETH_CHAINS = [local, mainnet, sepolia, polygon, optimism, arbitrum, bsc]
+export const ETH_CHAINS = [local, mainnet, polygon, optimism, arbitrum, bsc, celo, base, avalanche]
 
 export const SERVER_SESSION_SETTINGS = {
   cookieName: SITE_NAME,

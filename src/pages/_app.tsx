@@ -7,6 +7,29 @@ import { Seo } from 'components/layout/Seo'
 import { client } from '../providers/Apollo'
 // import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { ApolloProvider } from '@apollo/client'
+import { Provider } from 'react-redux'
+import store from '../state'
+import UserUpdater from '../state/user/updater'
+import ProtocolUpdater from '../state/protocol/updater'
+import TokenUpdater from '../state/tokens/updater'
+import PoolUpdater from '../state/pools/updater'
+import ApplicationUpdater from '../state/application/updater'
+import ListUpdater from '../state/lists/updater'
+import NetworkUpdater from '../state/network/updater'
+
+function Updaters() {
+  return (
+    <>
+      <ListUpdater />
+      <UserUpdater />
+      <ProtocolUpdater />
+      <TokenUpdater />
+      <PoolUpdater />
+      <ApplicationUpdater />
+      <NetworkUpdater />
+    </>
+  )
+}
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
@@ -14,17 +37,20 @@ export default function App({ Component, pageProps }: AppProps) {
   // loadDevMessages()
 
   return (
-    <ApolloProvider client={client}>
-      <ChakraProvider>
-        <Seo />
-        <Web3Provider>
-          {isMounted && (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          )}
-        </Web3Provider>
-      </ChakraProvider>
-    </ApolloProvider>
+    <Web3Provider>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <Updaters />
+          <ChakraProvider>
+            <Seo />
+            {isMounted && (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            )}
+          </ChakraProvider>
+        </Provider>
+      </ApolloProvider>
+    </Web3Provider>
   )
 }
