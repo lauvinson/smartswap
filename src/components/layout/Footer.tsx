@@ -3,6 +3,7 @@ import { Container, Flex, Image, Text, useColorModeValue } from '@chakra-ui/reac
 import { FaGithub, FaTwitter, FaWallet } from 'react-icons/fa'
 import { LinkComponent } from './LinkComponent'
 import Logo from '../../assets/logo/hollow.svg'
+import { SITE_NAME } from '../../utils/config'
 
 interface Props {
   className?: string
@@ -15,7 +16,7 @@ export function Footer(props: Props) {
   return (
     <Flex as="footer" className={className} flexDirection="column" justifyContent="center" alignItems="center" py={['10', '10', '10', '20']}>
       <Container maxW="container.lg" lineHeight="taller">
-        <Image draggable={false} filter={filterValue} mb={['5', '5', '10', '10']} objectFit="contain" maxW="35px" src={Logo.src} />
+        <Image draggable={false} filter={filterValue} mb={['5', '5', '10', '10']} objectFit="contain" maxW="35px" src={Logo.src} alt={SITE_NAME} />
         <Text>Byte Swap Labs</Text>
         <Text>
           Contact us by{' '}

@@ -17,9 +17,36 @@ export default function Examples() {
     },
   })
 
-  const daiPriceInEth = daiData?.tokens[0]?.derivedETH
-  const daiTotalLiquidity = daiData?.tokens[0]?.totalLiquidity
-  const ethPriceInUSD = ethPriceData?.bundle?.ethPrice
+  function ethPrice() {
+    if (ethLoading || daiLoading) {
+      return <></>
+    }
+    const daiPriceInEth = daiData?.tokens?.[0]?.derivedETH
+    const daiTotalLiquidity = daiData?.tokens?.[0]?.totalLiquidity
+    const ethPriceInUSD = ethPriceData?.bundle?.ethPrice
+    return (
+      <>
+        <div>
+          <div>
+            Dai price:{' '}
+            {ethLoading || daiLoading
+              ? 'Loading token data...'
+              : '$' +
+                // parse responses as floats and fix to 2 decimals
+                (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
+          </div>
+          <div>
+            Dai total liquidity:{' '}
+            {daiLoading
+              ? 'Loading token data...'
+              : // display the total amount of DAI spread across all pools
+                parseFloat(daiTotalLiquidity).toFixed(0)}
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <Head />
@@ -48,23 +75,7 @@ export default function Examples() {
           intro={<Text opacity={0.5}>Only the pools with the current network will be displayed. Please switch the network for other pools.</Text>}
           items={pools}
         />
-        <div>
-          <div>
-            Dai price:{' '}
-            {ethLoading || daiLoading
-              ? 'Loading token data...'
-              : '$' +
-                // parse responses as floats and fix to 2 decimals
-                (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
-          </div>
-          <div>
-            Dai total liquidity:{' '}
-            {daiLoading
-              ? 'Loading token data...'
-              : // display the total amount of DAI spread across all pools
-                parseFloat(daiTotalLiquidity).toFixed(0)}
-          </div>
-        </div>
+        {ethPrice()}
       </main>
     </>
   )

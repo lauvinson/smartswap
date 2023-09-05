@@ -33,6 +33,7 @@
     "@web3modal/wagmi": "3.0.0-alpha.5",
     "axios": "^1.5.0",
     "dayjs": "^1.11.7",
+    "ethers": "^6.7.1",
     "framer-motion": "^10.16.2",
     "graphql": "^16.8.0",
     "graphql-tag": "^2.12.6",

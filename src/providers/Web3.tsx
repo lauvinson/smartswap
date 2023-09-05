@@ -37,7 +37,7 @@ createWeb3Modal({
 
 export function Web3Provider(props: Props) {
   const [ready, setReady] = useState(false)
-  const { setThemeMode } = useWeb3ModalTheme()
+  const { themeMode, setThemeMode } = useWeb3ModalTheme()
   const themeColor = useColorModeValue('light', 'dark')
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export function Web3Provider(props: Props) {
 
   useEffect(() => {
     setThemeMode(themeColor)
-  }, [themeColor])
+  }, [setThemeMode, themeColor])
 
   return <>{ready && <WagmiConfig config={wagmiConfig}>{props.children}</WagmiConfig>}</>
 }
