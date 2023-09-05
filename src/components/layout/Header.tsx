@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Image, Spacer, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Spacer, Text, useColorModeValue } from '@chakra-ui/react'
 import { SITE_NAME, THEME_COLOR_SCHEME } from 'utils/config'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { PassportScore } from './PassportScore'
@@ -52,12 +52,14 @@ export function Header(props: Props) {
 
       <Flex alignItems="center" gap={4}>
         <PassportScore />
-        <Button onClick={() => open()} isLoading={isConnecting || isReconnecting} spinner={<BeatLoader size={8} color="white" />}>
-          <Jazzicon diameter={16} seed={jsNumberForAddress(address as string)} />
-          <Text display={{ base: 'none', md: 'block' }} ml={2}>
-            {isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}
-          </Text>
-        </Button>
+        <Box>
+          <Button onClick={() => open()} isLoading={isConnecting || isReconnecting} spinner={<BeatLoader size={8} color="white" />}>
+            {isConnected && <Jazzicon diameter={14} seed={jsNumberForAddress(address as string)} />}
+            <Text display={{ base: 'none', md: 'block' }} ml={2}>
+              {isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}
+            </Text>
+          </Button>
+        </Box>
         {/*<Web3NetworkSwitch />*/}
         <ThemeSwitcher />
       </Flex>
