@@ -2,6 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import gql from 'graphql-tag'
 import { Transaction, TransactionType } from 'types'
 import { formatTokenSymbol } from 'utils/tokens'
+import { v4 } from 'uuid'
 
 const GLOBAL_TRANSACTIONS = gql`
   query transactions {
@@ -135,6 +136,7 @@ export async function fetchTopTransactions(client: ApolloClient<NormalizedCacheO
     const formatted = data.transactions.reduce((accum: Transaction[], t: TransactionEntry) => {
       const mintEntries = t.mints.map((m) => {
         return {
+          uuid: v4(),
           type: TransactionType.MINT,
           hash: t.id,
           timestamp: t.timestamp,
@@ -150,6 +152,7 @@ export async function fetchTopTransactions(client: ApolloClient<NormalizedCacheO
       })
       const burnEntries = t.burns.map((m) => {
         return {
+          uuid: v4(),
           type: TransactionType.BURN,
           hash: t.id,
           timestamp: t.timestamp,
@@ -166,6 +169,7 @@ export async function fetchTopTransactions(client: ApolloClient<NormalizedCacheO
 
       const swapEntries = t.swaps.map((m) => {
         return {
+          uuid: v4(),
           hash: t.id,
           type: TransactionType.SWAP,
           timestamp: t.timestamp,

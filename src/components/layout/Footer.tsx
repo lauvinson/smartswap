@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Flex, Image, Text, useColorModeValue } from '@chakra-ui/react'
+import { Container, Flex, Image, Text } from '@chakra-ui/react'
 import { FaGithub, FaTwitter, FaWallet } from 'react-icons/fa'
 import { LinkComponent } from './LinkComponent'
 import Logo from '../../assets/logo/hollow.svg'

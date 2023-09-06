@@ -27,3 +27,16 @@ export const getPercentChange = (valueNow: string | undefined, value24HoursAgo: 
   }
   return 0
 }
+
+export const getTimeAgo = (timestamp: number): string => {
+  const now = Date.now() / 1000
+  const diff = now - timestamp
+
+  if (diff < 60) {
+    return 'recently'
+  } else if (diff < 3600) {
+    return `${Math.floor(diff / 60)} minutes ago`
+  } else {
+    return `${Math.floor(diff / 3600)} hours ago`
+  }
+}

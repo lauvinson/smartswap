@@ -1,5 +1,8 @@
+import { TransactionType } from '@/types'
+
 const txColumns = [
-  { name: 'TYPE', uid: 'type', sortable: true },
+  { name: 'UUID', uid: 'uuid' },
+  { name: 'TYPE', uid: 'type' },
   { name: 'HASH', uid: 'hash', sortable: true },
   { name: 'TIMESTAMP', uid: 'timestamp', sortable: true },
   { name: 'SENDER', uid: 'sender', sortable: true },
@@ -12,4 +15,10 @@ const txColumns = [
   { name: 'AMOUNTTOKEN1', uid: 'amountToken1', sortable: true },
 ]
 
-export { txColumns }
+const typeOptions = [
+  { name: 'Mint', uid: TransactionType.MINT },
+  { name: 'Burn', uid: TransactionType.BURN },
+  { name: 'Swap', uid: TransactionType.SWAP },
+]
+
+export { txColumns, typeOptions }

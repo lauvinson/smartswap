@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, Flex, Text, useColorModeValue } from '@chakra-ui/react'
+import { Badge, Flex, Text } from '@chakra-ui/react'
 import { useBlockNumber, useNetwork } from 'wagmi'
 import { GetNetworkColor } from 'utils/network'
 import { LinkComponent } from './LinkComponent'

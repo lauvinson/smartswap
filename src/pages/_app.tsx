@@ -16,7 +16,6 @@ import ApplicationUpdater from '../state/application/updater'
 import ListUpdater from '../state/lists/updater'
 import NetworkUpdater from '../state/network/updater'
 import { UIProviders } from 'providers/NextUI'
-import { Button } from '@nextui-org/react'
 import { ChakraProvider } from '@/providers/Chakra'
 
 function Updaters() {

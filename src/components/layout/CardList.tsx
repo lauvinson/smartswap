@@ -17,7 +17,6 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { HeadingComponent } from './HeadingComponent'
 import { SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from '@/utils/config'

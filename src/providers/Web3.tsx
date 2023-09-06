@@ -1,7 +1,6 @@
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { ETH_CHAINS } from 'utils/config'
-import { useColorModeValue } from '@chakra-ui/react'
 import { ReactNode, useEffect, useState } from 'react'
 import { createWeb3Modal, useWeb3ModalTheme } from '@web3modal/wagmi/react'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'

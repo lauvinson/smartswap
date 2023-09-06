@@ -1,52 +1,14 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Container, Input, InputGroup, InputLeftElement, Text, useColorModeValue } from '@chakra-ui/react'
+import { Container, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
 import { pools } from '@/pools'
 import React from 'react'
 import { SECOND_COLOR_SCHEME } from '@/utils/config'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useQuery } from '@apollo/client'
-import { DAI_QUERY, ETH_PRICE_QUERY } from '@/providers/Apollo'
 import { useThemeModeValue } from '@/providers/NextUI'
 
 export default function Applications() {
   const tdHoverTextColor = useThemeModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
-  const { loading: ethLoading, data: ethPriceData, error: ethError } = useQuery(ETH_PRICE_QUERY)
-  const { loading: daiLoading, data: daiData } = useQuery(DAI_QUERY, {
-    variables: {
-      tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-    },
-  })
-
-  function ethPrice() {
-    if (ethLoading || daiLoading) {
-      return <></>
-    }
-    const daiPriceInEth = daiData?.tokens?.[0]?.derivedETH
-    const daiTotalLiquidity = daiData?.tokens?.[0]?.totalLiquidity
-    const ethPriceInUSD = ethPriceData?.bundle?.ethPrice
-    return (
-      <>
-        <div>
-          <div>
-            Dai price:{' '}
-            {ethLoading || daiLoading
-              ? 'Loading token data...'
-              : '$' +
-                // parse responses as floats and fix to 2 decimals
-                (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
-          </div>
-          <div>
-            Dai total liquidity:{' '}
-            {daiLoading
-              ? 'Loading token data...'
-              : // display the total amount of DAI spread across all pools
-                parseFloat(daiTotalLiquidity).toFixed(0)}
-          </div>
-        </div>
-      </>
-    )
-  }
 
   return (
     <>
@@ -76,7 +38,6 @@ export default function Applications() {
           intro={<Text opacity={0.5}>Only the pools with the current network will be displayed. Please switch the network for other pools.</Text>}
           items={pools}
         />
-        {ethPrice()}
       </main>
     </>
   )

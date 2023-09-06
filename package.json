@@ -35,6 +35,7 @@
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/js-cookie": "^3.0.3",
+    "@types/uuid": "^9.0.3",
     "@uniswap/default-token-list": "^11.5.0",
     "@uniswap/sdk-core": "^4.0.6",
     "@uniswap/token-lists": "^1.0.0-beta.33",
