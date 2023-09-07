@@ -1,6 +1,5 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Text } from '@chakra-ui/react'
 import { pools } from '@/pools'
 import React from 'react'
 import { SearchIcon } from '@chakra-ui/icons'
@@ -40,15 +39,14 @@ export default function Applications() {
         <CardList
           title={
             <>
-              <Text fontWeight="bold" fontSize={{ base: '1xl', md: '2xl' }} mx={3.5}>
-                Pools{' '}
-                <Text as="span" opacity={0.5} fontSize={{ base: '4xs', md: '5xs' }}>
-                  ({pools.length})
-                </Text>
-              </Text>
+              <p className={'font-bold text-large md:text-2xl mx-3.5'}>
+                Pools <span className={'opacity-50 text-base'}>({pools.length})</span>
+              </p>
             </>
           }
-          intro={<Text opacity={0.5}>Only the pools with the current network will be displayed. Please switch the network for other pools.</Text>}
+          intro={
+            <p className={'opacity-50'}>Only the pools with the current network will be displayed. Please switch the network for other pools.</p>
+          }
           items={pools}
         />
       </main>

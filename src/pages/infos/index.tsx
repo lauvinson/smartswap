@@ -1,13 +1,11 @@
-import { Key, useCallback, useMemo, useState } from 'react'
+import { Key, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Button,
-  ChipProps,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
   Input,
-  ScrollShadow,
   Selection,
   SortDescriptor,
   Table,
@@ -23,17 +21,15 @@ import { capitalize } from '@/utils'
 import { useProtocolTransactions } from '@/state/protocol/hooks'
 import { Transaction, TransactionType } from '@/types'
 import { getTimeAgo } from '@/utils/data'
+import { formatAmount, formatDollarAmount } from '@/utils/numbers'
+import { BeatLoader } from 'react-spinners'
+import { useThemeModeValue } from '@/providers/NextUI'
 
-const statusColorMap: Record<string, ChipProps['color']> = {
-  [TransactionType.MINT]: 'success',
-  [TransactionType.BURN]: 'danger',
-  [TransactionType.SWAP]: 'warning',
-}
-
-const INITIAL_VISIBLE_COLUMNS = ['hash', 'amountToken0', 'amountToken1', 'timestamp']
+const INITIAL_VISIBLE_COLUMNS = ['type', 'amountToken0', 'amountToken1', 'timestamp', 'sender']
 
 export default function Infos() {
   const [txs = []] = useProtocolTransactions()
+  const spinnerColor = useThemeModeValue('black', 'white')
   const [filterValue, setFilterValue] = useState('')
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set([]))
   const [visibleColumns, setVisibleColumns] = useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS))
@@ -44,6 +40,7 @@ export default function Infos() {
     direction: 'ascending',
   })
 
+  const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
 
   const hasSearchFilter = Boolean(filterValue)
@@ -65,9 +62,14 @@ export default function Infos() {
       console.log(typeFilter)
       filteredTxs = filteredTxs.filter((tx) => Array.from(typeFilter).includes(tx.type))
     }
-
     return filteredTxs
-  }, [txs, filterValue, typeFilter])
+  }, [txs, hasSearchFilter, typeFilter, filterValue])
+
+  useEffect(() => {
+    if (txs.length > 0) {
+      setIsLoading(false)
+    }
+  }, [txs])
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage)
 
@@ -92,10 +94,32 @@ export default function Infos() {
     const cellValue = tx[columnKey as keyof Transaction]
 
     switch (columnKey) {
+      case 'type':
+        return (
+          <p className={'text-pink-600 font-bold'}>
+            {cellValue === TransactionType.MINT
+              ? `Add ${tx.token0Symbol} and ${tx.token1Symbol}`
+              : cellValue === TransactionType.SWAP
+              ? `Swap ${tx.amountToken1 < 0 ? tx.token0Symbol : tx.token1Symbol} for ${tx.amountToken0 < 0 ? tx.token0Symbol : tx.token1Symbol}`
+              : `Remove ${tx.token0Symbol} and ${tx.token1Symbol}`}
+          </p>
+        )
+      case 'sender':
+        return <p className={'text-pink-600 font-bold'}>{cellValue}</p>
       case 'hash':
-        return <div className="max-w-1/2 overflow-hidden overflow-ellipsis whitespace-nowrap">{cellValue}</div>
+        return <p>{cellValue}</p>
       case 'timestamp':
         return getTimeAgo(cellValue as number)
+      case 'amountUSD':
+        return formatDollarAmount(Math.abs(cellValue as number))
+      case 'amountToken0':
+      case 'amountToken1':
+        return (
+          <p>
+            {formatAmount(Math.abs(cellValue as number))}{' '}
+            <span className={'font-bold'}>{tx[('token' + columnKey.slice(-1) + 'Symbol') as keyof Transaction]}</span>
+          </p>
+        )
       default:
         return cellValue
     }
@@ -248,8 +272,16 @@ export default function Infos() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={'No users found'} items={sortedItems}>
-          {(item) => <TableRow key={item.uuid}>{(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>}
+        <TableBody
+          isLoading={isLoading}
+          loadingContent={<BeatLoader size={20} color={spinnerColor} />}
+          emptyContent={'No users found'}
+          items={sortedItems}>
+          {(item) => (
+            <TableRow key={item.uuid}>
+              {(columnKey) => <TableCell className={'overflow-hidden overflow-ellipsis whitespace-nowrap'}>{renderCell(item, columnKey)}</TableCell>}
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>

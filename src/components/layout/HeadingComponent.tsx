@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Heading } from '@chakra-ui/react'
+import clsx from 'clsx'
 
 interface Props {
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
@@ -16,13 +16,13 @@ export function HeadingComponent(props: Props) {
       size = props.size ?? '2xl'
       break
     case 'h2':
-      size = props.size ?? 'xl'
-      break
-    case 'h3':
       size = props.size ?? 'lg'
       break
+    case 'h3':
+      size = props.size ?? 'medium'
+      break
     case 'h4':
-      size = props.size ?? 'md'
+      size = props.size ?? 'base'
       break
     case 'h5':
       size = props.size ?? 'sm'
@@ -32,9 +32,5 @@ export function HeadingComponent(props: Props) {
       break
   }
 
-  return (
-    <Heading as={props.as} size={size} className={className} mb={2}>
-      {props.children}
-    </Heading>
-  )
+  return <props.as className={clsx(className, 'mb-2', 'text-' + size)}>{props.children}</props.as>
 }

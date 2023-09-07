@@ -1,10 +1,11 @@
 import React from 'react'
-import { Container, Flex, Image, Text } from '@chakra-ui/react'
 import { FaGithub, FaTwitter, FaWallet } from 'react-icons/fa'
 import { LinkComponent } from './LinkComponent'
 import Logo from '../../assets/logo/hollow.svg'
-import { SITE_NAME } from '../../utils/config'
+import { SITE_NAME } from '@/utils/config'
 import { useThemeModeValue } from '@/providers/NextUI'
+import { Image } from '@nextui-org/react'
+import clsx from 'clsx'
 
 interface Props {
   className?: string
@@ -12,20 +13,20 @@ interface Props {
 
 export function Footer(props: Props) {
   const className = props.className ?? ''
-  const filterValue = useThemeModeValue('invert(0%)', 'invert(100%)')
+  const filterValue = useThemeModeValue('invert-0', 'invert')
 
   return (
-    <Flex as="footer" className={className} flexDirection="column" justifyContent="center" alignItems="center" py={['10', '10', '10', '20']}>
-      <Container maxW="container.lg" lineHeight="taller">
-        <Image draggable={false} filter={filterValue} mb={['5', '5', '10', '10']} objectFit="contain" maxW="35px" src={Logo.src} alt={SITE_NAME} />
-        <Text>Byte Swap Labs</Text>
-        <Text>
+    <div className={'flex justify-items-center align-middle py-10 lg:py-20'}>
+      <div className={'container leading-normal'}>
+        <Image draggable={false} className={clsx('mb-5 lg:10 ', filterValue)} width={35} height={35} src={Logo.src} alt={SITE_NAME} />
+        <p>Byte Swap Labs</p>
+        <p>
           Contact us by{' '}
           <LinkComponent href="mailto:chat@byte.exchange" isExternal={true}>
-            <Text as="cite">chat@byte.exchange</Text>
+            <p className={'italic'}>chat@byte.exchange</p>
           </LinkComponent>
-        </Text>
-        <Flex gap={2} alignItems="center" mt={2}>
+        </p>
+        <div className={'flex gap-2 align-middle mt-2'}>
           <LinkComponent href={`/`}>
             <FaTwitter />
           </LinkComponent>
@@ -35,8 +36,8 @@ export function Footer(props: Props) {
           <LinkComponent href={`/`}>
             <FaWallet />
           </LinkComponent>
-        </Flex>
-      </Container>
-    </Flex>
+        </div>
+      </div>
+    </div>
   )
 }
