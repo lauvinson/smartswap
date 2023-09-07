@@ -55,7 +55,7 @@ export function CardList(props: Props) {
   const invert = useThemeModeValue('20%', '80%')
   const tdHoverBgColor = useThemeModeValue(`${THEME_COLOR_SCHEME}.100`, `${THEME_COLOR_SCHEME}.900`)
   const tdHoverTextColor = useThemeModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
-  const tbBgColor = useThemeModeValue(`${THEME_COLOR_SCHEME}.50`, `${THEME_COLOR_SCHEME}.800`)
+  // const tbBgColor = useThemeModeValue(`${THEME_COLOR_SCHEME}.50`, `${THEME_COLOR_SCHEME}.800`)
 
   const MakeLogo = function (i: Pool | ListItemType) {
     if (isListItemType(i)) {
@@ -94,7 +94,7 @@ export function CardList(props: Props) {
       as="section"
       overflow="hidden"
       className={className}>
-      <Card borderRadius="xl" boxShadow="base" borderWidth={1} bgColor={tbBgColor}>
+      <Card borderRadius="xl" boxShadow="base" borderWidth={1}>
         {props.title && <CardHeader borderBottomWidth={1}>{props.title}</CardHeader>}
         <CardBody>
           <TableContainer>

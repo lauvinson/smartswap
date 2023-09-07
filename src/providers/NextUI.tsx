@@ -19,9 +19,6 @@ export function UIProviders({ children, themeProps }: ProvidersProps) {
 }
 
 export const useThemeModeValue = (lightValue: string, darkValue: string) => {
-  const themeContext = useTheme()
-
-  const { theme } = themeContext
-
+  const { theme } = useTheme()
   return theme === 'dark' ? darkValue : lightValue
 }

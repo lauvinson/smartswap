@@ -107,7 +107,7 @@ export default function SignExample() {
     return (
       <div>
         <NextSeo title={swap_name} />
-        <HeadingComponent as="h2">{swap_name}</HeadingComponent>
+        <HeadingComponent as="h1">{swap_name}</HeadingComponent>
         <hr />
         <ol>
           <li>
