@@ -262,7 +262,7 @@ export default function Infos() {
         // selectionMode="multiple"
         sortDescriptor={sortDescriptor}
         topContent={topContent}
-        topContentPlacement="inside"
+        topContentPlacement="outside"
         onSelectionChange={setSelectedKeys}
         onSortChange={setSortDescriptor}>
         <TableHeader columns={headerColumns}>
