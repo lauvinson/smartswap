@@ -2,6 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import gql from 'graphql-tag'
 import { Transaction, TransactionType } from 'types'
 import { formatTokenSymbol } from 'utils/tokens'
+import { v4 } from 'uuid'
 
 const GLOBAL_TRANSACTIONS = gql`
   query transactions($address: Bytes!) {
@@ -286,6 +287,7 @@ export async function fetchTokenTransactions(
 
     const mints0 = data.mintsAs0.map((m) => {
       return {
+        uuid: v4(),
         type: TransactionType.MINT,
         hash: m.transaction.id,
         timestamp: m.timestamp,
@@ -301,6 +303,7 @@ export async function fetchTokenTransactions(
     })
     const mints1 = data.mintsAs1.map((m) => {
       return {
+        uuid: v4(),
         type: TransactionType.MINT,
         hash: m.transaction.id,
         timestamp: m.timestamp,
@@ -317,6 +320,7 @@ export async function fetchTokenTransactions(
 
     const burns0 = data.burnsAs0.map((m) => {
       return {
+        uuid: v4(),
         type: TransactionType.BURN,
         hash: m.transaction.id,
         timestamp: m.timestamp,
@@ -332,6 +336,7 @@ export async function fetchTokenTransactions(
     })
     const burns1 = data.burnsAs1.map((m) => {
       return {
+        uuid: v4(),
         type: TransactionType.BURN,
         hash: m.transaction.id,
         timestamp: m.timestamp,
@@ -348,6 +353,7 @@ export async function fetchTokenTransactions(
 
     const swaps0 = data.swapsAs0.map((m) => {
       return {
+        uuid: v4(),
         type: TransactionType.SWAP,
         hash: m.transaction.id,
         timestamp: m.timestamp,
@@ -364,6 +370,7 @@ export async function fetchTokenTransactions(
 
     const swaps1 = data.swapsAs1.map((m) => {
       return {
+        uuid: v4(),
         type: TransactionType.SWAP,
         hash: m.transaction.id,
         timestamp: m.timestamp,
