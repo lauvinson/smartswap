@@ -1,66 +1,42 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Container, Input, InputGroup, InputLeftElement, Text, useColorModeValue } from '@chakra-ui/react'
-import { pools } from '../../pools'
+import { Text } from '@chakra-ui/react'
+import { pools } from '@/pools'
 import React from 'react'
-import { SECOND_COLOR_SCHEME } from '../../utils/config'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useQuery } from '@apollo/client'
-import { DAI_QUERY, ETH_PRICE_QUERY } from '../../providers/Apollo'
+import { Input } from '@nextui-org/react'
 
-export default function Examples() {
-  const tdHoverTextColor = useColorModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
-  const { loading: ethLoading, data: ethPriceData, error: ethError } = useQuery(ETH_PRICE_QUERY)
-  const { loading: daiLoading, data: daiData } = useQuery(DAI_QUERY, {
-    variables: {
-      tokenAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-    },
-  })
-
-  function ethPrice() {
-    if (ethLoading || daiLoading) {
-      return <></>
-    }
-    const daiPriceInEth = daiData?.tokens?.[0]?.derivedETH
-    const daiTotalLiquidity = daiData?.tokens?.[0]?.totalLiquidity
-    const ethPriceInUSD = ethPriceData?.bundle?.ethPrice
-    return (
-      <>
-        <div>
-          <div>
-            Dai price:{' '}
-            {ethLoading || daiLoading
-              ? 'Loading token data...'
-              : '$' +
-                // parse responses as floats and fix to 2 decimals
-                (parseFloat(daiPriceInEth) * parseFloat(ethPriceInUSD)).toFixed(2)}
-          </div>
-          <div>
-            Dai total liquidity:{' '}
-            {daiLoading
-              ? 'Loading token data...'
-              : // display the total amount of DAI spread across all pools
-                parseFloat(daiTotalLiquidity).toFixed(0)}
-          </div>
-        </div>
-      </>
-    )
-  }
-
+export default function Applications() {
   return (
     <>
       <Head />
 
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
-        <Container m={0} maxW="100%" py={['2', '2', '5', '5']}>
-          <InputGroup display={{ base: 'none', md: 'block' }} gridColumn="span 1">
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input variant="filled" placeholder="Search Token" focusBorderColor={tdHoverTextColor} />
-          </InputGroup>
-        </Container>
+        <div className="max-w-full px-2 py-2 md:py-5">
+          <Input
+            isClearable
+            radius="lg"
+            classNames={{
+              input: ['bg-transparent', 'text-black/90 dark:text-white/90', 'placeholder:text-default-700/50 dark:placeholder:text-white/60'],
+              innerWrapper: 'bg-transparent',
+              inputWrapper: [
+                'shadow-xl',
+                'bg-default-200/50',
+                'dark:bg-default/60',
+                'backdrop-blur-xl',
+                'backdrop-saturate-200',
+                'hover:bg-default-200/70',
+                'dark:hover:bg-default/70',
+                'group-data-[focused=true]:bg-default-200/50',
+                'dark:group-data-[focused=true]:bg-default/60',
+                '!cursor-text',
+              ],
+            }}
+            placeholder="Search..."
+            startContent={<SearchIcon className="text-black/50 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />}
+          />
+        </div>
         <CardList
           title={
             <>
@@ -75,7 +51,6 @@ export default function Examples() {
           intro={<Text opacity={0.5}>Only the pools with the current network will be displayed. Please switch the network for other pools.</Text>}
           items={pools}
         />
-        {ethPrice()}
       </main>
     </>
   )

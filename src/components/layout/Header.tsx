@@ -1,15 +1,16 @@
 import React from 'react'
-import { Box, Button, Flex, Image, Spacer, Text, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Image, Spacer, Text } from '@chakra-ui/react'
+import { Button } from '@nextui-org/react'
 import { SITE_NAME, THEME_COLOR_SCHEME } from 'utils/config'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { PassportScore } from './PassportScore'
-// import { Web3Button, Web3NetworkSwitch } from '@web3modal/react'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import Logo from '../../assets/logo/color.svg'
 import Router from 'next/router'
 import { useAccount } from 'wagmi'
 import { BeatLoader } from 'react-spinners'
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 interface Props {
   className?: string
@@ -39,7 +40,7 @@ export function Header(props: Props) {
       as="header"
       className={className}
       borderBottom="1px"
-      borderColor={useColorModeValue(`${THEME_COLOR_SCHEME}.200`, `${THEME_COLOR_SCHEME}.700`)}
+      borderColor={useThemeModeValue(`${THEME_COLOR_SCHEME}.200`, `${THEME_COLOR_SCHEME}.700`)}
       px={4}
       py={4}
       pl={['4', '4', '16', '16']}
@@ -52,14 +53,10 @@ export function Header(props: Props) {
 
       <Flex alignItems="center" gap={4}>
         <PassportScore />
-        <Box>
-          <Button onClick={() => open()} isLoading={isConnecting || isReconnecting} spinner={<BeatLoader size={8} color="white" />}>
-            {isConnected && <Jazzicon diameter={14} seed={jsNumberForAddress(address as string)} />}
-            <Text display={{ base: 'none', md: 'block' }} ml={2}>
-              {isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}
-            </Text>
-          </Button>
-        </Box>
+        <Button variant="flat" onClick={() => open()} isLoading={isConnecting || isReconnecting} spinner={<BeatLoader size={8} color="white" />}>
+          {isConnected && <Jazzicon diameter={14} seed={jsNumberForAddress(address as string)} />}
+          {!isConnecting && !isReconnecting && <Text ml={2}>{isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}</Text>}
+        </Button>
         {/*<Web3NetworkSwitch />*/}
         <ThemeSwitcher />
       </Flex>

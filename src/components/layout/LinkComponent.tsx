@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react'
 import NextLink from 'next/link'
-import { Link, useColorModeValue } from '@chakra-ui/react'
+import { Link } from '@chakra-ui/react'
 import { THEME_COLOR_SCHEME } from 'utils/config'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 interface Props {
   href: string
@@ -13,7 +14,7 @@ interface Props {
 export function LinkComponent(props: Props) {
   const className = props.className ?? ''
   const isExternal = props.href.match(/^([a-z0-9]*:|.{0})\/\/.*$/) || props.isExternal
-  const color = useColorModeValue(`${THEME_COLOR_SCHEME}.600`, `${THEME_COLOR_SCHEME}.400`)
+  const color = useThemeModeValue(`${THEME_COLOR_SCHEME}.600`, `${THEME_COLOR_SCHEME}.400`)
 
   if (isExternal) {
     return (

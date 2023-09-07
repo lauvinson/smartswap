@@ -1,12 +1,12 @@
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { ETH_CHAINS } from 'utils/config'
-import { useColorModeValue } from '@chakra-ui/react'
 import { ReactNode, useEffect, useState } from 'react'
 import { createWeb3Modal, useWeb3ModalTheme } from '@web3modal/wagmi/react'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 import { InjectedConnector } from '@wagmi/core'
 import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 interface Props {
   children: ReactNode
@@ -38,14 +38,14 @@ createWeb3Modal({
 export function Web3Provider(props: Props) {
   const [ready, setReady] = useState(false)
   const { themeMode, setThemeMode } = useWeb3ModalTheme()
-  const themeColor = useColorModeValue('light', 'dark')
+  const themeColor = useThemeModeValue('light', 'dark')
 
   useEffect(() => {
     setReady(true)
   }, [])
 
   useEffect(() => {
-    setThemeMode(themeColor)
+    setThemeMode(themeColor === 'dark' ? 'dark' : 'light')
   }, [setThemeMode, themeColor])
 
   return <>{ready && <WagmiConfig config={wagmiConfig}>{props.children}</WagmiConfig>}</>

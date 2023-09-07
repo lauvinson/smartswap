@@ -17,13 +17,13 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { HeadingComponent } from './HeadingComponent'
-import { SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from '../../utils/config'
-import { Pool } from '../../pools'
+import { SECOND_COLOR_SCHEME, THEME_COLOR_SCHEME } from '@/utils/config'
+import { Pool } from '@/pools'
 import { motion } from 'framer-motion'
 import { LinkComponent } from './LinkComponent'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 // 创建一个基于 Chakra UI Box 的 Framer Motion 组件
 const MotionBox = motion(Box)
@@ -52,10 +52,10 @@ function isPoolConfig(item: ListItemType | Pool): item is Pool {
 
 export function CardList(props: Props) {
   const className = props.className ?? ''
-  const invert = useColorModeValue('20%', '80%')
-  const tdHoverBgColor = useColorModeValue(`${THEME_COLOR_SCHEME}.100`, `${THEME_COLOR_SCHEME}.900`)
-  const tdHoverTextColor = useColorModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
-  const tbBgColor = useColorModeValue(`${THEME_COLOR_SCHEME}.50`, `${THEME_COLOR_SCHEME}.800`)
+  const invert = useThemeModeValue('20%', '80%')
+  const tdHoverBgColor = useThemeModeValue(`${THEME_COLOR_SCHEME}.100`, `${THEME_COLOR_SCHEME}.900`)
+  const tdHoverTextColor = useThemeModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
+  const tbBgColor = useThemeModeValue(`${THEME_COLOR_SCHEME}.50`, `${THEME_COLOR_SCHEME}.800`)
 
   const MakeLogo = function (i: Pool | ListItemType) {
     if (isListItemType(i)) {

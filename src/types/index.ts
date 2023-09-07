@@ -75,6 +75,7 @@ export enum TransactionType {
 }
 
 export type Transaction = {
+  uuid: string
   type: TransactionType
   hash: string
   timestamp: string

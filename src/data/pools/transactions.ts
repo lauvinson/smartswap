@@ -2,6 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import gql from 'graphql-tag'
 import { Transaction, TransactionType } from 'types'
 import { formatTokenSymbol } from 'utils/tokens'
+import { v4 } from 'uuid'
 
 const POOL_TRANSACTIONS = gql`
   query transactions($address: Bytes!) {
@@ -163,6 +164,7 @@ export async function fetchPoolTransactions(
 
   const mints = data.mints.map((m) => {
     return {
+      uuid: v4(),
       type: TransactionType.MINT,
       hash: m.transaction.id,
       timestamp: m.timestamp,
@@ -178,6 +180,7 @@ export async function fetchPoolTransactions(
   })
   const burns = data.burns.map((m) => {
     return {
+      uuid: v4(),
       type: TransactionType.BURN,
       hash: m.transaction.id,
       timestamp: m.timestamp,
@@ -194,6 +197,7 @@ export async function fetchPoolTransactions(
 
   const swaps = data.swaps.map((m) => {
     return {
+      uuid: v4(),
       type: TransactionType.SWAP,
       hash: m.transaction.id,
       timestamp: m.timestamp,

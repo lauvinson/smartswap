@@ -1,11 +1,10 @@
+import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Layout } from 'components/layout'
 import { Web3Provider } from 'providers/Web3'
-import { ChakraProvider } from 'providers/Chakra'
 import { useIsMounted } from 'hooks/useIsMounted'
 import { Seo } from 'components/layout/Seo'
 import { client } from '../providers/Apollo'
-// import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import { ApolloProvider } from '@apollo/client'
 import { Provider } from 'react-redux'
 import store from '../state'
@@ -16,16 +15,18 @@ import PoolUpdater from '../state/pools/updater'
 import ApplicationUpdater from '../state/application/updater'
 import ListUpdater from '../state/lists/updater'
 import NetworkUpdater from '../state/network/updater'
+import { UIProviders } from 'providers/NextUI'
+import { ChakraProvider } from '@/providers/Chakra'
 
 function Updaters() {
   return (
     <>
-      <ListUpdater />
-      <UserUpdater />
+      {/*<ListUpdater />*/}
+      {/*<UserUpdater />*/}
       <ProtocolUpdater />
       <TokenUpdater />
       <PoolUpdater />
-      <ApplicationUpdater />
+      {/*<ApplicationUpdater />*/}
       <NetworkUpdater />
     </>
   )
@@ -33,24 +34,23 @@ function Updaters() {
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
-  // loadErrorMessages()
-  // loadDevMessages()
-
   return (
-    <Web3Provider>
-      <ApolloProvider client={client}>
-        <Provider store={store}>
-          <Updaters />
-          <ChakraProvider>
-            <Seo />
-            {isMounted && (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            )}
-          </ChakraProvider>
-        </Provider>
-      </ApolloProvider>
-    </Web3Provider>
+    <UIProviders>
+      <Web3Provider>
+        <ApolloProvider client={client}>
+          <Provider store={store}>
+            <Updaters />
+            <ChakraProvider>
+              <Seo />
+              {isMounted && (
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              )}
+            </ChakraProvider>
+          </Provider>
+        </ApolloProvider>
+      </Web3Provider>
+    </UIProviders>
   )
 }
