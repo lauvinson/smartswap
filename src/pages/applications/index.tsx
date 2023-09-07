@@ -1,29 +1,42 @@
 import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
-import { Container, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
 import { pools } from '@/pools'
 import React from 'react'
-import { SECOND_COLOR_SCHEME } from '@/utils/config'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useThemeModeValue } from '@/providers/NextUI'
+import { Input } from '@nextui-org/react'
 
 export default function Applications() {
-  const tdHoverTextColor = useThemeModeValue(`${SECOND_COLOR_SCHEME}.500`, `${SECOND_COLOR_SCHEME}.300`)
-
   return (
     <>
       <Head />
 
       <main>
         {/*<HeadingComponent as="h2">Nexth Examples</HeadingComponent>*/}
-        <Container m={0} maxW="100%" py={['2', '2', '5', '5']}>
-          <InputGroup display={{ base: 'none', md: 'block' }} gridColumn="span 1">
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input variant="filled" placeholder="Search Token" focusBorderColor={tdHoverTextColor} />
-          </InputGroup>
-        </Container>
+        <div className="max-w-full px-2 py-2 md:py-5">
+          <Input
+            isClearable
+            radius="lg"
+            classNames={{
+              input: ['bg-transparent', 'text-black/90 dark:text-white/90', 'placeholder:text-default-700/50 dark:placeholder:text-white/60'],
+              innerWrapper: 'bg-transparent',
+              inputWrapper: [
+                'shadow-xl',
+                'bg-default-200/50',
+                'dark:bg-default/60',
+                'backdrop-blur-xl',
+                'backdrop-saturate-200',
+                'hover:bg-default-200/70',
+                'dark:hover:bg-default/70',
+                'group-data-[focused=true]:bg-default-200/50',
+                'dark:group-data-[focused=true]:bg-default/60',
+                '!cursor-text',
+              ],
+            }}
+            placeholder="Search..."
+            startContent={<SearchIcon className="text-black/50 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />}
+          />
+        </div>
         <CardList
           title={
             <>

@@ -21,12 +21,12 @@ import { ChakraProvider } from '@/providers/Chakra'
 function Updaters() {
   return (
     <>
-      <ListUpdater />
-      <UserUpdater />
+      {/*<ListUpdater />*/}
+      {/*<UserUpdater />*/}
       <ProtocolUpdater />
       <TokenUpdater />
       <PoolUpdater />
-      <ApplicationUpdater />
+      {/*<ApplicationUpdater />*/}
       <NetworkUpdater />
     </>
   )

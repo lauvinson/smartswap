@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input,
+  ScrollShadow,
   Selection,
   SortDescriptor,
   Table,
@@ -91,6 +92,8 @@ export default function Infos() {
     const cellValue = tx[columnKey as keyof Transaction]
 
     switch (columnKey) {
+      case 'hash':
+        return <div className="max-w-1/2 overflow-hidden overflow-ellipsis whitespace-nowrap">{cellValue}</div>
       case 'timestamp':
         return getTimeAgo(cellValue as number)
       default:
@@ -127,6 +130,9 @@ export default function Infos() {
   const topContent = useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
+        <div className="flex justify-between items-center">
+          <span className="font-bold text-large">Transactions</span>
+        </div>
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
@@ -180,9 +186,6 @@ export default function Infos() {
             </Dropdown>
           </div>
         </div>
-        <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {txs.length} Transactions</span>
-        </div>
       </div>
     )
   }, [filterValue, visibleColumns, onSearchChange, txs.length, hasSearchFilter])
@@ -206,21 +209,36 @@ export default function Infos() {
     )
   }, [selectedKeys, items.length, page, pages, hasSearchFilter])
 
+  const classNames = useMemo(
+    () => ({
+      wrapper: ['max-h-[auto]', 'no-scrollbar'],
+      th: ['bg-transparent', 'text-default-500', 'border-b', 'border-divider'],
+      td: [
+        // changing the rows border radius
+        // first
+        'group-data-[first=true]:first:before:rounded-none',
+        'group-data-[first=true]:last:before:rounded-none',
+        // middle
+        'group-data-[middle=true]:before:rounded-none',
+        // last
+        'group-data-[last=true]:first:before:rounded-none',
+        'group-data-[last=true]:last:before:rounded-none',
+      ],
+    }),
+    []
+  )
+
   return (
     <div className={'my-10'}>
       <Table
-        aria-label="Example table with custom cells, pagination and sorting"
-        isHeaderSticky
         bottomContent={bottomContent}
-        bottomContentPlacement="outside"
-        classNames={{
-          wrapper: 'max-h-[382px]',
-        }}
+        bottomContentPlacement="inside"
+        classNames={classNames}
         selectedKeys={selectedKeys}
         // selectionMode="multiple"
         sortDescriptor={sortDescriptor}
         topContent={topContent}
-        topContentPlacement="outside"
+        topContentPlacement="inside"
         onSelectionChange={setSelectedKeys}
         onSortChange={setSortDescriptor}>
         <TableHeader columns={headerColumns}>
