@@ -1,5 +1,5 @@
 import { Head } from 'components/layout/Head'
-import Applications from './applications'
+import Applications from '../deprecated'
 import Infos from '@/pages/infos'
 
 export default function Home() {

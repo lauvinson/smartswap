@@ -1,5 +1,5 @@
-import { Head } from 'components/layout/Head'
-import { CardList } from 'components/layout/CardList'
+import { Head } from '@/components/layout/Head'
+import { CardList } from '@/components/layout/CardList'
 import { pools } from '@/pools'
 import React from 'react'
 import { Search } from 'react-feather'
