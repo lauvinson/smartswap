@@ -1,8 +1,6 @@
 import React from 'react'
 import { Pool } from '@/pools'
-import { LinkComponent } from './LinkComponent'
-import { useThemeModeValue } from '@/providers/NextUI'
-import { Card, Image } from '@nextui-org/react'
+import { Image } from '@nextui-org/react'
 
 interface Props {
   className?: string

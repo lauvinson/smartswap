@@ -1,5 +1,6 @@
 // @ts-ignore
 import ChromeDinoGame from 'react-chrome-dino'
+
 // @ts-ignore
 function Error({ statusCode }) {
   switch (statusCode) {

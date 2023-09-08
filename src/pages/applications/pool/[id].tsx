@@ -1,8 +1,7 @@
 import { useAccount, useContractEvent, useContractWrite, usePrepareContractWrite } from 'wagmi'
-import { Avatar, Button, Select, SelectItem } from '@nextui-org/react'
+import { Button, Select, SelectItem } from '@nextui-org/react'
 import React, { useMemo, useState } from 'react'
 import { NextSeo } from 'next-seo'
-import { HeadingComponent } from 'components/layout/HeadingComponent'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { abis, Pool, pools } from '@/pools'
@@ -11,6 +10,7 @@ import { useAllTokenData } from '@/state/tokens/hooks'
 import { notEmpty } from '@/utils'
 import CurrencyLogo from '@/components/CurrencyLogo'
 import styled from '@emotion/styled'
+import { ChevronsRight } from 'react-feather'
 
 const ResponsiveLogo = styled(CurrencyLogo)`
   @media screen and (max-width: 670px) {
@@ -84,12 +84,10 @@ function Approve({ pool }: { pool: Pool }) {
   }
 
   return (
-    <div className={'flex-row'}>
-      <HeadingComponent as="h3">Select Token</HeadingComponent>
-
+    <div className={'flex-col'}>
       <Select
         isRequired
-        defaultSelectedKeys={'all'}
+        defaultSelectedKeys={[pool.token0.address]}
         items={formattedTokens}
         label="Approve to"
         className="max-w-xs"
@@ -145,7 +143,7 @@ function Approve({ pool }: { pool: Pool }) {
           </SelectItem>
         )}
       </Select>
-
+      <br />
       <Button className={'mt-4'} onClick={submit} isLoading={approving} spinner={<BeatLoader size={8} color="white" />} variant="flat">
         {!approving && 'Approve'}
       </Button>
@@ -163,13 +161,18 @@ export default function SignExample() {
   if (isConnected) {
     const token0Name = pool.token0.name
     const token1Name = pool.token1.name
-    const swap_name = `${token0Name}-${token1Name} Swap`
+    const swap_name = `${token0Name} / ${token1Name} Liquidity`
     return (
-      <div>
+      <div className={'flex flex-col gap-2'}>
         <NextSeo title={swap_name} />
-        <HeadingComponent as="h1">{swap_name}</HeadingComponent>
+        <div className={'flex flex-row gap-2 items-center'}>
+          <CurrencyLogo address={pool.token0.address} className="flex-shrink-0" size="sm" alt={pool.token0.name} />
+          <ChevronsRight />
+          <CurrencyLogo address={pool.token1.address} className="flex-shrink-0" size="sm" alt={pool.token1.name} />
+        </div>
+        <p className={'text-4xl font-bold'}>{swap_name}</p>
         <hr />
-        <ol>
+        <ul className={'opacity-50'}>
           <li>
             Approve either {token0Name} or {token1Name}, or both
           </li>
@@ -178,7 +181,7 @@ export default function SignExample() {
           </li>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           <li>That's it! We do the rest. Withdraw whenever you want.</li>
-        </ol>
+        </ul>
         <br />
         <Approve pool={pool} />
       </div>

@@ -96,7 +96,7 @@ export default function Infos() {
     switch (columnKey) {
       case 'type':
         return (
-          <p className={'text-pink-600 font-bold'}>
+          <p className={'text-pink-400 font-bold'}>
             {cellValue === TransactionType.MINT
               ? `Add ${tx.token0Symbol} and ${tx.token1Symbol}`
               : cellValue === TransactionType.SWAP
@@ -105,7 +105,7 @@ export default function Infos() {
           </p>
         )
       case 'sender':
-        return <p className={'text-pink-600 font-bold'}>{cellValue}</p>
+        return <p className={'text-pink-400 font-bold'}>{cellValue}</p>
       case 'hash':
         return <p>{cellValue}</p>
       case 'timestamp':
