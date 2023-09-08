@@ -1,14 +1,31 @@
 import { useAccount, useContractEvent, useContractWrite, usePrepareContractWrite } from 'wagmi'
-import { Button, FormControl, FormLabel, Select } from '@chakra-ui/react'
-import { useState } from 'react'
+import { Avatar, Button, Select, SelectItem } from '@nextui-org/react'
+import React, { useMemo, useState } from 'react'
 import { NextSeo } from 'next-seo'
 import { HeadingComponent } from 'components/layout/HeadingComponent'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { abis, Pool, pools } from '../../../pools'
-import { SECOND_COLOR_SCHEME } from '../../../utils/config'
+import { abis, Pool, pools } from '@/pools'
+import { BeatLoader } from 'react-spinners'
+import { useAllTokenData } from '@/state/tokens/hooks'
+import { notEmpty } from '@/utils'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import styled from '@emotion/styled'
+
+const ResponsiveLogo = styled(CurrencyLogo)`
+  @media screen and (max-width: 670px) {
+    width: 16px;
+    height: 16px;
+  }
+`
 
 function Approve({ pool }: { pool: Pool }) {
+  const allTokens = useAllTokenData()
+  const formattedTokens = useMemo(() => {
+    return Object.values(allTokens)
+      .map((t) => t.data)
+      .filter(notEmpty)
+  }, [allTokens])
   let [approving, setApproving] = useState(false)
   let [token, setToken] = useState(pool.token0.address)
   const spender = pool.address
@@ -67,28 +84,71 @@ function Approve({ pool }: { pool: Pool }) {
   }
 
   return (
-    <div>
-      <HeadingComponent as="h3">Deposit</HeadingComponent>
+    <div className={'flex-row'}>
+      <HeadingComponent as="h3">Select Token</HeadingComponent>
 
-      <FormControl>
-        <FormLabel>Select Token</FormLabel>
+      <Select
+        isRequired
+        defaultSelectedKeys={'all'}
+        items={formattedTokens}
+        label="Approve to"
+        className="max-w-xs"
+        variant="flat"
+        classNames={{
+          label: 'group-data-[filled=true]:-translate-y-5',
+          trigger: 'min-h-unit-16',
+          listboxWrapper: 'max-h-[400px]',
+        }}
+        onChange={(e) => setToken(e.target.value)}
+        listboxProps={{
+          itemClasses: {
+            base: [
+              'rounded-md',
+              'text-default-500',
+              'transition-opacity',
+              'data-[hover=true]:text-foreground',
+              'data-[hover=true]:bg-default-100',
+              'dark:data-[hover=true]:bg-default-50',
+              'data-[selectable=true]:focus:bg-default-50',
+              'data-[pressed=true]:opacity-70',
+              'data-[focus-visible=true]:ring-default-500',
+            ],
+          },
+        }}
+        popoverProps={{
+          classNames: {
+            base: 'p-0 border-small border-divider bg-background',
+            arrow: 'bg-default-200',
+          },
+        }}
+        renderValue={(items) => {
+          return items.map((token) => (
+            <div key={token.data?.address} className="flex items-center gap-2">
+              <CurrencyLogo address={token.data?.address} className="flex-shrink-0" size="sm" alt={token.data?.name} />
+              <div className="flex flex-col">
+                <span>{token.data?.name}</span>
+                <span className="text-default-500 text-tiny">({token.data?.address})</span>
+              </div>
+            </div>
+          ))
+        }}
+        color={'default'}>
+        {(token) => (
+          <SelectItem key={token.address} textValue={token.name}>
+            <div className="flex gap-2 items-center">
+              <CurrencyLogo address={token.address} className="flex-shrink-0" size="sm" alt={token.name} />
+              <div className="flex flex-col">
+                <span className="text-small">{token.name}</span>
+                <span className="text-tiny text-default-400">{token.address}</span>
+              </div>
+            </div>
+          </SelectItem>
+        )}
+      </Select>
 
-        <Select onChange={(e) => setToken(e.target.value)}>
-          <option value={pool.token0.address}>{pool.token0.name}</option>
-          <option value={pool.token1.address}>{pool.token1.name}</option>
-        </Select>
-
-        <Button
-          mt={4}
-          type="submit"
-          onClick={submit}
-          isLoading={approving}
-          loadingText="Approving"
-          colorScheme={`${SECOND_COLOR_SCHEME}`}
-          variant="outline">
-          Approve
-        </Button>
-      </FormControl>
+      <Button className={'mt-4'} onClick={submit} isLoading={approving} spinner={<BeatLoader size={8} color="white" />} variant="flat">
+        {!approving && 'Approve'}
+      </Button>
     </div>
   )
 }

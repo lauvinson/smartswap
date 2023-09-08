@@ -1,4 +1,4 @@
-import { ThemingProps } from '@chakra-ui/react'
+// import { ThemingProps } from '@chakra-ui/react'
 import { arbitrum, bsc, mainnet, optimism, polygon } from '@wagmi/chains'
 import { avalanche, base, celo } from 'viem/chains'
 
@@ -8,9 +8,9 @@ export const SITE_DESCRIPTION =
 export const SITE_URL = 'https://byte.exchange'
 
 export const THEME_INITIAL_COLOR = 'system'
-export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
-
-export const SECOND_COLOR_SCHEME: ThemingProps['colorScheme'] = 'pink'
+// export const THEME_COLOR_SCHEME: ThemingProps['colorScheme'] = 'gray'
+//
+// export const SECOND_COLOR_SCHEME: ThemingProps['colorScheme'] = 'pink'
 export const THEME_CONFIG = {
   initialColorMode: THEME_INITIAL_COLOR,
 }

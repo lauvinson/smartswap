@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Image } from '@nextui-org/react'
 import { SITE_NAME } from 'utils/config'
 import { ThemeSwitcher } from './ThemeSwitcher'
-import { PassportScore } from './PassportScore'
+// import { PassportScore } from './PassportScore'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import Logo from '../../assets/logo/color.svg'
 import Router from 'next/router'
@@ -34,11 +34,11 @@ export function Header(props: Props) {
   }
 
   return (
-    <div className="flex justify-between border-b-1 p-4 md:pl-16 md:pr-16 mb-8">
+    <div className="flex justify-between p-4 md:pl-16 md:pr-16 mb-8">
       <Image width={35} height={35} onClick={Home} draggable={false} src={Logo.src} alt={SITE_NAME} />
 
       <div className="flex justify-center gap-4">
-        <PassportScore />
+        {/*<PassportScore />*/}
         <Button variant="flat" onClick={() => open()} isLoading={isConnecting || isReconnecting} spinner={<BeatLoader size={8} color="white" />}>
           {isConnected && <Jazzicon diameter={14} seed={jsNumberForAddress(address as string)} />}
           {!isConnecting && !isReconnecting && <div className="text-base">{isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}</div>}

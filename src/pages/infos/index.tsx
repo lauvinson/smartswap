@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/react'
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, SearchIcon } from '@chakra-ui/icons'
+import { ChevronDown, ChevronLeft, ChevronRight, Search } from 'react-feather'
 import { txColumns, typeOptions } from '@/constants/data'
 import { capitalize } from '@/utils'
 import { useProtocolTransactions } from '@/state/protocol/hooks'
@@ -162,7 +162,7 @@ export default function Infos() {
             isClearable
             className="w-full sm:max-w-[44%]"
             placeholder="Search by sender..."
-            startContent={<SearchIcon />}
+            startContent={<Search />}
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
@@ -170,7 +170,7 @@ export default function Infos() {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                <Button endContent={<ChevronDown className="text-small" />} variant="flat">
                   Type
                 </Button>
               </DropdownTrigger>
@@ -190,7 +190,7 @@ export default function Infos() {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                <Button endContent={<ChevronDown className="text-small" />} variant="flat">
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -223,10 +223,10 @@ export default function Infos() {
         {/*<Pagination isCompact showControls showShadow color="primary" page={page} total={pages} onChange={setPage} />*/}
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
           <Button isDisabled={pages === 1} size="sm" variant="light" onPress={onPreviousPage}>
-            <ChevronLeftIcon />
+            <ChevronLeft />
           </Button>
           <Button isDisabled={pages === 1} size="sm" variant="light" onPress={onNextPage}>
-            <ChevronRightIcon />
+            <ChevronRight />
           </Button>
         </div>
       </div>
