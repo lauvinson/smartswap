@@ -6,6 +6,7 @@ import { SITE_NAME } from '@/utils/config'
 import { useThemeModeValue } from '@/providers/NextUI'
 import { Image } from '@nextui-org/react'
 import clsx from 'clsx'
+import { NetworkStatus } from '@/components/layout/NetworkStatus'
 
 interface Props {
   className?: string
@@ -18,7 +19,9 @@ export function Footer(props: Props) {
   return (
     <div className={'flex justify-items-center align-middle py-10 lg:py-20'}>
       <div className={'container leading-normal'}>
-        <Image draggable={false} className={clsx('mb-5 lg:10 ', filterValue)} width={35} height={35} src={Logo.src} alt={SITE_NAME} />
+        <div className={'flex gap-2 align-middle mb-5'}>
+          <Image draggable={false} className={clsx('lg:10 ', filterValue)} width={35} height={35} src={Logo.src} alt={SITE_NAME} />
+        </div>
         <p>Byte Swap Labs</p>
         <p>
           Contact us by{' '}
@@ -26,7 +29,7 @@ export function Footer(props: Props) {
             <p className={'italic'}>chat@byte.exchange</p>
           </LinkComponent>
         </p>
-        <div className={'flex gap-2 align-middle mt-2'}>
+        <div className={'flex gap-2 align-middle my-2'}>
           <LinkComponent href={`/`}>
             <FaTwitter />
           </LinkComponent>
@@ -37,6 +40,7 @@ export function Footer(props: Props) {
             <FaWallet />
           </LinkComponent>
         </div>
+        <NetworkStatus />
       </div>
     </div>
   )

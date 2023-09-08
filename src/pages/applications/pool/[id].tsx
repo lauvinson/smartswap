@@ -1,14 +1,31 @@
 import { useAccount, useContractEvent, useContractWrite, usePrepareContractWrite } from 'wagmi'
-import { Button, FormControl, FormLabel, Select } from '@chakra-ui/react'
-import { useState } from 'react'
+import { Button, Select, SelectItem } from '@nextui-org/react'
+import React, { useMemo, useState } from 'react'
 import { NextSeo } from 'next-seo'
-import { HeadingComponent } from 'components/layout/HeadingComponent'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { abis, Pool, pools } from '../../../pools'
-import { SECOND_COLOR_SCHEME } from '../../../utils/config'
+import { abis, Pool, pools } from '@/pools'
+import { BeatLoader } from 'react-spinners'
+import { useAllTokenData } from '@/state/tokens/hooks'
+import { notEmpty } from '@/utils'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import styled from '@emotion/styled'
+import { ChevronsRight } from 'react-feather'
+
+const ResponsiveLogo = styled(CurrencyLogo)`
+  @media screen and (max-width: 670px) {
+    width: 16px;
+    height: 16px;
+  }
+`
 
 function Approve({ pool }: { pool: Pool }) {
+  const allTokens = useAllTokenData()
+  const formattedTokens = useMemo(() => {
+    return Object.values(allTokens)
+      .map((t) => t.data)
+      .filter(notEmpty)
+  }, [allTokens])
   let [approving, setApproving] = useState(false)
   let [token, setToken] = useState(pool.token0.address)
   const spender = pool.address
@@ -67,28 +84,69 @@ function Approve({ pool }: { pool: Pool }) {
   }
 
   return (
-    <div>
-      <HeadingComponent as="h3">Deposit</HeadingComponent>
-
-      <FormControl>
-        <FormLabel>Select Token</FormLabel>
-
-        <Select onChange={(e) => setToken(e.target.value)}>
-          <option value={pool.token0.address}>{pool.token0.name}</option>
-          <option value={pool.token1.address}>{pool.token1.name}</option>
-        </Select>
-
-        <Button
-          mt={4}
-          type="submit"
-          onClick={submit}
-          isLoading={approving}
-          loadingText="Approving"
-          colorScheme={`${SECOND_COLOR_SCHEME}`}
-          variant="outline">
-          Approve
-        </Button>
-      </FormControl>
+    <div className={'flex-col'}>
+      <Select
+        isRequired
+        defaultSelectedKeys={[pool.token0.address]}
+        items={formattedTokens}
+        label="Approve to"
+        className="max-w-xs"
+        variant="flat"
+        classNames={{
+          label: 'group-data-[filled=true]:-translate-y-5',
+          trigger: 'min-h-unit-16',
+          listboxWrapper: 'max-h-[400px]',
+        }}
+        onChange={(e) => setToken(e.target.value)}
+        listboxProps={{
+          itemClasses: {
+            base: [
+              'rounded-md',
+              'text-default-500',
+              'transition-opacity',
+              'data-[hover=true]:text-foreground',
+              'data-[hover=true]:bg-default-100',
+              'dark:data-[hover=true]:bg-default-50',
+              'data-[selectable=true]:focus:bg-default-50',
+              'data-[pressed=true]:opacity-70',
+              'data-[focus-visible=true]:ring-default-500',
+            ],
+          },
+        }}
+        popoverProps={{
+          classNames: {
+            base: 'p-0 border-small border-divider bg-background',
+            arrow: 'bg-default-200',
+          },
+        }}
+        renderValue={(items) => {
+          return items.map((token) => (
+            <div key={token.data?.address} className="flex items-center gap-2">
+              <CurrencyLogo address={token.data?.address} className="flex-shrink-0" size="sm" alt={token.data?.name} />
+              <div className="flex flex-col">
+                <span>{token.data?.name}</span>
+                <span className="text-default-500 text-tiny">({token.data?.address})</span>
+              </div>
+            </div>
+          ))
+        }}
+        color={'default'}>
+        {(token) => (
+          <SelectItem key={token.address} textValue={token.name}>
+            <div className="flex gap-2 items-center">
+              <CurrencyLogo address={token.address} className="flex-shrink-0" size="sm" alt={token.name} />
+              <div className="flex flex-col">
+                <span className="text-small">{token.name}</span>
+                <span className="text-tiny text-default-400">{token.address}</span>
+              </div>
+            </div>
+          </SelectItem>
+        )}
+      </Select>
+      <br />
+      <Button className={'mt-4'} onClick={submit} isLoading={approving} spinner={<BeatLoader size={8} color="white" />} variant="flat">
+        {!approving && 'Approve'}
+      </Button>
     </div>
   )
 }
@@ -103,13 +161,18 @@ export default function SignExample() {
   if (isConnected) {
     const token0Name = pool.token0.name
     const token1Name = pool.token1.name
-    const swap_name = `${token0Name}-${token1Name} Swap`
+    const swap_name = `${token0Name} / ${token1Name} Liquidity`
     return (
-      <div>
+      <div className={'flex flex-col gap-2'}>
         <NextSeo title={swap_name} />
-        <HeadingComponent as="h1">{swap_name}</HeadingComponent>
+        <div className={'flex flex-row gap-2 items-center'}>
+          <CurrencyLogo address={pool.token0.address} className="flex-shrink-0" size="sm" alt={pool.token0.name} />
+          <ChevronsRight />
+          <CurrencyLogo address={pool.token1.address} className="flex-shrink-0" size="sm" alt={pool.token1.name} />
+        </div>
+        <p className={'text-4xl font-bold'}>{swap_name}</p>
         <hr />
-        <ol>
+        <ul className={'opacity-50'}>
           <li>
             Approve either {token0Name} or {token1Name}, or both
           </li>
@@ -118,7 +181,7 @@ export default function SignExample() {
           </li>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           <li>That's it! We do the rest. Withdraw whenever you want.</li>
-        </ol>
+        </ul>
         <br />
         <Approve pool={pool} />
       </div>

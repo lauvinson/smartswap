@@ -2,7 +2,7 @@ import { Head } from 'components/layout/Head'
 import { CardList } from 'components/layout/CardList'
 import { pools } from '@/pools'
 import React from 'react'
-import { SearchIcon } from '@chakra-ui/icons'
+import { Search } from 'react-feather'
 import { Input } from '@nextui-org/react'
 
 export default function Applications() {
@@ -33,7 +33,7 @@ export default function Applications() {
               ],
             }}
             placeholder="Search..."
-            startContent={<SearchIcon className="text-black/50 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />}
+            startContent={<Search className="text-black/50 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />}
           />
         </div>
         <CardList

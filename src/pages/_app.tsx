@@ -13,7 +13,6 @@ import TokenUpdater from '../state/tokens/updater'
 import PoolUpdater from '../state/pools/updater'
 import NetworkUpdater from '../state/network/updater'
 import { UIProviders } from 'providers/NextUI'
-import { ChakraProvider } from '@/providers/Chakra'
 
 function Updaters() {
   return (
@@ -37,14 +36,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <ApolloProvider client={client}>
           <Provider store={store}>
             <Updaters />
-            <ChakraProvider>
-              <Seo />
-              {isMounted && (
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              )}
-            </ChakraProvider>
+            <Seo />
+            {isMounted && (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            )}
           </Provider>
         </ApolloProvider>
       </Web3Provider>
