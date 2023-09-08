@@ -15,7 +15,7 @@ import {
 import { SITE_NAME } from 'utils/config'
 // import { PassportScore } from './PassportScore'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
-import Logo from '../../assets/logo/hollow.svg'
+import Logo from '@/assets/logo/hollow.svg'
 import Router from 'next/router'
 import { useAccount } from 'wagmi'
 import { BeatLoader } from 'react-spinners'

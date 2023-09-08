@@ -38,7 +38,7 @@ export function NetworkStatus() {
               initial={{ y: direction === 'upward' ? -10 : 10 }}
               animate={(slidingAnimation as any)[direction]}
               transition={{ type: 'spring', duration: 2 }}>
-              {lastBlockNumber.toString()}
+              {lastBlockNumber?.toString()}
             </motion.span>
           </span>
         )}
