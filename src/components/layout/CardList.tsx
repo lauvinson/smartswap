@@ -23,6 +23,7 @@ const CardSkeleton: React.FC = () => {
   return (
     <div className="max-w-full w-full flex items-center gap-3">
       {Array.from({ length: 3 }, (i) => {
+        // eslint-disable-next-line react/jsx-key
         return <Skeleton className="flex rounded-lg w-1/3 h-24" />
       })}
     </div>
