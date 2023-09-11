@@ -9,15 +9,7 @@ import { BeatLoader } from 'react-spinners'
 import { useAllTokenData } from '@/state/tokens/hooks'
 import { notEmpty } from '@/utils'
 import CurrencyLogo from '@/components/CurrencyLogo'
-import styled from '@emotion/styled'
 import { ChevronsRight } from 'react-feather'
-
-const ResponsiveLogo = styled(CurrencyLogo)`
-  @media screen and (max-width: 670px) {
-    width: 16px;
-    height: 16px;
-  }
-`
 
 function Approve({ pool }: { pool: Pool }) {
   const allTokens = useAllTokenData()
