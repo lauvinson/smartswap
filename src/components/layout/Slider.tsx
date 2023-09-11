@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Slider = (props: Props) => {
-  const slider = useRef()
+  const slider = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     const ctx = gsap.context((self) => {
