@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { Pool } from '@/pools'
-import { Image } from '@nextui-org/react'
+import { Button, Card, CardFooter, CardHeader, Image, Skeleton } from '@nextui-org/react'
+import { useAllTokenData } from '@/state/tokens/hooks'
+import { notEmpty } from '@/utils'
+import Slider from '@/components/layout/Slider'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import { formatDollarAmount } from '@/utils/numbers'
+import Percent from '@/components/Percent'
 
 interface Props {
   className?: string
@@ -13,8 +19,27 @@ function isPoolConfig(item: Pool): item is Pool {
   return (item as Pool).token0 !== undefined
 }
 
+const CardSkeleton: React.FC = () => {
+  return (
+    <div className="max-w-full w-full flex items-center gap-3">
+      {Array.from({ length: 3 }, (i) => {
+        return <Skeleton className="flex rounded-lg w-1/3 h-24" />
+      })}
+    </div>
+  )
+}
+
 export function CardList(props: Props) {
-  // const tbBgColor = useThemeModeValue(`${THEME_COLOR_SCHEME}.50`, `${THEME_COLOR_SCHEME}.800`)
+  const allTokens = useAllTokenData()
+  const formattedTokens = useMemo(() => {
+    return Object.values(allTokens)
+      .map((t) => t.data)
+      .filter(notEmpty)
+  }, [allTokens])
+  const [followedMap, setFollowedMap] = useState<{ [id: string]: boolean }>({})
+  function updateFollowedStatus(id: string, isFollowed: boolean) {
+    setFollowedMap((prev) => ({ ...prev, [id]: isFollowed }))
+  }
 
   const MakeLogo = function (i: Pool) {
     return (
@@ -30,32 +55,53 @@ export function CardList(props: Props) {
 
   return (
     <div className={'overflow-hidden'}>
-      <div className="table w-full ...">
-        <div className="table-header-group ...">
-          <div className="table-row">
-            <div className="table-cell text-left ...">Song</div>
-            <div className="table-cell text-left ...">Artist</div>
-            <div className="table-cell text-left ...">Year</div>
-          </div>
+      {formattedTokens.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          <span className="font-bold text-large">Tokens</span>
+          <Slider>
+            {formattedTokens.map((t, i) => {
+              return (
+                <div key={i}>
+                  <Card className="max-w-[auto]">
+                    <CardHeader className="justify-between">
+                      <div className="flex gap-5">
+                        <CurrencyLogo address={t.address} className="flex-shrink-0" size="sm" alt={t.name} />
+                        <div className="flex flex-col gap-1 items-start justify-center">
+                          <h4 className="text-small font-semibold leading-none text-default-600">{t.name}</h4>
+                          {/*<h5 className="max-w-1/4 overflow-hidden whitespace-nowrap text-overflow-ellipsis text-small tracking-tight text-default-400">*/}
+                          {/*  {t.address}*/}
+                          {/*</h5>*/}
+                        </div>
+                      </div>
+                      <Button
+                        className={followedMap[t.address] ? 'bg-transparent text-pink-400 border-default-200' : ''}
+                        color={'default'}
+                        radius="full"
+                        size="sm"
+                        variant={followedMap[t.address] ? 'bordered' : 'flat'}
+                        onPress={() => updateFollowedStatus(t.address, !followedMap[t.address])}>
+                        {followedMap[t.address] ? 'Unwatch' : 'Watch'}
+                      </Button>
+                    </CardHeader>
+                    <CardFooter className="gap-3">
+                      <div className="flex gap-1">
+                        <p className="font-semibold text-small text-green-400">{formatDollarAmount(Math.abs(t.priceUSD))}</p>
+                        <p className=" text-default-400 text-small">Price</p>
+                      </div>
+                      <div className="flex gap-1">
+                        <p className="font-semibold text-small text-pink-400">{<Percent value={t.priceUSDChange} fontWeight={400} />}</p>
+                        <p className="text-default-400 text-small">Change</p>
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </div>
+              )
+            })}
+          </Slider>
         </div>
-        <div className="table-row-group">
-          <div className="table-row">
-            <div className="table-cell ...">The Sliding Mr. Bones (Next Stop, Pottersville)</div>
-            <div className="table-cell ...">Malcolm Lockyer</div>
-            <div className="table-cell ...">1961</div>
-          </div>
-          <div className="table-row">
-            <div className="table-cell ...">Witchy Woman</div>
-            <div className="table-cell ...">The Eagles</div>
-            <div className="table-cell ...">1972</div>
-          </div>
-          <div className="table-row">
-            <div className="table-cell ...">Shining Star</div>
-            <div className="table-cell ...">Earth, Wind, and Fire</div>
-            <div className="table-cell ...">1975</div>
-          </div>
-        </div>
-      </div>
+      ) : (
+        <CardSkeleton />
+      )}
       {/*<Card>*/}
       {/*  {props.title && <CardHeader borderBottomWidth={1}>{props.title}</CardHeader>}*/}
       {/*  <CardBody>*/}

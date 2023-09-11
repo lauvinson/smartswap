@@ -97,9 +97,6 @@ export function Header(props: Props) {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
         <NavbarItem>
           {isConnected ? (
             <Avatar
@@ -107,8 +104,6 @@ export function Header(props: Props) {
               onClick={() => open()}
               as="button"
               className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
               size="sm"
               alt={address}
               src={getJazziconDataUrl(address as string)}

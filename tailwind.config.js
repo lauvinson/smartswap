@@ -10,6 +10,9 @@ module.exports = {
         '1/2': '50%',
         '3/4': '75%',
       },
+      width: {
+        'super-wide': '150%', // 超过父容器宽度的宽度
+      },
     },
   },
   darkMode: 'class',
