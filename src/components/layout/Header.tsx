@@ -64,7 +64,7 @@ export function Header(props: Props) {
     //     <ThemeSwitcher />
     //   </div>
     // </div>
-    <Navbar className={className} isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+    <Navbar maxWidth={'2xl'} className={className} isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
       </NavbarContent>
