@@ -24,10 +24,11 @@ import { getTimeAgo } from '@/utils/data'
 import { formatAmount, formatDollarAmount } from '@/utils/numbers'
 import { BeatLoader } from 'react-spinners'
 import { useThemeModeValue } from '@/providers/NextUI'
+import { useActiveNetworkVersion } from '@/state/application/hooks'
 
 const INITIAL_VISIBLE_COLUMNS = ['type', 'amountToken0', 'amountToken1', 'timestamp', 'sender']
 
-export default function Infos() {
+export default function Transactions() {
   const [txs = []] = useProtocolTransactions()
   const spinnerColor = useThemeModeValue('black', 'white')
   const [filterValue, setFilterValue] = useState('')
@@ -96,7 +97,7 @@ export default function Infos() {
     switch (columnKey) {
       case 'type':
         return (
-          <p className={'text-pink-400 font-bold'}>
+          <p className={'font-bold'}>
             {cellValue === TransactionType.MINT
               ? `Add ${tx.token0Symbol} and ${tx.token1Symbol}`
               : cellValue === TransactionType.SWAP
@@ -105,7 +106,7 @@ export default function Infos() {
           </p>
         )
       case 'sender':
-        return <p className={'text-pink-400 font-bold'}>{cellValue}</p>
+        return <p className={'font-bold'}>{cellValue}</p>
       case 'hash':
         return <p>{cellValue}</p>
       case 'timestamp':
@@ -275,7 +276,7 @@ export default function Infos() {
         <TableBody
           isLoading={isLoading}
           loadingContent={<BeatLoader size={20} color={spinnerColor} />}
-          emptyContent={'No users found'}
+          emptyContent={'No Transactions'}
           items={sortedItems}>
           {(item) => (
             <TableRow key={item.uuid}>

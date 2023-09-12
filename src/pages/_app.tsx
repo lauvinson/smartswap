@@ -13,7 +13,6 @@ import TokenUpdater from '../state/tokens/updater'
 import PoolUpdater from '../state/pools/updater'
 import NetworkUpdater from '../state/network/updater'
 import { UIProviders } from 'providers/NextUI'
-import { ThemeProvider } from 'next-themes'
 
 function Updaters() {
   return (
@@ -32,18 +31,16 @@ function Updaters() {
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
   return (
-    <UIProviders>
+    <UIProviders themeProps={{ attribute: 'class', storageKey: 'nightwind-mode', defaultTheme: 'system', enableSystem: true }}>
       <Web3Provider>
         <ApolloProvider client={client}>
           <Provider store={store}>
             <Updaters />
             <Seo />
             {isMounted && (
-              <ThemeProvider forcedTheme={(Component as any).theme || 'dark'} attribute="class">
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </ThemeProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             )}
           </Provider>
         </ApolloProvider>

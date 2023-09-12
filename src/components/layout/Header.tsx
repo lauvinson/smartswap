@@ -22,6 +22,7 @@ import { BeatLoader } from 'react-spinners'
 import { useThemeModeValue } from '@/providers/NextUI'
 import clsx from 'clsx'
 import { getJazziconDataUrl } from '@/utils/jazzicon'
+import { useActiveNetworkVersion } from '@/state/application/hooks'
 
 interface Props {
   className?: string
@@ -45,6 +46,7 @@ export function Header(props: Props) {
   const filterValue = useThemeModeValue('invert-0', 'invert')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { open } = useWeb3Modal()
+  const [activeNetwork] = useActiveNetworkVersion()
   const { address, isConnected, isConnecting, isReconnecting } = useAccount()
   function Home() {
     Router.push('/').then()
@@ -100,12 +102,12 @@ export function Header(props: Props) {
         <NavbarItem>
           {isConnected ? (
             <Avatar
-              isBordered
               onClick={() => open()}
               as="button"
               className="transition-transform"
               size="sm"
-              alt={address}
+              title={address}
+              style={{ border: '2px solid ' + activeNetwork.bgColor }}
               src={getJazziconDataUrl(address as string)}
             />
           ) : (

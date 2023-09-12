@@ -1,6 +1,6 @@
 import { Head } from 'components/layout/Head'
 import Applications from './applications'
-import Infos from '@/pages/infos'
+import Transactions from '@/pages/infos'
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
       <Head />
       <main>
         <Applications />
-        <Infos />
+        <Transactions />
       </main>
     </>
   )
