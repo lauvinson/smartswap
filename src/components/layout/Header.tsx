@@ -53,20 +53,7 @@ export function Header(props: Props) {
   }
 
   return (
-    // <div className="flex justify-between p-4 md:pl-16 md:pr-16 mb-8">
-    //   <Image width={35} height={35} onClick={Home} draggable={false} src={Logo.src} alt={SITE_NAME} />
-    //
-    //   <div className="flex justify-center gap-4">
-    //     {/*<PassportScore />*/}
-    //     <Button variant="flat" onClick={() => open()} isLoading={isConnecting || isReconnecting} spinner={<BeatLoader size={8} color="white" />}>
-    //       {isConnected && <Jazzicon diameter={14} seed={jsNumberForAddress(address as string)} />}
-    //       {!isConnecting && !isReconnecting && <div className="text-base">{isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}</div>}
-    //     </Button>
-    //     {/*<Web3NetworkSwitch />*/}
-    //     <ThemeSwitcher />
-    //   </div>
-    // </div>
-    <Navbar maxWidth={'2xl'} className={className} isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+    <Navbar maxWidth={'2xl'} className={className} isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
       </NavbarContent>
