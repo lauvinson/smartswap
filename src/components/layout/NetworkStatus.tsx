@@ -13,7 +13,6 @@ export function NetworkStatus() {
   const [direction, setDirection] = useState<string>('upward')
   const [key, setKey] = useState<any>(0)
   useEffect(() => {
-    console.log(block.data as bigint)
     if (block.data === lastBlockNumber) return
     setDirection((block.data as bigint) > lastBlockNumber ? 'upward' : 'downward')
     setKey(random()) // 引产生成新的key使动画重新触发

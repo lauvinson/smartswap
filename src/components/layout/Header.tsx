@@ -38,7 +38,7 @@ function shortenAddress(str: `0x${string}`, startLength: number = 4, endLength: 
   return `${start}...${end}`
 }
 
-const menuItems = ['Swap', 'Pools', 'Pay', 'Analytics', 'Partner With Byte', 'Deployments', 'But Crypto']
+const menuItems = ['Swap', 'Pools', 'Pay', 'Analytics', 'Partner With Byte', 'Deployments', 'Buy Crypto']
 
 export function Header(props: Props) {
   const className = props.className ?? ''
@@ -75,7 +75,7 @@ export function Header(props: Props) {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-4 font-bold" justify="center">
         <NavbarBrand>
           <Image className={clsx(filterValue)} width={35} height={35} onClick={Home} draggable={false} src={Logo.src} alt={SITE_NAME} />
         </NavbarBrand>

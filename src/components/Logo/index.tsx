@@ -36,5 +36,5 @@ export default function Logo({ srcs, alt, size, className, ...rest }: LogoProps)
     )
   }
 
-  return <HelpCircle {...rest} />
+  return <HelpCircle size={'32'} {...rest} />
 }

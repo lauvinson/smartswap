@@ -1,12 +1,16 @@
 import React, { useMemo, useState } from 'react'
 import { Pool } from '@/pools'
-import { Button, Card, CardFooter, CardHeader, Image, Skeleton } from '@nextui-org/react'
+import { Button, Card, CardFooter, CardHeader, Image, Link, Skeleton } from '@nextui-org/react'
 import { useAllTokenData } from '@/state/tokens/hooks'
-import { notEmpty } from '@/utils'
+import { getEtherscanLink, notEmpty } from '@/utils'
 import Slider from '@/components/layout/Slider'
 import CurrencyLogo from '@/components/CurrencyLogo'
 import { formatDollarAmount } from '@/utils/numbers'
 import Percent from '@/components/Percent'
+import clsx from 'clsx'
+import { useSavedTokens } from '@/state/user/hooks'
+import { useActiveNetworkVersion } from '@/state/application/hooks'
+import { Bell, BellOff } from 'react-feather'
 
 interface Props {
   className?: string
@@ -37,10 +41,8 @@ export function CardList(props: Props) {
       .map((t) => t.data)
       .filter(notEmpty)
   }, [allTokens])
-  const [followedMap, setFollowedMap] = useState<{ [id: string]: boolean }>({})
-  function updateFollowedStatus(id: string, isFollowed: boolean) {
-    setFollowedMap((prev) => ({ ...prev, [id]: isFollowed }))
-  }
+  const [savedTokens, addSavedToken] = useSavedTokens()
+  const [activeNetwork] = useActiveNetworkVersion()
 
   const MakeLogo = function (i: Pool) {
     return (
@@ -54,50 +56,61 @@ export function CardList(props: Props) {
     )
   }
 
+  const TokensFeed = useMemo(() => {
+    if (!formattedTokens) {
+      return <></>
+    }
+    return formattedTokens.map((t, i) => {
+      return (
+        <div key={i}>
+          <Card className="max-w-[auto]">
+            <CardHeader className="justify-between">
+              <div className="flex gap-2">
+                <CurrencyLogo address={t.address} className="flex-shrink-0" size="sm" alt={t.name} />
+                <div className="flex flex-col gap-1 items-start justify-center overflow-hidden text-ellipsis whitespace-nowrap w-28">
+                  <h4 className="text-small font-semibold leading-none text-default-600" title={t.name}>
+                    {t.name}
+                  </h4>
+                  {/*<h5 className="max-w-1/4 overflow-hidden whitespace-nowrap text-overflow-ellipsis text-small tracking-tight text-default-400">*/}
+                  {/*  {t.address}*/}
+                  {/*</h5>*/}
+                </div>
+              </div>
+              <Link
+                className={clsx(savedTokens.includes(t.address) ? 'text-pink-400' : '', 'cursor-pointer p-2 hover:text-pink-400')}
+                color={'foreground'}
+                isExternal
+                showAnchorIcon
+                title={savedTokens.includes(t.address) ? 'Watched' : 'To Watch'}
+                anchorIcon={savedTokens.includes(t.address) ? <BellOff size={'16'} /> : <Bell size={'16'} />}
+                onClick={(e) => {
+                  addSavedToken(t.address)
+                }}
+              />
+            </CardHeader>
+            <CardFooter className="gap-3">
+              <a className="flex gap-1" href={getEtherscanLink(1, t.address, 'address', activeNetwork)}>
+                <p className="font-semibold text-small text-green-400">{formatDollarAmount(Math.abs(t.priceUSD))}</p>
+                <p className=" text-default-400 text-small">Price</p>
+              </a>
+              <a className="flex gap-1" href={getEtherscanLink(1, t.address, 'address', activeNetwork)}>
+                <p className="font-semibold text-small text-pink-400">{<Percent value={t.priceUSDChange} fontWeight={400} />}</p>
+                <p className="text-default-400 text-small">Change</p>
+              </a>
+            </CardFooter>
+          </Card>
+        </div>
+      )
+    })
+  }, [formattedTokens, savedTokens])
   return (
     <div className={'overflow-hidden'}>
       {formattedTokens.length > 0 ? (
         <div className="flex flex-col gap-4">
           <span className="font-bold text-large">Tokens</span>
           <Slider>
-            {formattedTokens.map((t, i) => {
-              return (
-                <div key={i}>
-                  <Card className="max-w-[auto]">
-                    <CardHeader className="justify-between">
-                      <div className="flex gap-5">
-                        <CurrencyLogo address={t.address} className="flex-shrink-0" size="sm" alt={t.name} />
-                        <div className="flex flex-col gap-1 items-start justify-center">
-                          <h4 className="text-small font-semibold leading-none text-default-600">{t.name}</h4>
-                          {/*<h5 className="max-w-1/4 overflow-hidden whitespace-nowrap text-overflow-ellipsis text-small tracking-tight text-default-400">*/}
-                          {/*  {t.address}*/}
-                          {/*</h5>*/}
-                        </div>
-                      </div>
-                      <Button
-                        className={followedMap[t.address] ? 'bg-transparent text-pink-400 border-default-200' : ''}
-                        color={'default'}
-                        radius="full"
-                        size="sm"
-                        variant={followedMap[t.address] ? 'bordered' : 'flat'}
-                        onPress={() => updateFollowedStatus(t.address, !followedMap[t.address])}>
-                        {followedMap[t.address] ? 'Unwatch' : 'Watch'}
-                      </Button>
-                    </CardHeader>
-                    <CardFooter className="gap-3">
-                      <div className="flex gap-1">
-                        <p className="font-semibold text-small text-green-400">{formatDollarAmount(Math.abs(t.priceUSD))}</p>
-                        <p className=" text-default-400 text-small">Price</p>
-                      </div>
-                      <div className="flex gap-1">
-                        <p className="font-semibold text-small text-pink-400">{<Percent value={t.priceUSDChange} fontWeight={400} />}</p>
-                        <p className="text-default-400 text-small">Change</p>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                </div>
-              )
-            })}
+            <div className={'flex gap-[1.5rem] w-auto'}>{TokensFeed}</div>
+            <div className={'flex gap-[1.5rem] w-auto'}>{TokensFeed}</div>
           </Slider>
         </div>
       ) : (

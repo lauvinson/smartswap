@@ -13,6 +13,7 @@ import TokenUpdater from '../state/tokens/updater'
 import PoolUpdater from '../state/pools/updater'
 import NetworkUpdater from '../state/network/updater'
 import { UIProviders } from 'providers/NextUI'
+import { ThemeProvider } from 'next-themes'
 
 function Updaters() {
   return (
@@ -38,9 +39,11 @@ export default function App({ Component, pageProps }: AppProps) {
             <Updaters />
             <Seo />
             {isMounted && (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <ThemeProvider forcedTheme={(Component as any).theme || 'dark'} attribute="class">
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </ThemeProvider>
             )}
           </Provider>
         </ApolloProvider>
