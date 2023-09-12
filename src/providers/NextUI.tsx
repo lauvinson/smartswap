@@ -13,13 +13,12 @@ export interface ProvidersProps {
 export function UIProviders({ children, themeProps }: ProvidersProps) {
   return (
     <NextUIProvider>
-      {/*<NextThemesProvider {...themeProps}></NextThemesProvider>*/}
-      {children}
+      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
     </NextUIProvider>
   )
 }
 
 export const useThemeModeValue = (lightValue: string, darkValue: string) => {
-  const { theme } = useTheme()
-  return theme === 'dark' ? darkValue : lightValue
+  const { resolvedTheme } = useTheme()
+  return resolvedTheme === 'dark' ? darkValue : lightValue
 }

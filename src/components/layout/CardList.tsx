@@ -106,7 +106,7 @@ export function CardList(props: Props) {
   return (
     <div className={'overflow-hidden'}>
       {formattedTokens.length > 0 ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
           <span className="font-bold text-large">Tokens</span>
           <Slider>
             <div className={'flex gap-[1.5rem] w-auto'}>{TokensFeed}</div>

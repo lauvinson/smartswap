@@ -2,7 +2,7 @@
 import { arbitrum, bsc, mainnet, optimism, polygon } from '@wagmi/chains'
 import { avalanche, base, celo } from 'viem/chains'
 
-export const SITE_NAME = 'Byte Pools'
+export const SITE_NAME = 'Byte Swap'
 export const SITE_DESCRIPTION =
   'A Decentralised Finance (DeFi) app with features such as swap, cross chain swap, streaming, vesting, and permissionless market making for liquidity providers.'
 export const SITE_URL = 'https://byte.exchange'
