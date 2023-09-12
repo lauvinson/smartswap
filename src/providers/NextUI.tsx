@@ -13,9 +13,8 @@ export interface ProvidersProps {
 export function UIProviders({ children, themeProps }: ProvidersProps) {
   return (
     <NextUIProvider>
-      <NextThemesProvider enableSystem={true} attribute={'class'} enableColorScheme={true} {...themeProps}>
-        {children}
-      </NextThemesProvider>
+      {/*<NextThemesProvider {...themeProps}></NextThemesProvider>*/}
+      {children}
     </NextUIProvider>
   )
 }

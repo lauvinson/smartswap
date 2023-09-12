@@ -16,7 +16,7 @@ export function HomeBanner(props: Props) {
 
   return (
     <div className={clsx('grid gap-4 md:grid-cols-3 grid-cols-1 grid-rows-2', className)}>
-      <div className="inline-grid col-start-1 col-end-2 row-start-1 row-end-2 text-center md:text-left">
+      <div className="inline-grid col-start-1 col-end-4 row-start-1 row-end-2 text-center md:text-left">
         <div className="text-3xl md:text-5xl font-bold">
           Put your funds <br /> to work by <br /> providing liquidity.
         </div>
