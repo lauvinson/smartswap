@@ -28,7 +28,7 @@ export function NetworkStatus() {
   return (
     <div className={clsx('flex align-middle gap-2 z-2 p-0')}>
       <Button className={'p-0'} as={LinkComponent} href={explorerUrl ? explorerUrl : ''} color="success" variant="light" size={'sm'}>
-        <p className={'text-xs'}>{network.chain?.name ?? 'Ethereum'}</p>
+        <span className={'text-xs'}>{network.chain?.name ?? 'Ethereum'}</span>
         {
           <span>
             #

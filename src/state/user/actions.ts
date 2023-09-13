@@ -22,3 +22,4 @@ export const addSavedPool = createAction<{ address: string }>('user/addSavedPool
 export const addSerializedPair = createAction<{ serializedPair: SerializedPair }>('user/addSerializedPair')
 export const removeSerializedPair = createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>('user/removeSerializedPair')
 export const toggleURLWarning = createAction<void>('app/toggleURLWarning')
+export const updateSliderAnimation = createAction<{ key: string; value: boolean }>('user/updateSliderAnimation')

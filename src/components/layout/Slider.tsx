@@ -1,9 +1,10 @@
-import React, { ReactElement, ReactNode, useLayoutEffect, useRef } from 'react'
+import React, { ReactElement, ReactNode, useEffect, useLayoutEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
 import horizontalLoop from '@/utils/gsap'
 import clsx from 'clsx'
 import { InView } from 'react-intersection-observer'
+import { useSliderAnimation } from '@/state/user/hooks'
 
 let scheduled = false
 let value = 0
@@ -28,21 +29,28 @@ interface Props {
 const Slider = (props: Props) => {
   const slider = useRef<HTMLDivElement>(null)
   const loop = useRef<any>(null)
+  const [effect] = useSliderAnimation('tokens')
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context((self) => {
       const slides = gsap.utils.toArray('.slide')
       loop.current = horizontalLoop(slides, {
         speed: 0.5,
         repeat: -1,
         paddingRight: 24,
+        paused: !effect,
       })
     }, slider)
     return () => {
       loop.current && loop.current.kill()
       ctx.revert()
     }
+    // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    !effect ? loop.current.pause() : loop.current.play(loop.current.xPercent)
+  }, [effect])
 
   return (
     <div className="overflow-hidden">

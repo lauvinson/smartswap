@@ -8,9 +8,9 @@ import CurrencyLogo from '@/components/CurrencyLogo'
 import { formatDollarAmount } from '@/utils/numbers'
 import Percent from '@/components/Percent'
 import clsx from 'clsx'
-import { useSavedTokens } from '@/state/user/hooks'
+import { useSavedTokens, useSliderAnimation } from '@/state/user/hooks'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
-import { Bell, BellOff } from 'react-feather'
+import { Bell, BellOff, Pause, Play } from 'react-feather'
 import { InView } from 'react-intersection-observer'
 
 interface Props {
@@ -43,6 +43,7 @@ export function CardList(props: Props) {
   }, [allTokens])
   const [savedTokens, addSavedToken] = useSavedTokens()
   const [activeNetwork] = useActiveNetworkVersion()
+  const [effect, switchEffect] = useSliderAnimation('tokens')
 
   const MakeLogo = function (i: Pool) {
     return (
@@ -111,7 +112,14 @@ export function CardList(props: Props) {
     <div className={'overflow-hidden'}>
       {formattedTokens.length > 0 ? (
         <div className="flex flex-col">
-          <span className="font-bold text-large">Tokens</span>
+          <span className="font-bold text-large flex flex-row items-center">
+            Tokens{' '}
+            {effect ? (
+              <Pause size={18} className={'cursor-pointer mx-1'} color={activeNetwork.primaryColor} onClick={switchEffect} />
+            ) : (
+              <Play size={18} className={'cursor-pointer mx-1'} color={activeNetwork.primaryColor} onClick={switchEffect} />
+            )}
+          </span>
           <Slider>
             <div className={'flex gap-[1.5rem] w-auto'}>{TokensFeed}</div>
             <div className={'flex gap-[1.5rem] w-auto'}>{TokensFeed}</div>
