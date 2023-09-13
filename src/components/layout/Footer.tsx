@@ -22,13 +22,13 @@ export function Footer(props: Props) {
         <div className={'flex gap-2 align-middle mb-5'}>
           <Image draggable={false} className={clsx('lg:10 ', filterValue)} width={35} height={35} src={Logo.src} alt={SITE_NAME} />
         </div>
-        <p>Byte Swap Labs</p>
-        <p>
+        <span>Byte Swap Labs</span>
+        <span>
           Contact us by{' '}
           <LinkComponent href="mailto:chat@byte.exchange" isExternal={true}>
             <p className={'italic'}>chat@byte.exchange</p>
           </LinkComponent>
-        </p>
+        </span>
         <div className={'flex gap-2 align-middle my-2'}>
           <LinkComponent href={`/`}>
             <FaTwitter />

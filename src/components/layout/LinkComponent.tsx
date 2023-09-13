@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import NextLink from 'next/link'
 import { Link } from '@nextui-org/react'
 
 interface Props {
@@ -16,14 +15,14 @@ export function LinkComponent(props: Props) {
   if (isExternal) {
     return (
       <Link className={className} color="foreground" href={props.href} target="_blank" rel="noopener noreferrer">
-        {props.children}
+        <div>{props.children}</div>
       </Link>
     )
   }
 
   return (
-    <Link as={NextLink} className={className} color="foreground" href={props.href}>
-      {props.children}
+    <Link className={className} color="foreground" href={props.href}>
+      <div>{props.children}</div>
     </Link>
   )
 }

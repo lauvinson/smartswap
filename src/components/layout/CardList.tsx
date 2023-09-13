@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { Pool } from '@/pools'
-import { Button, Card, CardFooter, CardHeader, Image, Link, Skeleton } from '@nextui-org/react'
+import { Card, CardFooter, CardHeader, Image, Link, Skeleton } from '@nextui-org/react'
 import { useAllTokenData } from '@/state/tokens/hooks'
 import { getEtherscanLink, notEmpty } from '@/utils'
 import Slider from '@/components/layout/Slider'
@@ -11,6 +11,7 @@ import clsx from 'clsx'
 import { useSavedTokens } from '@/state/user/hooks'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 import { Bell, BellOff } from 'react-feather'
+import { InView } from 'react-intersection-observer'
 
 interface Props {
   className?: string
@@ -26,9 +27,8 @@ function isPoolConfig(item: Pool): item is Pool {
 const CardSkeleton: React.FC = () => {
   return (
     <div className="max-w-full w-full flex items-center gap-3">
-      {Array.from({ length: 3 }, (i) => {
-        // eslint-disable-next-line react/jsx-key
-        return <Skeleton className="flex rounded-lg w-1/3 h-24" />
+      {Array.from({ length: 3 }, (_, i) => {
+        return <Skeleton key={i} className="flex rounded-lg w-1/3 h-24" />
       })}
     </div>
   )
@@ -66,7 +66,11 @@ export function CardList(props: Props) {
           <Card className="max-w-[auto]">
             <CardHeader className="justify-between">
               <div className="flex gap-2">
-                <CurrencyLogo address={t.address} className="flex-shrink-0" size="sm" alt={t.name} />
+                <InView triggerOnce={true}>
+                  {({ inView, ref }) => (
+                    <div ref={ref}>{inView && <CurrencyLogo address={t.address} className="flex-shrink-0" size="sm" alt={t.name} />}</div>
+                  )}
+                </InView>
                 <div className="flex flex-col gap-1 items-start justify-center overflow-hidden text-ellipsis whitespace-nowrap w-28">
                   <h4 className="text-small font-semibold leading-none text-default-600" title={t.name}>
                     {t.name}
@@ -102,7 +106,7 @@ export function CardList(props: Props) {
         </div>
       )
     })
-  }, [formattedTokens, savedTokens])
+  }, [activeNetwork, addSavedToken, formattedTokens, savedTokens])
   return (
     <div className={'overflow-hidden'}>
       {formattedTokens.length > 0 ? (

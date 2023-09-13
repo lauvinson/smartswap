@@ -5,10 +5,11 @@ import { LinkComponent } from './LinkComponent'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { random } from 'lodash'
+import { ChainId } from '@uniswap/sdk-core'
 
 export function NetworkStatus() {
-  const block = useBlockNumber({ watch: true })
   const network = useNetwork()
+  const block = useBlockNumber({ watch: true, chainId: network?.chain?.id || ChainId.MAINNET })
   const [lastBlockNumber, setLastBlockNumber] = useState<bigint>(0 as unknown as bigint)
   const [direction, setDirection] = useState<string>('upward')
   const [key, setKey] = useState<any>(0)
@@ -17,7 +18,7 @@ export function NetworkStatus() {
     setDirection((block.data as bigint) > lastBlockNumber ? 'upward' : 'downward')
     setKey(random()) // 引产生成新的key使动画重新触发
     setLastBlockNumber(block.data as bigint)
-  }, [block.data, key, lastBlockNumber])
+  }, [block, key, lastBlockNumber])
   const slidingAnimation = {
     upward: { y: [-10, 0], opacity: [0, 1] },
     downward: { y: [10, 0], opacity: [0, 1] },
@@ -28,7 +29,7 @@ export function NetworkStatus() {
     <div className={clsx('flex align-middle gap-2 z-2 p-0')}>
       <Button className={'p-0'} as={LinkComponent} href={explorerUrl ? explorerUrl : ''} color="success" variant="light" size={'sm'}>
         <p className={'text-xs'}>{network.chain?.name ?? 'Ethereum'}</p>
-        {explorerUrl && (
+        {
           <span>
             #
             <motion.span
@@ -40,7 +41,7 @@ export function NetworkStatus() {
               {lastBlockNumber?.toString()}
             </motion.span>
           </span>
-        )}
+        }
       </Button>
     </div>
   )

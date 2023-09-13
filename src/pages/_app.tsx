@@ -38,11 +38,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <ApolloProvider client={client}>
           <Provider store={store}>
             <Seo />
-            <Updaters />
             {isMounted && (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <>
+                <Updaters />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </>
             )}
           </Provider>
         </ApolloProvider>

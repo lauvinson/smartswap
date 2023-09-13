@@ -3,7 +3,7 @@ import { CardList } from '@/components/layout/CardList'
 import { pools } from '@/pools'
 import React from 'react'
 
-export default function Applications() {
+export default function TokensBanner() {
   return (
     <>
       <Head />
