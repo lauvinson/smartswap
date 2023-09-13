@@ -1,4 +1,4 @@
-import { Key, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { Key, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Button,
   Dropdown,
@@ -7,6 +7,7 @@ import {
   DropdownTrigger,
   Input,
   Selection,
+  Skeleton,
   SortDescriptor,
   Table,
   TableBody,
@@ -27,6 +28,15 @@ import { useThemeModeValue } from '@/providers/NextUI'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 
 const INITIAL_VISIBLE_COLUMNS = ['type', 'amountToken0', 'amountToken1', 'timestamp', 'sender']
+
+const TableSkeleton: React.FC = () => {
+  return (
+    <div className="max-w-full w-full flex flex-col items-center gap-3">
+      <Skeleton className="flex rounded-lg w-full h-8" />
+      <Skeleton className="flex rounded-lg w-full h-32" />
+    </div>
+  )
+}
 
 export default function Transactions() {
   const [txs = []] = useProtocolTransactions()
@@ -60,7 +70,6 @@ export default function Transactions() {
     }
 
     if (typeFilter !== 'all' && Array.from(typeFilter).length !== typeOptions.length) {
-      console.log(typeFilter)
       filteredTxs = filteredTxs.filter((tx) => Array.from(typeFilter).includes(tx.type))
     }
     return filteredTxs
@@ -255,36 +264,38 @@ export default function Transactions() {
 
   return (
     <div className={'my-10'}>
-      <Table
-        bottomContent={bottomContent}
-        bottomContentPlacement="inside"
-        classNames={classNames}
-        selectedKeys={selectedKeys}
-        // selectionMode="multiple"
-        sortDescriptor={sortDescriptor}
-        topContent={topContent}
-        topContentPlacement="outside"
-        onSelectionChange={setSelectedKeys}
-        onSortChange={setSortDescriptor}>
-        <TableHeader columns={headerColumns}>
-          {(column) => (
-            <TableColumn key={column.uid} align={'start'} allowsSorting={column.sortable}>
-              {column.uid}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          isLoading={isLoading}
-          loadingContent={<BeatLoader size={20} color={spinnerColor} />}
-          emptyContent={'No Transactions'}
-          items={sortedItems}>
-          {(item) => (
-            <TableRow key={item.uuid}>
-              {(columnKey) => <TableCell className={'overflow-hidden overflow-ellipsis whitespace-nowrap'}>{renderCell(item, columnKey)}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {sortedItems.length > 0 ? (
+        <Table
+          bottomContent={bottomContent}
+          bottomContentPlacement="inside"
+          classNames={classNames}
+          selectedKeys={selectedKeys}
+          // selectionMode="multiple"
+          sortDescriptor={sortDescriptor}
+          topContent={topContent}
+          topContentPlacement="outside"
+          onSelectionChange={setSelectedKeys}
+          onSortChange={setSortDescriptor}>
+          <TableHeader columns={headerColumns}>
+            {(column) => (
+              <TableColumn key={column.uid} align={'start'} allowsSorting={column.sortable}>
+                {column.uid}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody isLoading={isLoading} loadingContent={<BeatLoader size={20} color={spinnerColor} />} emptyContent={' '} items={sortedItems}>
+            {(item) => (
+              <TableRow key={item.uuid}>
+                {(columnKey) => (
+                  <TableCell className={'overflow-hidden overflow-ellipsis whitespace-nowrap'}>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      ) : (
+        <TableSkeleton />
+      )}
     </div>
   )
 }

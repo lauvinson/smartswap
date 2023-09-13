@@ -3,6 +3,23 @@ import { gsap } from 'gsap'
 
 import horizontalLoop from '@/utils/gsap'
 import clsx from 'clsx'
+import { InView } from 'react-intersection-observer'
+
+let scheduled = false
+let value = 0
+
+function adjustAnimation(loop: any) {
+  gsap.to(loop, { duration: value === 0 ? 1 : 2, timeScale: value })
+  scheduled = false
+}
+
+function throttleTimeScaleChange(loop: any, newValue: number) {
+  value = newValue
+  if (!scheduled) {
+    scheduled = true
+    requestAnimationFrame(() => adjustAnimation(loop))
+  }
+}
 
 interface Props {
   children: ReactNode
@@ -29,20 +46,24 @@ const Slider = (props: Props) => {
 
   return (
     <div className="overflow-hidden">
+      <InView
+        onChange={(inView, entry) => {
+          if (!inView) {
+            loop.current && throttleTimeScaleChange(loop.current, 0)
+          } else {
+            loop.current && throttleTimeScaleChange(loop.current, 1)
+          }
+        }}></InView>
       <div ref={slider} className="flex gap-[1.5rem] w-auto py-[1rem]">
         {React.Children.map(props.children, (child) => {
           if (React.isValidElement(child)) {
             return React.cloneElement(child as ReactElement, {
               className: clsx(child.props.className, 'slide'),
               onMouseEnter: () => {
-                if (loop.current) {
-                  gsap.to(loop.current, { duration: 1, timeScale: 0 })
-                }
+                loop.current && throttleTimeScaleChange(loop.current, 0)
               },
               onMouseLeave: () => {
-                if (loop.current) {
-                  gsap.to(loop.current, { duration: 2, timeScale: 1 })
-                }
+                loop.current && throttleTimeScaleChange(loop.current, 1)
               },
             })
           }
