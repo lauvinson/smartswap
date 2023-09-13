@@ -1,18 +1,20 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Layout } from 'components/layout'
-import { Web3Provider } from 'providers/Web3'
-import { useIsMounted } from 'hooks/useIsMounted'
-import { Seo } from 'components/layout/Seo'
+import dynamic from 'next/dynamic'
 import { client } from '@/providers/Apollo'
 import { ApolloProvider } from '@apollo/client'
-import { Provider } from 'react-redux'
 import store from '../state'
-import ProtocolUpdater from '../state/protocol/updater'
-import TokenUpdater from '../state/tokens/updater'
-import PoolUpdater from '../state/pools/updater'
-import NetworkUpdater from '../state/network/updater'
+import { LoadingPage } from '@/components/Loading'
+import { useIsMounted } from '@/hooks/useIsMounted'
+import { Provider } from 'react-redux'
 import { UIProviders } from 'providers/NextUI'
+const Seo = dynamic(() => import('components/layout/Seo').then((mod) => mod.Seo), { loading: () => <LoadingPage /> })
+const Web3Provider = dynamic(() => import('providers/Web3').then((mod) => mod.Web3Provider), { loading: () => <LoadingPage /> })
+const ProtocolUpdater = dynamic(() => import('../state/protocol/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
+const TokenUpdater = dynamic(() => import('../state/tokens/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
+const PoolUpdater = dynamic(() => import('../state/pools/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
+const NetworkUpdater = dynamic(() => import('../state/network/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
+const Layout = dynamic(() => import('components/layout').then((mod) => mod.Layout), { loading: () => <LoadingPage /> })
 
 function Updaters() {
   return (
@@ -35,8 +37,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Web3Provider>
         <ApolloProvider client={client}>
           <Provider store={store}>
-            <Updaters />
             <Seo />
+            <Updaters />
             {isMounted && (
               <Layout>
                 <Component {...pageProps} />
