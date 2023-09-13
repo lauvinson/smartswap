@@ -222,7 +222,7 @@ export default function Transactions() {
         </div>
       </div>
     )
-  }, [filterValue, visibleColumns, onSearchChange, txs.length, hasSearchFilter])
+  }, [filterValue, onSearchChange, typeFilter, visibleColumns, onClear])
 
   const bottomContent = useMemo(() => {
     return (
@@ -241,7 +241,7 @@ export default function Transactions() {
         </div>
       </div>
     )
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter])
+  }, [page, pages, onPreviousPage, onNextPage])
 
   const classNames = useMemo(
     () => ({

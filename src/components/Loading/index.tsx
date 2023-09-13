@@ -2,6 +2,7 @@ import React from 'react'
 import Logo from '@/assets/logo/color.svg'
 import { SITE_NAME } from '@/utils/config'
 import { motion } from 'framer-motion'
+import { Image } from '@nextui-org/react'
 
 export function LoadingPage() {
   return (
@@ -16,7 +17,7 @@ export function LoadingPage() {
             repeatType: 'reverse',
           },
         }}>
-        <img draggable="false" width={50} height={50} src={Logo.src} alt={SITE_NAME} />
+        <Image draggable="false" width={50} height={50} src={Logo.src} alt={SITE_NAME} />
       </motion.div>
     </div>
   )
