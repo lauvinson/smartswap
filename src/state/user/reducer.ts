@@ -11,6 +11,7 @@ import {
   SerializedToken,
   toggleURLWarning,
   updateMatchesDarkMode,
+  updateSliderAnimation,
   updateUserDarkMode,
 } from './actions'
 
@@ -41,6 +42,9 @@ export interface UserState {
 
   timestamp: number
   URLWarningVisible: boolean
+  sliderAnimation: {
+    [key: string]: boolean
+  }
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -56,6 +60,7 @@ export const initialState: UserState = {
   savedPools: [],
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
+  sliderAnimation: {},
 }
 
 export default createReducer(initialState, (builder) =>
@@ -121,5 +126,11 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(toggleURLWarning, (state) => {
       state.URLWarningVisible = !state.URLWarningVisible
+    })
+    .addCase(updateSliderAnimation, (state, action) => {
+      if (!state.sliderAnimation) {
+        state.sliderAnimation = {}
+      }
+      state.sliderAnimation[action.payload.key] = action.payload.value
     })
 )

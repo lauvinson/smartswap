@@ -9,6 +9,7 @@ import {
   removeSerializedToken,
   SerializedToken,
   toggleURLWarning,
+  updateSliderAnimation,
   updateUserDarkMode,
 } from './actions'
 import { useAppSelector } from 'hooks/useAppDispatch'
@@ -104,4 +105,17 @@ export function useURLWarningVisible(): boolean {
 export function useURLWarningToggle(): () => void {
   const dispatch = useDispatch()
   return useCallback(() => dispatch(toggleURLWarning()), [dispatch])
+}
+
+export function useSliderAnimation(key: string): [boolean, () => void] {
+  const dispatch = useDispatch<AppDispatch>()
+  const effect = useSelector((state: AppState) => {
+    return state.user.sliderAnimation?.[key] || false
+  })
+
+  const switchEffect = useCallback(() => {
+    dispatch(updateSliderAnimation({ key: key, value: !effect }))
+  }, [dispatch, effect, key])
+
+  return [effect, switchEffect]
 }
