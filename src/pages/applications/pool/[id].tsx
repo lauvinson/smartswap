@@ -9,7 +9,7 @@ import { BeatLoader } from 'react-spinners'
 import { useAllTokenData } from '@/state/tokens/hooks'
 import { notEmpty } from '@/utils'
 import CurrencyLogo from '@/components/CurrencyLogo'
-import { ChevronsRight } from 'react-feather'
+import { RiExchangeFundsLine } from 'react-icons/ri'
 
 function Approve({ pool }: { pool: Pool }) {
   const allTokens = useAllTokenData()
@@ -159,7 +159,7 @@ export default function SignExample() {
         <NextSeo title={swap_name} />
         <div className={'flex flex-row gap-2 items-center'}>
           <CurrencyLogo address={pool.token0.address} className="flex-shrink-0" size="sm" alt={pool.token0.name} />
-          <ChevronsRight />
+          <RiExchangeFundsLine />
           <CurrencyLogo address={pool.token1.address} className="flex-shrink-0" size="sm" alt={pool.token1.name} />
         </div>
         <p className={'text-4xl font-bold'}>{swap_name}</p>

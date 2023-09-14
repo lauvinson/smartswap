@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { HelpCircle } from 'react-feather'
+import { FaBitcoin } from 'react-icons/fa6'
 import { Avatar } from '@nextui-org/react'
 
 const BAD_SRCS: { [tokenAddress: string]: true } = {}
@@ -36,5 +36,5 @@ export default function Logo({ srcs, alt, size, className, ...rest }: LogoProps)
     )
   }
 
-  return <HelpCircle size={'32'} {...rest} />
+  return <FaBitcoin size={'32'} {...rest} />
 }

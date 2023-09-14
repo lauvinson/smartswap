@@ -1,8 +1,22 @@
 // @ts-ignore
 import ChromeDinoGame from 'react-chrome-dino'
+import { useEffect } from 'react'
 
 // @ts-ignore
 function Error({ statusCode }) {
+  useEffect(() => {
+    const onKeyDown = (event: any) => {
+      if (event.key === ' ') {
+        event.preventDefault()
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
   switch (statusCode) {
     case 404:
       return (

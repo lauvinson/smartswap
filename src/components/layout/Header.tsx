@@ -94,7 +94,7 @@ export function Header(props: Props) {
               className="transition-transform"
               size="sm"
               title={address}
-              style={{ border: '2px solid ' + activeNetwork.bgColor }}
+              style={{ border: '2px solid ' + activeNetwork.primaryColor }}
               src={getJazziconDataUrl(address as string)}
             />
           ) : (

@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head />
-      <main>
+      <main className={'space-y-5'}>
         <InView rootMargin="50px 0px" triggerOnce={true}>
           {({ inView, ref }) => <div ref={ref}>{inView && <TokensBanner />}</div>}
         </InView>
