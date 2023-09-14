@@ -10,7 +10,8 @@ import { SupportedNetwork } from '@/constants/networks'
 import { formatDollarAmount } from '@/utils/numbers'
 import { useEthPrices } from '@/hooks/useEthPrices'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
-import { FaGasPump } from 'react-icons/fa6'
+import { FaEthereum, FaGasPump } from 'react-icons/fa6'
+import { SiBinance } from 'react-icons/si'
 
 export function NetworkStatus() {
   const network = useNetwork()
@@ -53,14 +54,20 @@ export function NetworkStatus() {
         }
       </Button>
       <Button className={'p-0 justify-start pointer-events-none'} as={LinkComponent} href={'#'} color="default" variant="light" size={'sm'}>
-        <span className={'text-xs flex'}>
-          {activeNetwork.id === SupportedNetwork.CELO
-            ? 'Celo Price:'
-            : activeNetwork.id === SupportedNetwork.BNB
-            ? 'BNB Price:'
-            : activeNetwork.id === SupportedNetwork.AVALANCHE
-            ? 'AVAX Price:'
-            : 'Eth Price:'}
+        <span className={'text-xs flex items-center'}>
+          {activeNetwork.id === SupportedNetwork.CELO ? (
+            'Celo Price:'
+          ) : activeNetwork.id === SupportedNetwork.BNB ? (
+            <>
+              <SiBinance /> BNB Price:
+            </>
+          ) : activeNetwork.id === SupportedNetwork.AVALANCHE ? (
+            'AVAX Price:'
+          ) : (
+            <>
+              <FaEthereum /> Eth Price:
+            </>
+          )}
           &nbsp;
           {formatDollarAmount(ethPrices?.current, 2, true, true)}
           {ethPrices?.oneDay && (
