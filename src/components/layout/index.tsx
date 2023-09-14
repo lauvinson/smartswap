@@ -29,6 +29,10 @@ export const ThemedBackgroundGlobal = styled.div<{ backgroundColor: string }>`
   opacity: 0.3;
   z-index: -1;
   animation: ${opacityAnimation} 5s ease-in-out infinite;
+
+  @media (max-width: 767px) {
+    transform: translateY(-80vh) translateX(0vh);
+  }
 `
 
 const Container = (props: any) => <div className="flex flex-col flex-1 m-0 max-w-[90%] md:max-w-[80%] mx-auto" {...props} />
@@ -39,7 +43,7 @@ export function Layout(props: Props) {
     <div className="container m-0 max-w-full">
       <Header className={'mb-10 md:mb-20'} />
       <Container>
-        <ThemedBackgroundGlobal className="hidden md:block" backgroundColor={activeNetwork.bgColor} />
+        <ThemedBackgroundGlobal className="" backgroundColor={activeNetwork.bgColor} />
         <HomeBanner />
         {props.children}
         <Footer />
