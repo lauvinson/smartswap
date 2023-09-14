@@ -3,16 +3,14 @@
 @tailwind utilities;
 
 @layer components {
-    @variants responsive {
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar, body::-webkit-scrollbar {
-            display: none;
-        }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar, body::-webkit-scrollbar {
+        display: none;
+    }
 
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar, body {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar, body {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 }

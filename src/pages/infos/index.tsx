@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/react'
-import { ChevronDown, ChevronLeft, ChevronRight, Search } from 'react-feather'
+import { FaChevronDown, FaChevronLeft, FaChevronRight, FaFilterCircleDollar } from 'react-icons/fa6'
 import { txColumns, typeOptions } from '@/constants/data'
 import { capitalize } from '@/utils'
 import { useProtocolTransactions } from '@/state/protocol/hooks'
@@ -25,7 +25,6 @@ import { getTimeAgo } from '@/utils/data'
 import { formatAmount, formatDollarAmount } from '@/utils/numbers'
 import { BeatLoader } from 'react-spinners'
 import { useThemeModeValue } from '@/providers/NextUI'
-import { useActiveNetworkVersion } from '@/state/application/hooks'
 
 const INITIAL_VISIBLE_COLUMNS = ['type', 'amountToken0', 'amountToken1', 'timestamp', 'sender']
 
@@ -172,7 +171,7 @@ export default function Transactions() {
             isClearable
             className="w-full sm:max-w-[44%]"
             placeholder="Search by sender..."
-            startContent={<Search />}
+            startContent={<FaFilterCircleDollar />}
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
@@ -180,7 +179,7 @@ export default function Transactions() {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDown className="text-small" />} variant="flat">
+                <Button endContent={<FaChevronDown className="text-small" />} variant="flat">
                   Type
                 </Button>
               </DropdownTrigger>
@@ -200,7 +199,7 @@ export default function Transactions() {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDown className="text-small" />} variant="flat">
+                <Button endContent={<FaChevronDown className="text-small" />} variant="flat">
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -232,11 +231,11 @@ export default function Transactions() {
         </span>
         {/*<Pagination isCompact showControls showShadow color="primary" page={page} total={pages} onChange={setPage} />*/}
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="light" onPress={onPreviousPage}>
-            <ChevronLeft />
+          <Button isDisabled={pages === 1 || page === 1} size="sm" variant="light" onPress={onPreviousPage}>
+            <FaChevronLeft />
           </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="light" onPress={onNextPage}>
-            <ChevronRight />
+          <Button isDisabled={pages === 1 || page === pages} size="sm" variant="light" onPress={onNextPage}>
+            <FaChevronRight />
           </Button>
         </div>
       </div>
@@ -263,8 +262,8 @@ export default function Transactions() {
   )
 
   return (
-    <div className={'my-10'}>
-      {sortedItems.length > 0 ? (
+    <div>
+      {sortedItems ? (
         <Table
           bottomContent={bottomContent}
           bottomContentPlacement="inside"

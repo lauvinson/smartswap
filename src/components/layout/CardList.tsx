@@ -10,7 +10,7 @@ import Percent from '@/components/Percent'
 import clsx from 'clsx'
 import { useSavedTokens, useSliderAnimation } from '@/state/user/hooks'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
-import { Bell, BellOff, Pause, Play } from 'react-feather'
+import { PiBellFill, PiBellRingingFill, PiPauseFill, PiPlayFill } from 'react-icons/pi'
 import { InView } from 'react-intersection-observer'
 
 interface Props {
@@ -82,12 +82,13 @@ export function CardList(props: Props) {
                 </div>
               </div>
               <Link
-                className={clsx(savedTokens.includes(t.address) ? 'text-pink-400' : '', 'cursor-pointer p-2 hover:text-pink-400')}
+                className={clsx('cursor-pointer p-2')}
+                style={savedTokens.includes(t.address) ? { color: activeNetwork.primaryColor } : {}}
                 color={'foreground'}
                 isExternal
                 showAnchorIcon
                 title={savedTokens.includes(t.address) ? 'Watched' : 'To Watch'}
-                anchorIcon={savedTokens.includes(t.address) ? <BellOff size={'16'} /> : <Bell size={'16'} />}
+                anchorIcon={savedTokens.includes(t.address) ? <PiBellRingingFill size={'16'} /> : <PiBellFill size={'16'} />}
                 onClick={(e) => {
                   addSavedToken(t.address)
                 }}
@@ -115,9 +116,9 @@ export function CardList(props: Props) {
           <span className="font-bold text-large flex flex-row items-center">
             Tokens{' '}
             {effect ? (
-              <Pause size={18} className={'cursor-pointer mx-1'} color={activeNetwork.primaryColor} onClick={switchEffect} />
+              <PiPauseFill size={18} className={'cursor-pointer mx-1'} onClick={switchEffect} />
             ) : (
-              <Play size={18} className={'cursor-pointer mx-1'} color={activeNetwork.primaryColor} onClick={switchEffect} />
+              <PiPlayFill size={18} className={'cursor-pointer mx-1'} onClick={switchEffect} />
             )}
           </span>
           <Slider>

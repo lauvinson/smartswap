@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@nextui-org/react'
-import { useBlockNumber, useNetwork } from 'wagmi'
+import { useBlockNumber, useFeeData, useNetwork } from 'wagmi'
 import { LinkComponent } from './LinkComponent'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { random } from 'lodash'
 import { ChainId } from '@uniswap/sdk-core'
+import { SupportedNetwork } from '@/constants/networks'
+import { formatDollarAmount } from '@/utils/numbers'
+import { useEthPrices } from '@/hooks/useEthPrices'
+import { useActiveNetworkVersion } from '@/state/application/hooks'
+import { FaGasPump } from 'react-icons/fa6'
 
 export function NetworkStatus() {
   const network = useNetwork()
+  const ethPrices = useEthPrices()
+  const { data, isError, isLoading } = useFeeData()
+  const [activeNetwork] = useActiveNetworkVersion()
   const block = useBlockNumber({ watch: true, chainId: network?.chain?.id || ChainId.MAINNET })
   const [lastBlockNumber, setLastBlockNumber] = useState<bigint>(0 as unknown as bigint)
   const [direction, setDirection] = useState<string>('upward')
@@ -27,8 +35,9 @@ export function NetworkStatus() {
 
   return (
     <div className={clsx('flex align-middle gap-2 z-2 p-0')}>
-      <Button className={'p-0'} as={LinkComponent} href={explorerUrl ? explorerUrl : ''} color="success" variant="light" size={'sm'}>
+      <Button className={'p-0 justify-start'} as={LinkComponent} href={explorerUrl ? explorerUrl : ''} color="success" variant="light" size={'sm'}>
         <span className={'text-xs'}>{network.chain?.name ?? 'Ethereum'}</span>
+        &nbsp;
         {
           <span>
             #
@@ -42,6 +51,34 @@ export function NetworkStatus() {
             </motion.span>
           </span>
         }
+      </Button>
+      <Button className={'p-0 justify-start pointer-events-none'} as={LinkComponent} href={'#'} color="default" variant="light" size={'sm'}>
+        <span className={'text-xs flex'}>
+          {activeNetwork.id === SupportedNetwork.CELO
+            ? 'Celo Price:'
+            : activeNetwork.id === SupportedNetwork.BNB
+            ? 'BNB Price:'
+            : activeNetwork.id === SupportedNetwork.AVALANCHE
+            ? 'AVAX Price:'
+            : 'Eth Price:'}
+          &nbsp;
+          {formatDollarAmount(ethPrices?.current, 2, true, true)}
+          {ethPrices?.oneDay && (
+            <span className={ethPrices?.current > ethPrices?.oneDay ? 'text-rose-600' : 'text-green-600'}>
+              (+{(((ethPrices?.current - ethPrices?.oneDay) / ethPrices?.oneDay) * 100).toFixed(2)})
+            </span>
+          )}
+          &nbsp;&nbsp;
+          <FaGasPump />
+          &nbsp;
+          {!isLoading && !isError ? (
+            <span>Gas Price: {data?.formatted.gasPrice} Gwei</span>
+          ) : isLoading ? (
+            <span>Fetching fee data…</span>
+          ) : (
+            <span>Error fetching fee data</span>
+          )}
+        </span>
       </Button>
     </div>
   )

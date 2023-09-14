@@ -7,6 +7,7 @@ import { useThemeModeValue } from '@/providers/NextUI'
 import { Image } from '@nextui-org/react'
 import clsx from 'clsx'
 import { NetworkStatus } from '@/components/layout/NetworkStatus'
+import { PriceStatus } from '@/components/layout/PriceStatus'
 
 interface Props {
   className?: string
@@ -41,6 +42,7 @@ export function Footer(props: Props) {
           </LinkComponent>
         </div>
         <NetworkStatus />
+        <PriceStatus />
       </div>
     </div>
   )
