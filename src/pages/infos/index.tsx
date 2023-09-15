@@ -49,6 +49,7 @@ export default function Transactions() {
     column: 'age',
     direction: 'ascending',
   })
+  const inputVariant = useThemeModeValue('flat', 'bordered')
 
   const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
@@ -175,12 +176,12 @@ export default function Transactions() {
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
-            variant="bordered"
+            variant={inputVariant}
           />
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant="bordered">
+                <Button endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
                   Type
                 </Button>
               </DropdownTrigger>
@@ -200,7 +201,7 @@ export default function Transactions() {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant="flat">
+                <Button endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
                   Columns
                 </Button>
               </DropdownTrigger>
