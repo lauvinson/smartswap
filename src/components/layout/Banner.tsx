@@ -18,7 +18,6 @@ const variants = {
 }
 
 const GradientText = styled.span<{ c1: string; c2: string; c3: string }>`
-  display: inline-block;
   background: linear-gradient(to right, ${({ c1 }) => c1}, ${({ c2 }) => c2}, ${({ c3 }) => c3});
   color: transparent;
   -webkit-background-clip: text;
@@ -46,7 +45,7 @@ export function HomeBanner(props: Props) {
   return (
     <div className={clsx('grid gap-4 md:grid-cols-3 grid-cols-1 grid-rows-2', className)}>
       <div className="inline-grid col-start-1 col-end-4 row-start-1 row-end-2 text-center md:text-left">
-        <div className="text-3xl md:text-5xl font-bold overflow-hidden">
+        <div className="text-3xl md:text-5xl font-bold">
           <AnimatePresence mode="wait" initial={false}>
             <motion.span key={words[index]} initial="initial" animate="animate" exit="exit" variants={variants} transition={{ duration: 0.5 }}>
               <GradientText c1={activeNetwork.secondaryColor} c2={activeNetwork.primaryColor} c3={activeNetwork.bgColor}>

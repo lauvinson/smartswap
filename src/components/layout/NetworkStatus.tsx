@@ -37,7 +37,7 @@ export function NetworkStatus() {
   return (
     <div className={clsx('flex align-middle gap-2 z-2 p-0 overflow-auto')}>
       <Button
-        className={'p-0 justify-start hidden md:block'}
+        className={'hidden md:flex p-0 justify-start items-center'}
         as={LinkComponent}
         href={explorerUrl ? explorerUrl : ''}
         color="success"

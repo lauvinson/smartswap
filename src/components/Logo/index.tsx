@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaBitcoin } from 'react-icons/fa6'
+import { BsCoin } from 'react-icons/bs'
 import { Avatar } from '@nextui-org/react'
 
 const BAD_SRCS: { [tokenAddress: string]: true } = {}
@@ -24,9 +24,10 @@ export default function Logo({ srcs, alt, size, className, ...rest }: LogoProps)
     return (
       <Avatar
         {...rest}
-        alt={alt}
-        className={className}
+        draggable={false}
+        title={alt}
         size={size}
+        className={className}
         src={src}
         onError={() => {
           if (src) BAD_SRCS[src] = true
@@ -36,5 +37,5 @@ export default function Logo({ srcs, alt, size, className, ...rest }: LogoProps)
     )
   }
 
-  return <FaBitcoin size={'32'} {...rest} />
+  return <BsCoin size={'32'} className={className} {...rest} />
 }

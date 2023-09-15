@@ -60,7 +60,9 @@ export const initialState: UserState = {
   savedPools: [],
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
-  sliderAnimation: {},
+  sliderAnimation: {
+    tokens: true,
+  },
 }
 
 export default createReducer(initialState, (builder) =>
@@ -128,9 +130,6 @@ export default createReducer(initialState, (builder) =>
       state.URLWarningVisible = !state.URLWarningVisible
     })
     .addCase(updateSliderAnimation, (state, action) => {
-      if (!state.sliderAnimation) {
-        state.sliderAnimation = {}
-      }
       state.sliderAnimation[action.payload.key] = action.payload.value
     })
 )

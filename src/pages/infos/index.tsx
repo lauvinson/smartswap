@@ -25,8 +25,10 @@ import { getTimeAgo } from '@/utils/data'
 import { formatAmount, formatDollarAmount } from '@/utils/numbers'
 import { BeatLoader } from 'react-spinners'
 import { useThemeModeValue } from '@/providers/NextUI'
+import CurrencyLogo from '@/components/CurrencyLogo'
+import { useMediaQuery } from 'usehooks-ts'
 
-const INITIAL_VISIBLE_COLUMNS = ['type', 'amountToken0', 'amountToken1', 'timestamp', 'sender']
+const INITIAL_VISIBLE_COLUMNS = ['', 'type', 'amountToken0', 'amountToken1', 'amountUSD', 'timestamp', 'sender']
 
 const TableSkeleton: React.FC = () => {
   return (
@@ -49,6 +51,10 @@ export default function Transactions() {
     column: 'age',
     direction: 'ascending',
   })
+  const inputVariant = useThemeModeValue('flat', 'flat')
+  const scrollbarColor = useThemeModeValue('scrollbar-thumb-gray-300', 'scrollbar-thumb-gray-500')
+  const contentIconColor = useThemeModeValue('#71717a', '#71717a')
+  const md = useMediaQuery('(min-width: 768px)')
 
   const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
@@ -69,7 +75,7 @@ export default function Transactions() {
     }
 
     if (typeFilter !== 'all' && Array.from(typeFilter).length !== typeOptions.length) {
-      filteredTxs = filteredTxs.filter((tx) => Array.from(typeFilter).includes(tx.type))
+      filteredTxs = filteredTxs.filter((tx) => Array.from(typeFilter).includes(tx.type.toString()))
     }
     return filteredTxs
   }, [txs, hasSearchFilter, typeFilter, filterValue])
@@ -103,18 +109,22 @@ export default function Transactions() {
     const cellValue = tx[columnKey as keyof Transaction]
 
     switch (columnKey) {
-      case 'type':
+      case '':
         return (
-          <p className={'font-bold'}>
-            {cellValue === TransactionType.MINT
-              ? `Add ${tx.token0Symbol} and ${tx.token1Symbol}`
-              : cellValue === TransactionType.SWAP
-              ? `Swap ${tx.amountToken1 < 0 ? tx.token0Symbol : tx.token1Symbol} for ${tx.amountToken0 < 0 ? tx.token0Symbol : tx.token1Symbol}`
-              : `Remove ${tx.token0Symbol} and ${tx.token1Symbol}`}
-          </p>
+          <div className="flex space-x-2 items-center">
+            <div className="flex -space-x-2 space-y-2">
+              <CurrencyLogo address={tx.token0Address} className="w-8 h-8 text-tiny flex-shrink-0" alt={tx.token0Symbol} />
+              <CurrencyLogo address={tx.token1Address} className="w-8 h-8 text-tiny flex-shrink-0" alt={tx.token1Symbol} />
+            </div>
+            <span className={'font-bold'}>
+              {tx.token0Symbol} <span className={'font-light opacity-50'}>/</span> {tx.token1Symbol}
+            </span>
+          </div>
         )
+      case 'type':
+        return <p>{cellValue === TransactionType.MINT ? `Mint` : cellValue === TransactionType.SWAP ? `Swap` : `Burn`}</p>
       case 'sender':
-        return <p className={'font-bold'}>{cellValue}</p>
+        return <p>{cellValue}</p>
       case 'hash':
         return <p>{cellValue}</p>
       case 'timestamp':
@@ -124,9 +134,8 @@ export default function Transactions() {
       case 'amountToken0':
       case 'amountToken1':
         return (
-          <p>
-            {formatAmount(Math.abs(cellValue as number))}{' '}
-            <span className={'font-bold'}>{tx[('token' + columnKey.slice(-1) + 'Symbol') as keyof Transaction]}</span>
+          <p className={'flex justify-start space-x-2'}>
+            <span>{formatAmount(Math.abs(cellValue as number))} </span>
           </p>
         )
       default:
@@ -171,16 +180,16 @@ export default function Transactions() {
             isClearable
             className="w-full sm:max-w-[44%]"
             placeholder="Search"
-            startContent={<FaFilterCircleDollar />}
+            startContent={<FaFilterCircleDollar color={contentIconColor} />}
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
-            variant="bordered"
+            variant={inputVariant}
           />
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant="bordered">
+                <Button endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
                   Type
                 </Button>
               </DropdownTrigger>
@@ -200,7 +209,7 @@ export default function Transactions() {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant="flat">
+                <Button endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -222,7 +231,7 @@ export default function Transactions() {
         </div>
       </div>
     )
-  }, [filterValue, onSearchChange, typeFilter, visibleColumns, onClear])
+  }, [contentIconColor, filterValue, onSearchChange, inputVariant, typeFilter, visibleColumns, onClear])
 
   const bottomContent = useMemo(() => {
     return (
@@ -231,7 +240,7 @@ export default function Transactions() {
           Page {page} of {pages}
         </span>
         {/*<Pagination isCompact showControls showShadow color="primary" page={page} total={pages} onChange={setPage} />*/}
-        <div className="hidden sm:flex w-[30%] justify-end gap-2">
+        <div className="flex w-[30%] justify-end gap-2">
           <Button isDisabled={pages === 1 || page === 1} size="sm" variant="light" onPress={onPreviousPage}>
             <FaChevronLeft />
           </Button>
@@ -245,7 +254,7 @@ export default function Transactions() {
 
   const classNames = useMemo(
     () => ({
-      wrapper: ['max-h-[auto]', 'no-scrollbar', 'dark:bg-background/70'],
+      wrapper: ['max-h-[auto]', md ? 'scrollbar' : '', md ? scrollbarColor : scrollbarColor, 'dark:bg-background/70'],
       th: ['bg-transparent', 'text-default-500', 'border-b', 'border-divider'],
       td: [
         // changing the rows border radius
@@ -259,7 +268,7 @@ export default function Transactions() {
         'group-data-[last=true]:last:before:rounded-none',
       ],
     }),
-    []
+    [md, scrollbarColor]
   )
 
   return (
@@ -267,7 +276,7 @@ export default function Transactions() {
       {sortedItems ? (
         <Table
           bottomContent={bottomContent}
-          bottomContentPlacement="inside"
+          bottomContentPlacement="outside"
           classNames={classNames}
           selectedKeys={selectedKeys}
           // selectionMode="multiple"
