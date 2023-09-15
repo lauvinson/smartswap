@@ -156,7 +156,7 @@ export default function SignExample() {
     const swap_name = `${token0Name} / ${token1Name} Liquidity`
     return (
       <div className={'flex flex-col gap-2'}>
-        <NextSeo title={swap_name} />
+        <NextSeo noindex={true} nofollow={true} />
         <div className={'flex flex-row gap-2 items-center'}>
           <CurrencyLogo address={pool.token0.address} className="flex-shrink-0" size="sm" alt={pool.token0.name} />
           <RiExchangeFundsLine />
