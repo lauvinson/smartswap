@@ -8,7 +8,8 @@ import { LoadingPage } from '@/components/Loading'
 import { useIsMounted } from '@/hooks/useIsMounted'
 import { Provider } from 'react-redux'
 import { UIProviders } from 'providers/NextUI'
-const Seo = dynamic(() => import('components/layout/Seo').then((mod) => mod.Seo), { loading: () => <LoadingPage /> })
+import { NextSeo } from 'next-seo'
+// const Seo = dynamic(() => import('components/layout/Seo').then((mod) => mod.Seo), { loading: () => <LoadingPage /> })
 const Web3Provider = dynamic(() => import('providers/Web3').then((mod) => mod.Web3Provider), { loading: () => <LoadingPage /> })
 const ProtocolUpdater = dynamic(() => import('../state/protocol/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
 const TokenUpdater = dynamic(() => import('../state/tokens/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
@@ -37,7 +38,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Web3Provider>
         <ApolloProvider client={client}>
           <Provider store={store}>
-            <Seo />
+            {/*<Seo />*/}
+            <NextSeo noindex={true} nofollow={true} />
             {isMounted && (
               <>
                 <Updaters />
