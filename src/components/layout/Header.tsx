@@ -55,7 +55,7 @@ export function Header(props: Props) {
 
   return (
     <>
-      <div className={'flex z-40 w-full h-auto items-center justify-center top-0 inset-x-0 bg-background/70'}>
+      <div className={'z-40 w-full h-auto items-center justify-center top-0 inset-x-0 bg-background/70 overflow-auto hidden md:block'}>
         <div className={'z-40 flex px-6 gap-4 w-full flex-row relative flex-nowrap justify-center md:justify-end max-w-screen-2xl'}>
           <NetworkStatus />
         </div>

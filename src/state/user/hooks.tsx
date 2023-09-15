@@ -110,7 +110,7 @@ export function useURLWarningToggle(): () => void {
 export function useSliderAnimation(key: string): [boolean, () => void] {
   const dispatch = useDispatch<AppDispatch>()
   const effect = useSelector((state: AppState) => {
-    return state.user.sliderAnimation?.[key] || false
+    return state.user.sliderAnimation?.[key] || true
   })
 
   const switchEffect = useCallback(() => {
