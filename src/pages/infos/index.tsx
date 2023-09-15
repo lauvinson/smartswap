@@ -175,12 +175,12 @@ export default function Transactions() {
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
-            variant="flat"
+            variant="bordered"
           />
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant="flat">
+                <Button endContent={<FaChevronDown className="text-small" />} variant="bordered">
                   Type
                 </Button>
               </DropdownTrigger>
