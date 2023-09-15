@@ -170,11 +170,12 @@ export default function Transactions() {
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
-            placeholder="Search by sender..."
+            placeholder="Search"
             startContent={<FaFilterCircleDollar />}
             value={filterValue}
             onClear={() => onClear()}
             onValueChange={onSearchChange}
+            variant="flat"
           />
           <div className="flex gap-3">
             <Dropdown>
@@ -244,7 +245,7 @@ export default function Transactions() {
 
   const classNames = useMemo(
     () => ({
-      wrapper: ['max-h-[auto]', 'no-scrollbar'],
+      wrapper: ['max-h-[auto]', 'no-scrollbar', 'dark:bg-background/70'],
       th: ['bg-transparent', 'text-default-500', 'border-b', 'border-divider'],
       td: [
         // changing the rows border radius

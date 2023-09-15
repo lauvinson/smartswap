@@ -35,8 +35,14 @@ export function NetworkStatus() {
   const explorerUrl = network.chain?.blockExplorers?.default.url
 
   return (
-    <div className={clsx('flex align-middle gap-2 z-2 p-0')}>
-      <Button className={'p-0 justify-start'} as={LinkComponent} href={explorerUrl ? explorerUrl : ''} color="success" variant="light" size={'sm'}>
+    <div className={clsx('flex align-middle gap-2 z-2 p-0 overflow-auto')}>
+      <Button
+        className={'p-0 justify-start hidden md:block'}
+        as={LinkComponent}
+        href={explorerUrl ? explorerUrl : ''}
+        color="success"
+        variant="light"
+        size={'sm'}>
         <span className={'text-xs'}>{network.chain?.name ?? 'Ethereum'}</span>
         &nbsp;
         {

@@ -64,7 +64,7 @@ export function CardList(props: Props) {
     return formattedTokens.map((t, i) => {
       return (
         <div key={i}>
-          <Card className="max-w-[auto] cursor-pointer bg-background/30 hover:scale-105">
+          <Card className="max-w-[auto] cursor-pointer dark:bg-background/30 hover:scale-105">
             <CardHeader className="justify-between">
               <div className="flex gap-2">
                 <InView triggerOnce={true}>
