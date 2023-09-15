@@ -12,6 +12,7 @@ import { useSavedTokens, useSliderAnimation } from '@/state/user/hooks'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 import { PiBellFill, PiBellRingingFill, PiPauseFill, PiPlayFill } from 'react-icons/pi'
 import { InView } from 'react-intersection-observer'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 interface Props {
   className?: string
@@ -44,6 +45,7 @@ export function CardList(props: Props) {
   const [savedTokens, addSavedToken] = useSavedTokens()
   const [activeNetwork] = useActiveNetworkVersion()
   const [effect, switchEffect] = useSliderAnimation('tokens')
+  const actionColor = useThemeModeValue('#a1a1aa', '#3f3f46')
 
   const MakeLogo = function (i: Pool) {
     return (
@@ -64,7 +66,7 @@ export function CardList(props: Props) {
     return formattedTokens.map((t, i) => {
       return (
         <div key={i}>
-          <Card className="max-w-[auto] cursor-pointer dark:bg-background/30 hover:scale-105">
+          <Card className="max-w-[auto] cursor-pointer bg-background/30 hover:scale-105">
             <CardHeader className="justify-between">
               <div className="flex gap-2">
                 <InView triggerOnce={true}>
@@ -88,7 +90,7 @@ export function CardList(props: Props) {
                 isExternal
                 showAnchorIcon
                 title={savedTokens.includes(t.address) ? 'Watched' : 'To Watch'}
-                anchorIcon={savedTokens.includes(t.address) ? <PiBellRingingFill size={'16'} /> : <PiBellFill size={'16'} />}
+                anchorIcon={savedTokens.includes(t.address) ? <PiBellRingingFill size={'16'} /> : <PiBellFill color={actionColor} size={'16'} />}
                 onClick={(e) => {
                   addSavedToken(t.address)
                 }}
@@ -108,7 +110,7 @@ export function CardList(props: Props) {
         </div>
       )
     })
-  }, [activeNetwork, addSavedToken, formattedTokens, savedTokens])
+  }, [actionColor, activeNetwork, addSavedToken, formattedTokens, savedTokens])
   return (
     <div className={'overflow-hidden'}>
       {formattedTokens.length > 0 ? (
@@ -116,9 +118,9 @@ export function CardList(props: Props) {
           <span className="font-bold text-large flex flex-row items-center">
             Tokens{' '}
             {effect ? (
-              <PiPauseFill size={18} className={'cursor-pointer mx-1'} onClick={switchEffect} />
+              <PiPauseFill size={18} color={actionColor} className={'cursor-pointer mx-1'} onClick={switchEffect} />
             ) : (
-              <PiPlayFill size={18} className={'cursor-pointer mx-1'} onClick={switchEffect} />
+              <PiPlayFill size={18} color={actionColor} className={'cursor-pointer mx-1'} onClick={switchEffect} />
             )}
           </span>
           <Slider>

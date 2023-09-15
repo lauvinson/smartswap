@@ -19,7 +19,7 @@ export function UIProviders({ children, themeProps }: ProvidersProps) {
   )
 }
 
-export const useThemeModeValue = (lightValue: string, darkValue: string) => {
+export const useThemeModeValue = <T extends string = string>(lightValue: T, darkValue: T): T => {
   const { resolvedTheme } = useTheme()
   const [themeModeValue, setThemeModeValue] = useState(resolvedTheme === 'dark' ? darkValue : lightValue)
 

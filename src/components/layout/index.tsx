@@ -44,7 +44,7 @@ export function Layout(props: Props) {
       <Header className={'mb-10 md:mb-20'} />
       <Container>
         <ThemedBackgroundGlobal className="" backgroundColor={activeNetwork.bgColor} />
-        <HomeBanner />
+        <HomeBanner className={'mb-10 md:mb-20'} />
         {props.children}
         <Footer />
       </Container>

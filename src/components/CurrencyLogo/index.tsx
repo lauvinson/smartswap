@@ -153,7 +153,8 @@ export default function CurrencyLogo({
   ])
 
   if (activeNetwork === OptimismNetworkInfo && address === '0x4200000000000000000000000000000000000006') {
-    return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} {...rest} />
+    // @ts-ignore
+    return <StyledLogo className={className} size={size} src={EthereumLogo} alt={alt} style={style} {...rest} />
   }
 
   // @ts-ignore

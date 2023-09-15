@@ -7,6 +7,7 @@ import { useThemeModeValue } from '@/providers/NextUI'
 import { Image } from '@nextui-org/react'
 import clsx from 'clsx'
 import { NetworkStatus } from '@/components/layout/NetworkStatus'
+import { TbMailFilled } from 'react-icons/tb'
 
 interface Props {
   className?: string
@@ -17,18 +18,12 @@ export function Footer(props: Props) {
   const filterValue = useThemeModeValue('invert-0', 'invert')
 
   return (
-    <div className={'flex justify-items-center align-middle py-10 lg:py-20'}>
-      <div className={'container leading-normal'}>
-        <div className={'flex gap-2 align-middle mb-5'}>
+    <div className={'flex py-10 lg:py-20 mx-auto md:mx-0'}>
+      <div className={'flex flex-col items-center md:items-start'}>
+        <div className={'gap-2 align-middle mb-5 hidden md:block'}>
           <Image draggable={false} className={clsx('lg:10 ', filterValue)} width={35} height={35} src={Logo.src} alt={SITE_NAME} />
         </div>
         <span>Byte Swap Labs</span>
-        <span>
-          Contact us by{' '}
-          <LinkComponent href="mailto:chat@byte.exchange" isExternal={true}>
-            <p className={'italic'}>chat@byte.exchange</p>
-          </LinkComponent>
-        </span>
         <div className={'flex gap-2 align-middle my-2'}>
           <LinkComponent href={`/`}>
             <FaTwitter />
@@ -38,6 +33,9 @@ export function Footer(props: Props) {
           </LinkComponent>
           <LinkComponent href={`/`}>
             <FaWallet />
+          </LinkComponent>
+          <LinkComponent href={`mailto:chat@byte.exchange`} isExternal={true}>
+            <TbMailFilled />
           </LinkComponent>
         </div>
         <NetworkStatus />

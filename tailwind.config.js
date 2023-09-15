@@ -16,5 +16,25 @@ module.exports = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [
+    require('tailwind-scrollbar'),
+    nextui({
+      themes: {
+        light: {
+          colors: {
+            default: {
+              // 100: '#ffffff',
+            },
+          },
+        },
+        // dark: {
+        //   colors: {
+        //     primary: '#FFD34E',
+        //     secondary: '#EE457E',
+        //     background: '#E1CA9E',
+        //   },
+        // },
+      },
+    }),
+  ],
 }
