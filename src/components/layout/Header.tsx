@@ -1,26 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  Avatar,
-  Button,
-  Image,
-  Link,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
-  NavbarMenuToggle,
-} from '@nextui-org/react'
-import { SITE_NAME } from 'utils/config'
+import { Avatar, Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from '@nextui-org/react'
 // import { PassportScore } from './PassportScore'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
-import Logo from '@/assets/logo/hollow.svg'
 import Router from 'next/router'
 import { useAccount } from 'wagmi'
 import { BeatLoader } from 'react-spinners'
-import { useThemeModeValue } from '@/providers/NextUI'
-import clsx from 'clsx'
 import { getJazziconDataUrl } from '@/utils/jazzicon'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 import { NetworkStatus } from '@/components/layout/NetworkStatus'
@@ -53,7 +37,7 @@ export function Header(props: Props) {
   const { open } = useWeb3Modal()
   const [activeNetwork] = useActiveNetworkVersion()
   const { address, isConnected, isConnecting, isReconnecting } = useAccount()
-  const divRef = useRef(null)
+  const divRef = useRef<HTMLDivElement>(null)
   const [maxWidth, setMaxWidth] = useState('')
   useEffect(() => {
     if (divRef.current && divRef.current?.firstElementChild) {
