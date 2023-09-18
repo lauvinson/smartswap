@@ -24,6 +24,7 @@ import clsx from 'clsx'
 import { getJazziconDataUrl } from '@/utils/jazzicon'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 import { NetworkStatus } from '@/components/layout/NetworkStatus'
+import { AppLogo } from '@/components/layout/AppLogo'
 
 interface Props {
   className?: string
@@ -44,7 +45,6 @@ const menuItems = ['Swap', 'Pools', 'Pay', 'Analytics', 'Partner With Byte', 'De
 
 export function Header(props: Props) {
   const className = props.className ?? ''
-  const filterValue = useThemeModeValue('invert-0', 'invert')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { open } = useWeb3Modal()
   const [activeNetwork] = useActiveNetworkVersion()
@@ -67,13 +67,13 @@ export function Header(props: Props) {
 
         <NavbarContent className="sm:hidden pr-3" justify="center">
           <NavbarBrand>
-            <Image className={clsx(filterValue)} width={35} height={35} onClick={Home} draggable={false} src={Logo.src} alt={SITE_NAME} />
+            <AppLogo width={35} height={35} onClick={Home} draggable={false} />
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4 font-bold" justify="center">
           <NavbarBrand>
-            <Image className={clsx(filterValue)} width={35} height={35} onClick={Home} draggable={false} src={Logo.src} alt={SITE_NAME} />
+            <AppLogo width={35} height={35} onClick={Home} draggable={false} />
           </NavbarBrand>
           <NavbarItem>
             <Link color="foreground" href="#">

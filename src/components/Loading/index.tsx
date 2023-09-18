@@ -1,8 +1,6 @@
 import React from 'react'
-import Logo from '@/assets/logo/color.svg'
-import { SITE_NAME } from '@/utils/config'
 import { motion } from 'framer-motion'
-import { Image } from '@nextui-org/react'
+import { AppLogo } from '@/components/layout/AppLogo'
 
 export function LoadingPage() {
   return (
@@ -17,7 +15,7 @@ export function LoadingPage() {
             repeatType: 'reverse',
           },
         }}>
-        <Image draggable="false" width={50} height={50} src={Logo.src} alt={SITE_NAME} />
+        <AppLogo draggable="false" width={50} height={50} />
       </motion.div>
     </div>
   )
