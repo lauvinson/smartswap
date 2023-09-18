@@ -13,7 +13,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   height?: number
 }
 
-const logos = {
+const logos: { [key: string]: string } = {
   localhost: MetamaskLogo.src,
   'byte.exchange': ByteLogo.src,
   'metamask.digital': MetamaskLogo.src,
@@ -21,12 +21,19 @@ const logos = {
 
 export function AppLogo({ draggable, width, height, className, ...rest }: Props) {
   const filterValue = useThemeModeValue('invert-0', 'invert')
-  const domain = window.location.hostname
+
+  // Checking if window object is defined
+  let domain = ''
+  if (typeof window !== 'undefined') {
+    domain = window.location.hostname
+  }
   const firstLevelDomain = getFirstLevelDomain(domain)
   const src = logos[firstLevelDomain as any]
   const dynamicClassNames = [className]
   if (firstLevelDomain === 'byte.exchange') {
     dynamicClassNames.push(filterValue)
   }
+
+  // @ts-ignore
   return <Image className={clsx(dynamicClassNames)} draggable={draggable} width={width} height={height} src={src} alt={SITE_NAME} {...rest} />
 }

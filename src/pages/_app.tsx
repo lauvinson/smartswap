@@ -9,6 +9,8 @@ import { useIsMounted } from '@/hooks/useIsMounted'
 import { Provider } from 'react-redux'
 import { UIProviders } from 'providers/NextUI'
 import { NextSeo } from 'next-seo'
+import React from 'react'
+import { IconHandling } from '@/components/layout/Head'
 // const Seo = dynamic(() => import('components/layout/Seo').then((mod) => mod.Seo), { loading: () => <LoadingPage /> })
 const Web3Provider = dynamic(() => import('providers/Web3').then((mod) => mod.Web3Provider), { loading: () => <LoadingPage /> })
 const ProtocolUpdater = dynamic(() => import('../state/protocol/updater').then((mod) => mod.default), { loading: () => <LoadingPage /> })
@@ -34,23 +36,26 @@ function Updaters() {
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
   return (
-    <UIProviders themeProps={{ attribute: 'class', storageKey: 'nightwind-mode', defaultTheme: 'system', enableSystem: true }}>
-      <Web3Provider>
-        <ApolloProvider client={client}>
-          <Provider store={store}>
-            {/*<Seo />*/}
-            <NextSeo noindex={true} nofollow={true} />
-            {isMounted && (
-              <>
-                <Updaters />
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </>
-            )}
-          </Provider>
-        </ApolloProvider>
-      </Web3Provider>
-    </UIProviders>
+    <>
+      <IconHandling rel="icon" />
+      <UIProviders themeProps={{ attribute: 'class', storageKey: 'nightwind-mode', defaultTheme: 'system', enableSystem: true }}>
+        <Web3Provider>
+          <ApolloProvider client={client}>
+            <Provider store={store}>
+              {/*<Seo />*/}
+              <NextSeo noindex={true} nofollow={true} />
+              {isMounted && (
+                <>
+                  <Updaters />
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </>
+              )}
+            </Provider>
+          </ApolloProvider>
+        </Web3Provider>
+      </UIProviders>
+    </>
   )
 }

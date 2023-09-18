@@ -15,7 +15,7 @@ export function LoadingPage() {
             repeatType: 'reverse',
           },
         }}>
-        <AppLogo draggable="false" width={50} height={50} />
+        <AppLogo draggable={false} width={50} height={50} />
       </motion.div>
     </div>
   )

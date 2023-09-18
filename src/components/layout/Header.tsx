@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Avatar,
   Button,
@@ -25,6 +25,9 @@ import { getJazziconDataUrl } from '@/utils/jazzicon'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 import { NetworkStatus } from '@/components/layout/NetworkStatus'
 import { AppLogo } from '@/components/layout/AppLogo'
+import { useOnlineStatus } from '@/components/layout/OnlineStatus'
+import { RiWifiOffLine } from 'react-icons/ri'
+import { LinkComponent } from '@/components/layout/LinkComponent'
 
 interface Props {
   className?: string
@@ -44,23 +47,41 @@ function shortenAddress(str: `0x${string}`, startLength: number = 4, endLength: 
 const menuItems = ['Swap', 'Pools', 'Pay', 'Analytics', 'Partner With Byte', 'Deployments', 'Buy Crypto']
 
 export function Header(props: Props) {
+  const isOnline = useOnlineStatus()
   const className = props.className ?? ''
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { open } = useWeb3Modal()
   const [activeNetwork] = useActiveNetworkVersion()
   const { address, isConnected, isConnecting, isReconnecting } = useAccount()
+  const divRef = useRef(null)
+  const [maxWidth, setMaxWidth] = useState('')
+  useEffect(() => {
+    if (divRef.current && divRef.current?.firstElementChild) {
+      const computedStyle = getComputedStyle(divRef.current?.firstElementChild)
+
+      setMaxWidth(computedStyle.width)
+    }
+  }, [])
   function Home() {
     Router.push('/').then()
   }
 
   return (
     <>
-      <div className={'z-40 w-full h-auto items-center justify-center top-0 inset-x-0 bg-background/70 overflow-auto hidden md:block'}>
-        <div className={'z-40 flex px-6 gap-4 w-full flex-row relative flex-nowrap justify-center md:justify-end max-w-screen-2xl'}>
-          <NetworkStatus />
+      <div className={'z-40 h-auto items-center justify-center top-0 inset-x-0 bg-background/70 overflow-auto'}>
+        <div className={'z-40 flex px-6 gap-4 flex-row relative flex-nowrap justify-center md:justify-end w-[' + maxWidth + ']'}>
+          {isOnline ? (
+            <NetworkStatus />
+          ) : (
+            <Button className={'p-0 justify-start pointer-events-none'} as={LinkComponent} href={'#'} color="default" variant="light" size={'sm'}>
+              <span className={'text-xs flex items-center text-warning'}>
+                <RiWifiOffLine /> &nbsp; Offline, please check the network.
+              </span>
+            </Button>
+          )}
         </div>
       </div>
-      <Navbar maxWidth={'2xl'} className={className} isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <Navbar ref={divRef} maxWidth={'2xl'} className={className} isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent className="sm:hidden" justify="start">
           <NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
         </NavbarContent>
