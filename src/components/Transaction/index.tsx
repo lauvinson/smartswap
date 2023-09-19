@@ -39,7 +39,7 @@ const TableSkeleton: React.FC = () => {
   )
 }
 
-export default function Transactions() {
+export default function Index() {
   const [txs = []] = useProtocolTransactions()
   const spinnerColor = useThemeModeValue('black', 'white')
   const [filterValue, setFilterValue] = useState('')
@@ -113,8 +113,8 @@ export default function Transactions() {
         return (
           <div className="flex space-x-2 items-center">
             <div className="flex -space-x-2 space-y-2">
-              <CurrencyLogo address={tx.token0Address} className="w-8 h-8 text-tiny flex-shrink-0" alt={tx.token0Symbol} />
-              <CurrencyLogo address={tx.token1Address} className="w-8 h-8 text-tiny flex-shrink-0" alt={tx.token1Symbol} />
+              <CurrencyLogo address={tx.token0Address} className="w-7 h-7 text-tiny flex-shrink-0" alt={tx.token0Symbol} />
+              <CurrencyLogo address={tx.token1Address} className="w-7 h-7 text-tiny flex-shrink-0" alt={tx.token1Symbol} />
             </div>
             <span className={'font-bold'}>
               {tx.token0Symbol} <span className={'font-light opacity-50'}>/</span> {tx.token1Symbol}
