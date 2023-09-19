@@ -1,7 +1,11 @@
 import { Head } from 'components/layout/Head'
-import TokensBanner from './applications'
-import Transactions from '@/pages/infos'
 import { InView } from 'react-intersection-observer'
+import dynamic from 'next/dynamic'
+import { ComponentLoadingPage } from '@/components/Loading'
+import React from 'react'
+
+const TokensBanner = dynamic(() => import('./applications').then((mod) => mod.default), { loading: () => <ComponentLoadingPage /> })
+const Transactions = dynamic(() => import('@/pages/infos').then((mod) => mod.default), { loading: () => <ComponentLoadingPage /> })
 
 export default function Home() {
   return (

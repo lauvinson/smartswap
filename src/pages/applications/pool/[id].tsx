@@ -10,8 +10,10 @@ import { useAllTokenData } from '@/state/tokens/hooks'
 import { notEmpty } from '@/utils'
 import CurrencyLogo from '@/components/CurrencyLogo'
 import { RiExchangeFundsLine } from 'react-icons/ri'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 function Approve({ pool }: { pool: Pool }) {
+  const spinnerColor = useThemeModeValue('black', 'white')
   const allTokens = useAllTokenData()
   const formattedTokens = useMemo(() => {
     return Object.values(allTokens)
@@ -136,7 +138,7 @@ function Approve({ pool }: { pool: Pool }) {
         )}
       </Select>
       <br />
-      <Button className={'mt-4'} onClick={submit} isLoading={approving} spinner={<BeatLoader size={8} color="white" />} variant="flat">
+      <Button className={'mt-4'} onClick={submit} isLoading={approving} spinner={<BeatLoader size={8} color={spinnerColor} />} variant="flat">
         {!approving && 'Approve'}
       </Button>
     </div>

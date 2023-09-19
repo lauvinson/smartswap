@@ -12,6 +12,7 @@ import { AppLogo } from '@/components/layout/AppLogo'
 import { useOnlineStatus } from '@/components/layout/OnlineStatus'
 import { RiWifiOffLine } from 'react-icons/ri'
 import { LinkComponent } from '@/components/layout/LinkComponent'
+import { useThemeModeValue } from '@/providers/NextUI'
 
 interface Props {
   className?: string
@@ -32,6 +33,7 @@ const menuItems = ['Swap', 'Pools', 'Pay', 'Analytics', 'Partner With Byte', 'De
 
 export function Header(props: Props) {
   const isOnline = useOnlineStatus()
+  const spinnerColor = useThemeModeValue('black', 'white')
   const className = props.className ?? ''
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { open } = useWeb3Modal()
@@ -46,6 +48,20 @@ export function Header(props: Props) {
       setMaxWidth(computedStyle.width)
     }
   }, [])
+  useEffect(() => {
+    // 跟随主题变更meta color
+    let metaThemeColor = document.querySelector('meta[name=theme-color]')
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', activeNetwork.bgColor)
+    }
+
+    // Change background color
+    let metaBackgroundColor = document.querySelector('meta[name=background-color]')
+    if (metaBackgroundColor) {
+      metaBackgroundColor.setAttribute('content', activeNetwork.bgColor)
+    }
+  }, [activeNetwork])
+
   function Home() {
     Router.push('/').then()
   }
@@ -114,7 +130,7 @@ export function Header(props: Props) {
                 variant="flat"
                 onClick={() => open()}
                 isLoading={isConnecting || isReconnecting}
-                spinner={<BeatLoader size={8} color="white" />}>
+                spinner={<BeatLoader size={8} color={spinnerColor} />}>
                 {!isConnecting && !isReconnecting && 'Connect'}
               </Button>
             )}
