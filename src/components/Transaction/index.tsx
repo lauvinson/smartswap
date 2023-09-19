@@ -178,7 +178,8 @@ export default function Index() {
         <div className="flex justify-between gap-3 items-end">
           <Input
             isClearable
-            className="w-full sm:max-w-[44%]"
+            size={'sm'}
+            className="w-full sm:max-w-[30%]"
             placeholder="Search"
             startContent={<FaFilterCircleDollar color={contentIconColor} />}
             value={filterValue}
@@ -189,7 +190,7 @@ export default function Index() {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
+                <Button size={'sm'} endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
                   Type
                 </Button>
               </DropdownTrigger>
@@ -209,7 +210,7 @@ export default function Index() {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
+                <Button size={'sm'} endContent={<FaChevronDown className="text-small" />} variant={inputVariant}>
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -254,7 +255,7 @@ export default function Index() {
 
   const classNames = useMemo(
     () => ({
-      wrapper: ['max-h-[auto]', md ? 'scrollbar' : '', md ? scrollbarColor : scrollbarColor, 'dark:bg-background/70'],
+      wrapper: ['max-h-[auto]', md ? 'scrollbar' : '', md ? scrollbarColor : scrollbarColor, 'bg-background/70 backdrop-blur-lg'],
       th: ['bg-transparent', 'text-default-500', 'border-b', 'border-divider'],
       td: [
         // changing the rows border radius

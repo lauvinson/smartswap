@@ -1,6 +1,6 @@
 import { Pool } from '@/pools'
 import React, { useMemo } from 'react'
-import { Card, CardFooter, CardHeader, Image, Link, Skeleton } from '@nextui-org/react'
+import { Button, Card, CardFooter, CardHeader, Image, Link, Skeleton } from '@nextui-org/react'
 import { useAllTokenData } from '@/state/tokens/hooks'
 import { getEtherscanLink, notEmpty } from '@/utils'
 import { useSavedTokens, useSliderAnimation } from '@/state/user/hooks'
@@ -13,6 +13,7 @@ import { PiBellFill, PiBellRingingFill, PiPauseFill, PiPlayFill } from 'react-ic
 import { formatDollarAmount } from '@/utils/numbers'
 import Percent from '@/components/Percent'
 import Slider from '@/components/layout/Slider'
+import { LinkComponent } from '@/components/layout/LinkComponent'
 
 const CardSkeleton: React.FC = () => {
   return (
@@ -55,7 +56,7 @@ export function TokensBanner() {
     return formattedTokens.map((t, i) => {
       return (
         <div key={i}>
-          <Card className="max-w-[auto] cursor-pointer bg-background/30 hover:scale-105">
+          <Card className="max-w-[auto] cursor-pointer bg-background/30 backdrop-blur-lg hover:scale-105">
             <CardHeader className="justify-between">
               <div className="flex gap-2">
                 <InView triggerOnce={true}>
@@ -101,13 +102,24 @@ export function TokensBanner() {
     <div className={'overflow-hidden'}>
       {formattedTokens.length > 0 ? (
         <div className="flex flex-col">
-          <span className="font-bold text-large flex flex-row items-center">
-            Tokens{' '}
-            {effect ? (
-              <PiPauseFill size={18} color={actionColor} className={'cursor-pointer mx-1'} onClick={switchEffect} />
-            ) : (
-              <PiPlayFill size={18} color={actionColor} className={'cursor-pointer mx-1'} onClick={switchEffect} />
-            )}
+          <span className="flex justify-between">
+            <span className="font-bold text-large flex flex-row items-center">
+              Tokens{' '}
+              {effect ? (
+                <PiPauseFill size={18} color={actionColor} className={'cursor-pointer mx-1'} onClick={switchEffect} />
+              ) : (
+                <PiPlayFill size={18} color={actionColor} className={'cursor-pointer mx-1'} onClick={switchEffect} />
+              )}
+            </span>
+            <Button
+              className={'hidden md:flex p-0 justify-start items-center'}
+              as={LinkComponent}
+              href={'#'}
+              color="default"
+              variant="light"
+              size={'sm'}>
+              View All
+            </Button>
           </span>
           <Slider>
             <div className={'flex gap-[1.5rem] w-auto'}>{TokensFeed}</div>

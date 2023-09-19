@@ -69,7 +69,7 @@ export function Header(props: Props) {
 
   return (
     <>
-      <div className={'z-40 h-auto items-center justify-center top-0 inset-x-0 bg-background/70 overflow-auto'}>
+      <div className={'sticky z-40 h-auto items-center justify-center top-0 inset-x-0 bg-background/70 overflow-auto backdrop-blur-lg'}>
         <div className={'z-40 flex px-6 gap-4 flex-row relative flex-nowrap justify-center md:justify-end w-[' + maxWidth + ']'}>
           {isOnline ? (
             <NetworkStatus />
@@ -95,7 +95,7 @@ export function Header(props: Props) {
 
         <NavbarContent className="hidden sm:flex gap-4 font-bold" justify="center">
           <NavbarBrand>
-            <AppLogo width={35} height={35} onClick={Home} draggable={false} />
+            <AppLogo width={28} height={28} onClick={Home} draggable={false} />
           </NavbarBrand>
           <NavbarItem>
             <Link color="foreground" href="#">
