@@ -85,12 +85,12 @@
 //   if (isConnected) {
 //     return (
 //       <div>
-//         <NextSeo title="Send Ether transaction" />
+//         <NextSeo title="Send Ether Transaction" />
 //         <Heading as="h2" fontSize="2xl" my={4}>
-//           Send Ether transaction
+//           Send Ether Transaction
 //         </Heading>
 //         <p>
-//           This example shows how to send an Ether transaction. You can use this to send Ether to another address, or to interact with a smart
+//           This example shows how to send an Ether Transaction. You can use this to send Ether to another address, or to interact with a smart
 //           contract.
 //         </p>
 //

@@ -52,9 +52,12 @@ export default function Document() {
         <meta property="og:image" content="https://byte.exchange/apple-touch-icon-180x180.png" />
         {/*<link rel="icon" href="/favicon.png" />*/}
       </Head>
-      <body>
-        <Main />
-        <NextScript />
+      {/*  Prevent excessive sliding and tend to be native */}
+      <body className={'overflow-hidden fixed w-full h-full'}>
+        <div className={'overflow-y-auto h-full overscroll-y-none'}>
+          <Main />
+          <NextScript />
+        </div>
       </body>
     </Html>
   )

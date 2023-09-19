@@ -34,6 +34,7 @@ const menuItems = ['Swap', 'Pools', 'Pay', 'Analytics', 'Partner With Byte', 'De
 export function Header(props: Props) {
   const isOnline = useOnlineStatus()
   const spinnerColor = useThemeModeValue('black', 'white')
+  const metaColor = useThemeModeValue('white', 'black')
   const className = props.className ?? ''
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { open } = useWeb3Modal()
@@ -49,18 +50,18 @@ export function Header(props: Props) {
     }
   }, [])
   useEffect(() => {
-    // 跟随主题变更meta color
+    // meta color depend on the theme
     let metaThemeColor = document.querySelector('meta[name=theme-color]')
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', activeNetwork.bgColor)
+      metaThemeColor.setAttribute('content', metaColor)
     }
 
     // Change background color
     let metaBackgroundColor = document.querySelector('meta[name=background-color]')
     if (metaBackgroundColor) {
-      metaBackgroundColor.setAttribute('content', activeNetwork.bgColor)
+      metaBackgroundColor.setAttribute('content', metaColor)
     }
-  }, [activeNetwork])
+  }, [metaColor])
 
   function Home() {
     Router.push('/').then()
@@ -86,11 +87,11 @@ export function Header(props: Props) {
           <NavbarMenuToggle aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
         </NavbarContent>
 
-        <NavbarContent className="sm:hidden pr-3" justify="center">
-          <NavbarBrand>
-            <AppLogo width={35} height={35} onClick={Home} draggable={false} />
-          </NavbarBrand>
-        </NavbarContent>
+        {/*<NavbarContent className="sm:hidden pr-3" justify="center">*/}
+        {/*  <NavbarBrand>*/}
+        {/*    <AppLogo width={35} height={35} onClick={Home} draggable={false} />*/}
+        {/*  </NavbarBrand>*/}
+        {/*</NavbarContent>*/}
 
         <NavbarContent className="hidden sm:flex gap-4 font-bold" justify="center">
           <NavbarBrand>
@@ -131,12 +132,13 @@ export function Header(props: Props) {
                 onClick={() => open()}
                 isLoading={isConnecting || isReconnecting}
                 spinner={<BeatLoader size={8} color={spinnerColor} />}>
-                {!isConnecting && !isReconnecting && 'Connect'}
+                {!isConnecting && !isReconnecting && (
+                  <span className={'flex items-center'}>
+                    Connect&nbsp;<span className={'hidden md:block'}>Wallet</span>
+                  </span>
+                )}
               </Button>
             )}
-            {/*{!isConnecting && !isReconnecting && (*/}
-            {/*  <div className="text-base">{isConnected ? shortenAddress(address as `0x${string}`) : 'Connect'}</div>*/}
-            {/*)}*/}
           </NavbarItem>
         </NavbarContent>
 

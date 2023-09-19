@@ -94,11 +94,11 @@
 //   if (isConnected) {
 //     return (
 //       <div>
-//         <NextSeo title="Send ERC20 transaction" />
+//         <NextSeo title="Send ERC20 Transaction" />
 //         <Heading as="h2" fontSize="2xl" my={4}>
-//           Send ERC20 transaction
+//           Send ERC20 Transaction
 //         </Heading>
-//         <p>This example shows how to send an ERC20 transaction. You can use this to send any ERC20 to another address.</p>
+//         <p>This example shows how to send an ERC20 Transaction. You can use this to send any ERC20 to another address.</p>
 //
 //         <SendERC20 />
 //       </div>

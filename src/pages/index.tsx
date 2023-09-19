@@ -4,8 +4,10 @@ import dynamic from 'next/dynamic'
 import { ComponentLoadingPage } from '@/components/Loading'
 import React from 'react'
 
-const TokensBanner = dynamic(() => import('./applications').then((mod) => mod.default), { loading: () => <ComponentLoadingPage /> })
-const Transactions = dynamic(() => import('@/pages/infos').then((mod) => mod.default), { loading: () => <ComponentLoadingPage /> })
+const TokensBanner = dynamic(() => import('../components/Token').then((mod) => mod.TokensBanner), { loading: () => <ComponentLoadingPage /> })
+const Transactions = dynamic(() => import('@/components/Transaction').then((mod) => mod.default), {
+  loading: () => <ComponentLoadingPage />,
+})
 
 export default function Home() {
   return (
