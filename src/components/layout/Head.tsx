@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { default as NextHead } from 'next/head'
 import { SITE_DESCRIPTION, SITE_NAME } from 'utils/config'
 import IconHead from 'next/head'
+import { getFirstLevelDomain } from '@/utils/window'
 
 interface Props {
   title?: string
@@ -24,7 +25,7 @@ export const IconHandling = (props: IconProps) => {
   const [icon, setIcon] = useState<string>('/favicon.png')
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIcon(logos[window.location.hostname])
+      setIcon(logos[getFirstLevelDomain(window.location.hostname)])
     }
   }, [])
 
