@@ -5,6 +5,7 @@ import { HomeBanner } from './Banner'
 import styled from '@emotion/styled'
 import { useActiveNetworkVersion } from '@/state/application/hooks'
 import { keyframes } from '@emotion/react'
+import clsx from 'clsx'
 
 interface Props {
   children: ReactNode
@@ -40,11 +41,11 @@ const Container = (props: any) => <div className="flex flex-col flex-1 m-0 max-w
 export function Layout(props: Props) {
   const [activeNetwork] = useActiveNetworkVersion()
   return (
-    <div className="container m-0 max-w-full">
+    <div className={clsx('container m-0 max-w-full')}>
       <Header className={'mb-10 md:mb-20'} />
       <Container>
         <ThemedBackgroundGlobal className="" backgroundColor={activeNetwork.bgColor} />
-        <HomeBanner className={'mb-10 md:mb-20'} />
+        <HomeBanner className={clsx('mb-10 md:mb-20')} />
         {props.children}
         <Footer />
       </Container>
